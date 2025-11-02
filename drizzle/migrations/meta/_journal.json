@@ -15,6 +15,20 @@
       "when": 1762076243739,
       "tag": "0001_giant_marvex",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1762093600243,
+      "tag": "0002_glossy_chronomancer",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1762114434710,
+      "tag": "0003_funny_blacklash",
+      "breakpoints": true
     }
   ]
 }

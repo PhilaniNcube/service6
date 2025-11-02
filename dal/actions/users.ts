@@ -1,9 +1,9 @@
 "use server";
 
 import db from "@/drizzle/client";
-import { users, type ContactMethod } from "@/drizzle/tables";
+import { users, type ContactMethod, medical_background } from "@/drizzle/tables";
 import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
+import {  revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 
 // Validation schema for user update
@@ -13,7 +13,10 @@ const updateUserSchema = z.object({
   last_name: z.string().min(1, "Last name is required").max(100),
   phone_number: z.string().optional().nullable(),
   country: z.string().optional().nullable(),
-  preferred_contact_method: z.enum(["email", "phone", "sms", "whatsapp", "video call"]).optional().nullable(),
+  preferred_contact_method: z
+    .enum(["email", "phone", "sms", "whatsapp", "video call"])
+    .optional()
+    .nullable(),
   next_of_kin_name: z.string().optional().nullable(),
   next_of_kin_contact: z.string().optional().nullable(),
 });
@@ -53,7 +56,9 @@ export async function updateUserProfile(
       last_name: formData.get("last_name") as string,
       phone_number: formData.get("phone_number") as string | null,
       country: formData.get("country") as string | null,
-      preferred_contact_method: formData.get("preferred_contact_method") as ContactMethod | null,
+      preferred_contact_method: formData.get(
+        "preferred_contact_method"
+      ) as ContactMethod | null,
       next_of_kin_name: formData.get("next_of_kin_name") as string | null,
       next_of_kin_contact: formData.get("next_of_kin_contact") as string | null,
     };
@@ -93,11 +98,7 @@ export async function updateUserProfile(
       })
       .where(eq(users.clerk_id, clerk_id));
 
-    // Revalidate the profile page and the current-user cache
-    revalidatePath("/profile");
-    // Note: In Next.js 16 with "use cache", revalidateTag requires the cache scope
-    // For now, we revalidate the entire path which will refresh the cached data
-    revalidatePath("/", "layout");
+    revalidateTag("profile", "max");
 
     return {
       success: true,
@@ -107,7 +108,98 @@ export async function updateUserProfile(
     console.error("Error updating user profile:", error);
     return {
       success: false,
-      message: "An error occurred while updating your profile. Please try again.",
+      message:
+        "An error occurred while updating your profile. Please try again.",
+    };
+  }
+}
+
+// Validation schema for medical background
+const addMedicalBackgroundSchema = z.object({
+  clerk_id: z.string().min(1, "Clerk ID is required"),
+  notes: z.string().min(10, "Notes must be at least 10 characters").max(1000, "Notes must not exceed 1000 characters"),
+});
+
+export type AddMedicalBackgroundInput = z.infer<typeof addMedicalBackgroundSchema>;
+
+// State type for useActionState
+export type AddMedicalBackgroundState = {
+  success: boolean;
+  message: string;
+  errors?: {
+    notes?: string[];
+  };
+};
+
+/**
+ * Server action to add medical background
+ * @param prevState - Previous state from useActionState
+ * @param formData - Form data from the client
+ * @returns State object with success status and message
+ */
+export async function addMedicalBackground(
+  prevState: AddMedicalBackgroundState,
+  formData: FormData
+): Promise<AddMedicalBackgroundState> {
+  try {
+    // Extract data from formData
+    const clerk_id = formData.get("clerk_id") as string;
+    const notes = formData.get("notes") as string;
+
+    const rawData = {
+      clerk_id,
+      notes,
+    };
+
+    const validatedData = addMedicalBackgroundSchema.safeParse(rawData);
+
+    if (!validatedData.success) {
+      return {
+        success: false,
+        message: "Validation failed. Please check your inputs.",
+        errors: validatedData.error.flatten().fieldErrors,
+      };
+    }
+
+    const { clerk_id: clerkId, notes: validatedNotes } = validatedData.data;
+
+    // Get user by clerk_id
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.clerk_id, clerkId))
+      .limit(1);
+
+    if (!user) {
+      return {
+        success: false,
+        message: "User not found",
+      };
+    }
+
+    // Insert medical background
+    await db
+      .insert(medical_background)
+      .values({
+        user_id: user.id,
+        clerk_id: clerkId,
+        notes: validatedNotes,
+      })
+      .returning();
+
+    revalidateTag(`medical_history-${clerkId}`, "max");
+    revalidatePath("/medical-history");
+
+    return {
+      success: true,
+      message: "Medical history added successfully!",
+    };
+  } catch (error) {
+    console.error("Error adding medical background:", error);
+    return {
+      success: false,
+      message:
+        "An error occurred while adding your medical history. Please try again.",
     };
   }
 }

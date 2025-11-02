@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { Suspense } from 'react'
+import MedicalHistoryComponent from '../_components/medical-history'
 
 const MedicalHistory = async () => {
   return (
-    <div>MedicalHistory</div>
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <MedicalHistoryComponent />
+      </Suspense>
+    </div>
   )
 }
 

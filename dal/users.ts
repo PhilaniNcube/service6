@@ -17,6 +17,8 @@ import { cacheTag } from "next/cache";
  * @returns The user object with Clerk ID or null if not authenticated
  */
 export async function getCurrentUser() {
+  "use cache: private";
+  cacheTag("profile");
 
 
   try {
@@ -32,7 +34,11 @@ export async function getCurrentUser() {
       .where(eq(users.clerk_id, clerkUser.id))
       .limit(1);
 
-    return user || null;
+      if (!user) {
+        return null;
+      }
+
+    return user;
   } catch (error) {
     console.error("Error fetching current user:", error);
     throw new Error("Failed to fetch current user data");
