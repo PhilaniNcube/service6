@@ -8,6 +8,13 @@
       "when": 1761909853454,
       "tag": "0000_supreme_hex",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1762076243739,
+      "tag": "0001_giant_marvex",
+      "breakpoints": true
     }
   ]
 }
