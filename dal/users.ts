@@ -1,0 +1,102 @@
+import "server-only";
+import db from "@/drizzle/client";
+import { users } from "@/drizzle/tables";
+import { eq } from "drizzle-orm";
+import { cache } from "react";
+import { currentUser } from "@clerk/nextjs/server";
+import { cacheTag } from "next/cache";
+
+/**
+ * Data Access Layer for User operations
+ * All functions are cached and should only be used on the server
+ */
+
+/**
+ * Get the current authenticated user from Clerk and fetch their profile from database
+ * Uses "use cache" directive with cache tags for fine-grained revalidation
+ * @returns The user object with Clerk ID or null if not authenticated
+ */
+export async function getCurrentUser() {
+
+
+  try {
+    const clerkUser = await currentUser();
+
+    if (!clerkUser) {
+      return null;
+    }
+
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.clerk_id, clerkUser.id))
+      .limit(1);
+
+    return user || null;
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+    throw new Error("Failed to fetch current user data");
+  }
+}
+
+/**
+ * Get a user by their Clerk ID
+ * @param clerkId - The Clerk user ID
+ * @returns The user object or null if not found
+ */
+export const getUserByClerkId = cache(async (clerkId: string) => {
+
+  try {
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.clerk_id, clerkId))
+      .limit(1);
+
+    return user || null;
+  } catch (error) {
+    console.error("Error fetching user by clerk_id:", error);
+    throw new Error("Failed to fetch user data");
+  }
+});
+
+/**
+ * Get a user by their email address
+ * @param email - The user's email
+ * @returns The user object or null if not found
+ */
+export const getUserByEmail = cache(async (email: string) => {
+  try {
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+
+    return user || null;
+  } catch (error) {
+    console.error("Error fetching user by email:", error);
+    throw new Error("Failed to fetch user data");
+  }
+});
+
+/**
+ * Get a user by their database ID
+ * @param id - The user's database ID
+ * @returns The user object or null if not found
+ */
+export const getUserById = cache(async (id: number) => {
+
+  try {
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, id))
+      .limit(1);
+
+    return user || null;
+  } catch (error) {
+    console.error("Error fetching user by id:", error);
+    throw new Error("Failed to fetch user data");
+  }
+});

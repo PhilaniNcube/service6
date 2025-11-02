@@ -22,7 +22,7 @@ export function Navigation() {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-br from-primary to-accent">
             <Heart className="h-6 w-6 text-white" />
           </div>
-          <span className="text-xl font-semibold text-foreground">AfriCare Medical</span>
+          <span className="text-xl font-semibold text-foreground">Services6 Medical</span>
         </div>
 
         {/* Desktop Navigation */}

@@ -35,7 +35,7 @@ export function WhyChooseUs() {
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl text-balance mb-6">
-              Why Choose AfriCare Medical?
+              Why Choose Services6 Medical?
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8 text-pretty">
               We bridge the gap between African patients and South Africa&apos;s
