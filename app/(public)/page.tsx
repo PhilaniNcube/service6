@@ -1,8 +1,17 @@
-import React from 'react'
+
+import { Hero } from './_components/hero'
+import { Services } from './_components/services'
+import { HowItWorks } from './_components/how-it-works'
+import { WhyChooseUs } from './_components/why-choose-us'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div>
+        <Hero />
+        <Services />
+        <HowItWorks />
+        <WhyChooseUs />
+    </div>
   )
 }
 
