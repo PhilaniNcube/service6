@@ -1,15 +1,38 @@
 "use client";
 
-import type { User } from '@/drizzle/tables'
-import React, { useActionState, useEffect, useRef } from 'react'
-import { addMedicalBackground, type AddMedicalBackgroundState } from '@/dal/actions/users'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Loader2 } from 'lucide-react'
+import type { User } from "@/drizzle/tables";
+import React, { startTransition, useActionState, useEffect } from "react";
+import {
+  addMedicalBackground,
+  type AddMedicalBackgroundState,
+} from "@/dal/actions/users";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+  FieldContent,
+} from "@/components/ui/field";
 
-const AddMedicalHistory = ({profile}: {profile: User}) => {
+// Form validation schema
+const formSchema = z.object({
+  clerk_id: z.string().min(1, "Clerk ID is required"),
+  notes: z
+    .string()
+    .min(10, "Notes must be at least 10 characters")
+    .max(1000, "Notes must not exceed 1000 characters"),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
+const AddMedicalHistory = ({ profile }: { profile: User }) => {
   const initialState: AddMedicalBackgroundState = {
     success: false,
     message: "",
@@ -20,39 +43,71 @@ const AddMedicalHistory = ({profile}: {profile: User}) => {
     initialState
   );
 
-  const formRef = useRef<HTMLFormElement>(null);
+  // Initialize react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setError,
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      clerk_id: profile.clerk_id,
+      notes: "",
+    },
+  });
 
   // Reset form on successful submission
   useEffect(() => {
     if (state.success) {
-      formRef.current?.reset();
+      reset();
     }
-  }, [state.success]);
+  }, [state.success, reset]);
+
+  // Sync server-side errors with react-hook-form
+  useEffect(() => {
+    if (state.errors?.notes) {
+      setError("notes", {
+        type: "server",
+        message: state.errors.notes[0],
+      });
+    }
+  }, [state.errors, setError]);
+
+  // Handle form submission
+  const onSubmit = handleSubmit((data) => {
+    const formData = new FormData();
+    formData.append("clerk_id", data.clerk_id);
+    formData.append("notes", data.notes);
+    startTransition(() => {
+      formAction(formData);
+    });
+  });
 
   return (
     <div>
-      <form ref={formRef} action={formAction} className="space-y-6">
+      <form onSubmit={onSubmit} className="space-y-6">
         {/* Hidden field for clerk_id */}
-        <input type="hidden" name="clerk_id" value={profile.clerk_id} />
+        <input type="hidden" {...register("clerk_id")} />
 
         {/* Notes field */}
-        <div className="space-y-2">
-          <Label htmlFor="notes">Medical Notes *</Label>
-          <Textarea
-            id="notes"
-            name="notes"
-            placeholder="Enter detailed medical history notes..."
-            rows={8}
-            disabled={isPending}
-            className={state.errors?.notes ? "border-red-500" : ""}
-          />
-          {state.errors?.notes && (
-            <p className="text-sm text-red-500">{state.errors.notes[0]}</p>
-          )}
-          <p className="text-sm text-muted-foreground">
-            Minimum 10 characters, maximum 1000 characters
-          </p>
-        </div>
+        <Field>
+          <FieldLabel htmlFor="notes">Medical Notes *</FieldLabel>
+          <FieldContent>
+            <Textarea
+              id="notes"
+              placeholder="Enter detailed medical history notes..."
+              rows={8}
+              disabled={isPending}
+              {...register("notes")}
+            />
+            <FieldDescription>
+              Minimum 10 characters, maximum 1000 characters
+            </FieldDescription>
+            <FieldError errors={[errors.notes]} />
+          </FieldContent>
+        </Field>
 
         {/* Status messages */}
         {state.message && (
@@ -74,7 +129,7 @@ const AddMedicalHistory = ({profile}: {profile: User}) => {
         </Button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AddMedicalHistory
+export default AddMedicalHistory;
