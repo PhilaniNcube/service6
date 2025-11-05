@@ -1,4 +1,3 @@
-
 import { getCurrentUser } from "@/dal";
 
 import React, { Suspense } from "react";
@@ -7,6 +6,8 @@ import { Separator } from "@/components/ui/separator";
 import MedicalHistorySummary from "./medical-history-summary";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import AddDesiredProcedure from "./add-desired-procedure";
+import Procedures from "./procedures";
 
 const MedicalHistoryComponent = async () => {
   const profile = await getCurrentUser();
@@ -24,13 +25,15 @@ const MedicalHistoryComponent = async () => {
             View and manage your medical history records
           </p>
         </div>
-     
       </div>
-      
+
       <Separator />
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
         <Suspense fallback={<LoadingSkeleton />}>
           <MedicalHistorySummary profile={profile} />
+        </Suspense>
+        <Suspense fallback={<LoadingSkeleton />}>
+          <Procedures />
         </Suspense>
       </div>
     </div>
