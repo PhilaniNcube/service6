@@ -1,8 +1,8 @@
 import { allergies } from "@/drizzle/tables";
-import { getCurrentUser } from "./users";
 import db from "@/drizzle/client";
 import { eq } from "drizzle-orm";
 import { cacheTag } from "next/cache";
+import { getCurrentUser } from "./users";
 
 export async function getUserAllergies() {
   "use cache: private";
@@ -16,7 +16,7 @@ export async function getUserAllergies() {
     .where(eq(allergies.user_id, user.id));
 
   cacheTag(`allergies-${user.id}`, "max");
-  
+
   return allergiesList;
 }
 

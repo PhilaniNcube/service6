@@ -1,4 +1,4 @@
-import { getProcedures, getUserProcedures } from "@/dal/procedures";
+import { getProcedures, getUserProcedures } from "@/dal/queries/procedures";
 import React from "react";
 import AddDesiredProcedure from "./add-desired-procedure";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

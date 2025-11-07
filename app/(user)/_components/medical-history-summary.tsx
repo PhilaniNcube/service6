@@ -1,4 +1,4 @@
-import { getMedicalHistorySummaryByClerkId } from "@/dal/medical-history";
+import { getMedicalHistorySummaryByClerkId } from "@/dal/queries/medical-history";
 import React from "react";
 import {
   Card,
@@ -107,7 +107,7 @@ const MedicalHistorySummary = async ({ profile }: { profile: User }) => {
         </div>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="space-y-6 max-h-[300px] overflow-y-scroll">
+        <ScrollArea className="space-y-6 overflow-y-scroll">
           {medicalHistory.map((entry, index) => (
             <div key={entry.id}>
               <div className="space-y-3">

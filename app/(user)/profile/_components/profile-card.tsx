@@ -7,11 +7,11 @@ import {
 } from "@/components/ui/card";
 import { ProfileEditDialog } from "./profile-edit-dialog";
 import { Label } from "@/components/ui/label";
-import { getCurrentUser } from "@/dal";
 import { redirect } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, User, Users, Heart } from "lucide-react";
+import { getCurrentUser } from "@/dal/queries/users";
 
 const ProfileCard = async () => {
 

@@ -4,3 +4,8 @@ export const addAllergySchema = z.object({
   allergy: z.string().min(1, "Allergy name is required"),
   clerkId: z.string().min(1, "Clerk ID is required"),
 });
+
+export const pastSurgeriesSchema = z.object({
+  notes: z.string(),
+  clerkId: z.string().min(1, "Clerk ID is required"),
+});

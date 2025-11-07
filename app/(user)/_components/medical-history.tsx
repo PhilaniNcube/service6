@@ -1,14 +1,15 @@
-import { getCurrentUser } from "@/dal";
 
-import React, { Suspense } from "react";
+
+import { Suspense } from "react";
 
 import { Separator } from "@/components/ui/separator";
 import MedicalHistorySummary from "./medical-history-summary";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import AddDesiredProcedure from "./add-desired-procedure";
 import Procedures from "./procedures";
 import Allergies from "./allergies";
+import PastSurgeries from "./past-surgeries";
+import { getCurrentUser } from "@/dal/queries/users";
 
 const MedicalHistoryComponent = async () => {
   const profile = await getCurrentUser();
@@ -29,7 +30,7 @@ const MedicalHistoryComponent = async () => {
       </div>
 
       <Separator />
-      <div className="gap-6 grid grid-cols-1 lg:grid-cols-2">
+      <div className="gap-6 grid grid-cols-1 md:grid-cols-2">
         <Suspense fallback={<LoadingSkeleton />}>
           <MedicalHistorySummary profile={profile} />
         </Suspense>
@@ -38,6 +39,9 @@ const MedicalHistoryComponent = async () => {
         </Suspense>
         <Suspense fallback={<LoadingSkeleton />}>
           <Allergies />
+        </Suspense>
+        <Suspense fallback={<LoadingSkeleton />}>
+          <PastSurgeries />
         </Suspense>
       </div>
     </div>

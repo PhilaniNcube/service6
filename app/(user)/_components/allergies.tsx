@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getUserAllergies } from "@/dal/allergies";
 import React from "react";
 import AddAllergyDialog from "./add-allergy-dialog";
 import AllergyItem from "./allergy-item";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { getUserAllergies } from "@/dal/queries/allergies";
 
 const Allergies = async () => {
   const allergies = await getUserAllergies();
