@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Procedures from "./procedures";
 import Allergies from "./allergies";
 import PastSurgeries from "./past-surgeries";
+import Medications from "./medications";
 import { getCurrentUser } from "@/dal/queries/users";
 
 const MedicalHistoryComponent = async () => {
@@ -42,6 +43,9 @@ const MedicalHistoryComponent = async () => {
         </Suspense>
         <Suspense fallback={<LoadingSkeleton />}>
           <PastSurgeries />
+        </Suspense>
+        <Suspense fallback={<LoadingSkeleton />}>
+          <Medications />
         </Suspense>
       </div>
     </div>
