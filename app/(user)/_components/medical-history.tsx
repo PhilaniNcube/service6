@@ -29,7 +29,7 @@ const MedicalHistoryComponent = async () => {
       </div>
 
       <Separator />
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+      <div className="gap-6 grid grid-cols-1 lg:grid-cols-2">
         <Suspense fallback={<LoadingSkeleton />}>
           <MedicalHistorySummary profile={profile} />
         </Suspense>
