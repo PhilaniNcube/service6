@@ -1,8 +1,7 @@
 import "server-only";
 import db from "@/drizzle/client";
-import { users, procedures, desired_procedures } from "@/drizzle/tables";
+import {  procedures, desired_procedures } from "@/drizzle/tables";
 import { eq } from "drizzle-orm";
-import { cache } from "react";
 import { currentUser } from "@clerk/nextjs/server";
 import { cacheTag } from "next/cache";
 

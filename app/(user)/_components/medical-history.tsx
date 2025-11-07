@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import AddDesiredProcedure from "./add-desired-procedure";
 import Procedures from "./procedures";
+import Allergies from "./allergies";
 
 const MedicalHistoryComponent = async () => {
   const profile = await getCurrentUser();
@@ -34,6 +35,9 @@ const MedicalHistoryComponent = async () => {
         </Suspense>
         <Suspense fallback={<LoadingSkeleton />}>
           <Procedures />
+        </Suspense>
+        <Suspense fallback={<LoadingSkeleton />}>
+          <Allergies />
         </Suspense>
       </div>
     </div>
