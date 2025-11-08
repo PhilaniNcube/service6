@@ -49,7 +49,7 @@ const ClerkUsers = async () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Clerk Users</CardTitle>
+        <CardTitle> Users</CardTitle>
         <CardDescription>
           All users registered in the system ({allClerkUsers.data.length} total)
         </CardDescription>

@@ -176,6 +176,26 @@ export const medications = sqliteTable("medications", {
 export type Medication = typeof medications.$inferSelect;
 export type NewMedication = typeof medications.$inferInsert;
 
+// create a new table for medication linked to medical_background were there is a one to many relationship 
+export const medical_background_medications = sqliteTable("medical_background_medications", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  user_id: integer("user_id")
+    .references(() => users.id)
+    .notNull(),
+  clerk_id: text("clerk_id")
+    .references(() => users.clerk_id)
+    .notNull(),  
+  medical_background_id: integer("medical_background_id")
+    .references(() => medical_background.id)
+    .notNull(),
+  medication_id: integer("medication_id")
+    .references(() => medications.id)
+    .notNull(),
+});
+
+export type MedicalBackgroundMedication = typeof medical_background_medications.$inferSelect;
+export type NewMedicalBackgroundMedication = typeof medical_background_medications.$inferInsert;
+
 // create a table for other medical conditions which should then be linked to medical_background
 // this is supposed to be a list of the following conditions:
 //     • Other Medical Conditions:
@@ -241,7 +261,7 @@ export const referring_physicians = sqliteTable("referring_physicians", {
 export type ReferringPhysician = typeof referring_physicians.$inferSelect;
 export type NewReferringPhysician = typeof referring_physicians.$inferInsert;
 
-const patient_consent = ["written", "verbal", "pending", "emergency"] as const;
+export const patient_consent = ["written", "verbal", "pending", "emergency"] as const;
 
 export type PatientConsent = (typeof patient_consent)[number];
 
@@ -269,11 +289,11 @@ export const patients = sqliteTable("patients", {
 export type Patient = typeof patients.$inferSelect;
 export type NewPatient = typeof patients.$inferInsert;
 
-const complexity = ["straightforward", "moderate", "complex", "highly complex"];
+export const complexity = ["straightforward", "moderate", "complex", "highly complex"];
 
 export type CaseComplexity = (typeof complexity)[number];
 
-const referral_reason = [
+export const referral_reason = [
   "procedure not available locally",
   "specialist expertise required",
   "cost considerations",

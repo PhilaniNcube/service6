@@ -20,7 +20,7 @@ const ClerkUsersSkeleton = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Clerk Users</CardTitle>
+        <CardTitle> Users</CardTitle>
         <CardDescription>
           <Skeleton className="h-4 w-48" />
         </CardDescription>
