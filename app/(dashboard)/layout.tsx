@@ -14,11 +14,9 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
       }
     >
       <AppSidebar variant="inset" />
-       <SidebarInset>
-          <SiteHeader />
-        <main className="p-3">
-          {children}
-        </main> 
+      <SidebarInset>
+        <SiteHeader />
+        <main className="p-3">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

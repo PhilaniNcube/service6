@@ -9,7 +9,10 @@ export function AuthButtons() {
   if (isSignedIn) {
     return (
       <div className="flex items-center gap-2">
-        <UserButton afterSignOutUrl="/" />
+        
+        <UserButton 
+        userProfileUrl="/profile"
+        />
       </div>
     );
   }

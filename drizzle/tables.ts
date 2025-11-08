@@ -58,6 +58,8 @@ export const treatment_timelines = [
   "researching",
 ] as const;
 
+export const genders = ["male", "female", "other"] as const;
+
 export type TreatmentTimeline = (typeof treatment_timelines)[number];
 
 export const diagnosis_statuses = ["yes", "no", "awaiting"] as const;
@@ -195,3 +197,116 @@ export const medical_conditions = sqliteTable("medical_conditions", {
 
 export type MedicalCondition = typeof medical_conditions.$inferSelect;
 export type NewMedicalCondition = typeof medical_conditions.$inferInsert;
+
+// create a speciality table
+export const specialties = sqliteTable("specialties", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+});
+
+export type Specialty = typeof specialties.$inferSelect;
+export type NewSpecialty = typeof specialties.$inferInsert;
+
+// add a table for the the refering physicians
+export const referring_physicians = sqliteTable("referring_physicians", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  user_id: integer("user_id")
+    .references(() => users.id)
+    .notNull(),
+  clerk_id: text("clerk_id")
+    .references(() => users.clerk_id)
+    .notNull(),
+  full_name: text("full_name").notNull(),
+  qualification: text("qualification").notNull(),
+  specialty: integer("specialty")
+    .references(() => specialties.id)
+    .notNull(),
+  medical_practice: text("medical_practice").notNull(),
+  medical_council_number: text("medical_council_number").notNull(),
+  country_of_practice: text("country_of_practice").notNull(),
+  phone: text("phone").notNull(),
+  email: text("email").notNull(),
+  preferred_contact_method: text(
+    "preferred_contact_method"
+  ).$type<ContactMethod>(),
+  alternative_contact_number: text("alternative_contact_number"),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+});
+
+export type ReferringPhysician = typeof referring_physicians.$inferSelect;
+export type NewReferringPhysician = typeof referring_physicians.$inferInsert;
+
+const patient_consent = ["written", "verbal", "pending", "emergency"] as const;
+
+export type PatientConsent = (typeof patient_consent)[number];
+
+export const patients = sqliteTable("patients", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  referring_physician_id: integer("referring_physician_id")
+    .references(() => referring_physicians.id)
+    .notNull(),
+  full_name: text("full_name").notNull(),
+  date_of_birth: integer("date_of_birth", { mode: "timestamp" }).notNull(),
+  gender: text("gender").$type<(typeof genders)[number]>(),
+  nationality: text("nationality").notNull(),
+  current_location: text("current_location").notNull(),
+  patient_consent:
+    text("patient_consent").$type<(typeof patient_consent)[number]>(),
+  patient_language: text("patient_language").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+});
+
+export type Patient = typeof patients.$inferSelect;
+export type NewPatient = typeof patients.$inferInsert;
+
+const complexity = ["straightforward", "moderate", "complex", "highly complex"];
+
+export type CaseComplexity = (typeof complexity)[number];
+
+const referral_reason = [
+  "procedure not available locally",
+  "specialist expertise required",
+  "cost considerations",
+  "reduced waiting times",
+  "patient preference",
+  "second opinion",
+  "complicated revision surgery",
+  "other",
+] as const;
+
+export const patient_cases = sqliteTable("patient_cases", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  patient_id: integer("patient_id")
+    .references(() => patients.id)
+    .notNull(),
+  diagnosis_name: text("diagnosis_name").notNull(),
+  icd_code: text("icd_code"),
+  secondary_diagnoses: text("secondary_diagnoses"),
+  case_complexity: text("case_complexity").$type<(typeof complexity)[number]>(),
+  referral_reason:
+    text("referral_reason").$type<(typeof referral_reason)[number]>(),
+  recommended_procedure: text("recommended_procedure"),
+  procedure_id: integer("procedure_id")
+    .references(() => procedures.id)
+    .notNull(),
+  preferred_timeline: text("preferred_timeline").$type<TreatmentTimeline>(),  
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+});
+
+export type PatientCase = typeof patient_cases.$inferSelect;
+export type NewPatientCase = typeof patient_cases.$inferInsert;
