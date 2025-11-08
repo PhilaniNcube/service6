@@ -5,6 +5,13 @@ import { users, type ContactMethod, medical_background } from "@/drizzle/tables"
 import { eq } from "drizzle-orm";
 import {  revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
+import { clerkClient } from "@clerk/nextjs/server";
+import type { Roles } from "@/types/global";
+import type {
+  UpdateUserState,
+  AddMedicalBackgroundState,
+  UpdateUserRoleState,
+} from "./types";
 
 // Validation schema for user update
 const updateUserSchema = z.object({
@@ -22,21 +29,6 @@ const updateUserSchema = z.object({
 });
 
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
-
-// State type for useActionState
-export type UpdateUserState = {
-  success: boolean;
-  message: string;
-  errors?: {
-    first_name?: string[];
-    last_name?: string[];
-    phone_number?: string[];
-    country?: string[];
-    preferred_contact_method?: string[];
-    next_of_kin_name?: string[];
-    next_of_kin_contact?: string[];
-  };
-};
 
 /**
  * Server action to update user profile
@@ -122,15 +114,6 @@ const addMedicalBackgroundSchema = z.object({
 
 export type AddMedicalBackgroundInput = z.infer<typeof addMedicalBackgroundSchema>;
 
-// State type for useActionState
-export type AddMedicalBackgroundState = {
-  success: boolean;
-  message: string;
-  errors?: {
-    notes?: string[];
-  };
-};
-
 /**
  * Server action to add medical background
  * @param prevState - Previous state from useActionState
@@ -200,6 +183,52 @@ export async function addMedicalBackground(
       success: false,
       message:
         "An error occurred while adding your medical history. Please try again.",
+    };
+  }
+}
+
+/**
+ * Server action to update user's Clerk role to doctor
+ * @param prevState - Previous state from useActionState
+ * @param formData - Form data from the client
+ * @returns State object with success status and message
+ */
+export async function updateUserRoleToDoctor(
+  prevState: UpdateUserRoleState,
+  formData: FormData
+): Promise<UpdateUserRoleState> {
+  try {
+    const clerk_id = formData.get("clerk_id") as string;
+
+    if (!clerk_id) {
+      return {
+        success: false,
+        message: "User ID is required",
+      };
+    }
+
+    // Update the user's public metadata in Clerk
+    const client = await clerkClient();
+    await client.users.updateUserMetadata(clerk_id, {
+      publicMetadata: {
+        role: "doctor" as Roles,
+      },
+    });
+
+    // Revalidate to update the UI
+    revalidateTag("profile", "max");
+    revalidatePath("/profile");
+
+    return {
+      success: true,
+      message: "Role updated to doctor successfully!",
+    };
+  } catch (error) {
+    console.error("Error updating user role:", error);
+    return {
+      success: false,
+      message:
+        "An error occurred while updating your role. Please try again.",
     };
   }
 }

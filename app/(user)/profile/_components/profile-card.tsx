@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, User, Users, Heart } from "lucide-react";
 import { getCurrentUser } from "@/dal/queries/users";
+import { UpdateRoleButton } from "./update-role-button";
 
 const ProfileCard = async () => {
 
@@ -56,7 +57,10 @@ const ProfileCard = async () => {
               Your personal information and contact details
             </CardDescription>
           </div>
-          <ProfileEditDialog user={user} />
+          <div className="flex flex-col sm:flex-row gap-2">
+            <UpdateRoleButton clerkId={user.clerk_id} />
+            <ProfileEditDialog user={user} />
+          </div>
         </div>
       </CardHeader>
 
