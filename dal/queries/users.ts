@@ -49,7 +49,9 @@ export async function getCurrentUser() {
  * @param clerkId - The Clerk user ID
  * @returns The user object or null if not found
  */
-export const getUserByClerkId = cache(async (clerkId: string) => {
+export const getUserByClerkId = async (clerkId: string) => {
+
+
   try {
     const [user] = await db
       .select()
@@ -62,7 +64,7 @@ export const getUserByClerkId = cache(async (clerkId: string) => {
     console.error("Error fetching user by clerk_id:", error);
     throw new Error("Failed to fetch user data");
   }
-});
+};
 
 /**
  * Get a user by their email address

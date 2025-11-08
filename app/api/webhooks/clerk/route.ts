@@ -1,6 +1,6 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
-import { WebhookEvent } from "@clerk/nextjs/server";
+import { WebhookEvent, clerkClient } from "@clerk/nextjs/server";
 import db from "@/drizzle/client";
 import { users } from "@/drizzle/tables";
 import { eq } from "drizzle-orm";
@@ -114,6 +114,16 @@ export async function POST(req: Request) {
 
       console.log("✅ User created successfully:", result);
       console.log(`✅ User created in DB: ${id}`);
+
+      // Set default role to 'client' in Clerk public metadata
+      const client = await clerkClient();
+      await client.users.updateUserMetadata(id, {
+        publicMetadata: {
+          role: "client",
+        },
+      });
+
+      console.log("✅ User role set to 'client' in public metadata");
     } catch (error) {
       console.error("❌ Error creating user:", error);
       console.error("Error details:", JSON.stringify(error, null, 2));

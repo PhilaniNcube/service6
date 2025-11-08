@@ -1,20 +1,12 @@
-import { checkRole } from '@/lib/roles'
-import { redirect } from 'next/navigation'
-import React from 'react'
-import { DashboardStats } from './_components/dashboard-stats'
-import { RecentPatientsTable } from './_components/recent-patients-table'
-import { ProcedureRequests } from './_components/procedure-requests'
-import { MedicalOverview } from './_components/medical-overview'
+import { checkRole } from "@/lib/roles";
+import { redirect } from "next/navigation";
+import React, { Suspense } from "react";
+import { DashboardStats } from "./_components/dashboard-stats";
+import { RecentPatientsTable } from "./_components/recent-patients-table";
+import { ProcedureRequests } from "./_components/procedure-requests";
+import { MedicalOverview } from "./_components/medical-overview";
 
 const DashboardHome = async () => {
-
-    const isAdmin = await checkRole('admin')
-
-  if (!isAdmin) {
-    redirect('/')
-  }
-
-
   return (
     <div className="flex flex-col gap-6 p-4 lg:p-6">
       <div>
@@ -25,18 +17,23 @@ const DashboardHome = async () => {
       </div>
 
       {/* Stats Overview */}
-      <DashboardStats />
+      {/* <DashboardStats /> */}
 
-      {/* Recent Patients Table */}
-      <RecentPatientsTable />
+      <Suspense fallback={<div>Loading recent patients...</div>}>
+        <RecentPatientsTable />
+      </Suspense>
 
       {/* Procedure Requests */}
-      <ProcedureRequests />
+      <Suspense fallback={<div>Loading procedure requests...</div>}>
+        <ProcedureRequests />
+      </Suspense>
 
       {/* Medical Overview */}
-      <MedicalOverview />
+      <Suspense fallback={<div>Loading medical overview...</div>}>
+        <MedicalOverview />
+      </Suspense>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardHome
+export default DashboardHome;

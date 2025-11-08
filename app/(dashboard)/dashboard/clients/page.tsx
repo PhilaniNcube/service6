@@ -1,10 +1,13 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ClerkUsers from "./_components/clerk-users";
+import ClerkUsersSkeleton from "./_components/clerk-users-skeleton";
 
 const ClientsPage = async () => {
   return (
     <div>
-      <ClerkUsers />
+      <Suspense fallback={<ClerkUsersSkeleton />}>
+        <ClerkUsers />
+      </Suspense>
     </div>
   );
 };

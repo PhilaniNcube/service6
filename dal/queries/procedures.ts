@@ -4,7 +4,7 @@ import { procedures, desired_procedures, users } from "@/drizzle/tables";
 import { desc, eq } from "drizzle-orm";
 import { currentUser } from "@clerk/nextjs/server";
 import { cacheTag } from "next/cache";
-import { ca } from "date-fns/locale";
+
 
 export async function getProcedures() {
   "use cache: private";
@@ -32,6 +32,19 @@ export async function getUserProcedures() {
     .from(desired_procedures)
     .innerJoin(procedures, eq(desired_procedures.procedure_id, procedures.id))
     .where(eq(desired_procedures.clerk_id, user.id));
+  return userProcedures;
+}
+
+export async function getUserProceduresByClerkId(clerkId: string) {
+  const userProcedures = await db
+    .select({
+      desired_procedures,
+      procedure_name: procedures.name,
+      procedure_description: procedures.description,
+    })
+    .from(desired_procedures)
+    .innerJoin(procedures, eq(desired_procedures.procedure_id, procedures.id))
+    .where(eq(desired_procedures.clerk_id, clerkId));
   return userProcedures;
 }
 
