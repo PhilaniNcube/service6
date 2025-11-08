@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import ClerkUsers from "./_components/clerk-users";
 
 const ClientsPage = async () => {
   return (
-    <div>ClientsPage</div>
-  )
-}
+    <div>
+      <ClerkUsers />
+    </div>
+  );
+};
 
-export default ClientsPage
+export default ClientsPage;

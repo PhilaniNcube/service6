@@ -13,11 +13,14 @@ import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, User, Users, Heart } from "lucide-react";
 import { getCurrentUser } from "@/dal/queries/users";
 import { UpdateRoleButton } from "./update-role-button";
+import { getUserRole } from "@/lib/roles";
+import Link from "next/link";
 
 const ProfileCard = async () => {
-
   // Get the current authenticated user from the DAL with caching
   const user = await getCurrentUser();
+
+  const role = await getUserRole();
 
   if (!user) {
     redirect("/");
@@ -46,19 +49,41 @@ const ProfileCard = async () => {
               <CardTitle className="text-3xl">
                 {user.first_name} {user.last_name}
               </CardTitle>
-              <Badge
-                variant="secondary"
-                className="bg-linear-to-r from-primary/10 to-accent/10 text-primary border-primary/20"
-              >
-                Patient
-              </Badge>
+              {role === "doctor" && (
+                <Badge
+                  variant="secondary"
+                  className="bg-linear-to-r from-primary/10 to-accent/10 text-primary border-primary/20"
+                >
+                  Doctor
+                </Badge>
+              )}
+              {role === "client" && (
+                <Badge
+                  variant="secondary"
+                  className="bg-linear-to-r from-primary/10 to-accent/10 text-primary border-primary/20"
+                >
+                  Patient
+                </Badge>
+              )}
+              {role === "admin" && (
+                <Link href="/dashboard">
+                  <Badge
+                    variant="secondary"
+                    className="bg-linear-to-r from-primary/10 to-accent/10 text-primary border-primary/20"
+                  >
+                    Admin
+                  </Badge>
+                </Link>
+              )}
             </div>
             <CardDescription className="text-base">
               Your personal information and contact details
             </CardDescription>
           </div>
           <div className="flex flex-col sm:flex-row gap-2">
-            <UpdateRoleButton clerkId={user.clerk_id} />
+            {role !== "doctor" && role !== "admin" && (
+              <UpdateRoleButton clerkId={user.clerk_id} />
+            )}
             <ProfileEditDialog user={user} />
           </div>
         </div>

@@ -5,10 +5,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { getRecentProcedureRequests } from "@/dal/queries/procedures";
 
 // Placeholder data matching the desired_procedures table schema
 const procedureRequests = [
@@ -77,30 +84,39 @@ const procedureRequests = [
     notes: "Post-pregnancy consideration",
     createdAt: new Date("2024-11-05"),
   },
-]
+];
 
-const getTimelineColor = (timeline: string): "default" | "secondary" | "destructive" | "outline" => {
-  const colors: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+const getTimelineColor = (
+  timeline: string
+): "default" | "secondary" | "destructive" | "outline" => {
+  const colors: Record<
+    string,
+    "default" | "secondary" | "destructive" | "outline"
+  > = {
     immediate: "destructive",
     "within a month": "default",
     "within 3 months": "secondary",
     "within 6 months": "outline",
     "not sure": "outline",
     researching: "outline",
-  }
-  return colors[timeline] || "outline"
-}
+  };
+  return colors[timeline] || "outline";
+};
 
-const getDiagnosisColor = (status: string): "default" | "secondary" | "outline" => {
+const getDiagnosisColor = (
+  status: string
+): "default" | "secondary" | "outline" => {
   const colors: Record<string, "default" | "secondary" | "outline"> = {
     yes: "default",
     no: "secondary",
     awaiting: "outline",
-  }
-  return colors[status] || "outline"
-}
+  };
+  return colors[status] || "outline";
+};
 
-export function ProcedureRequests() {
+export async function ProcedureRequests() {
+  const recentRequests = await getRecentProcedureRequests();
+
   return (
     <Card>
       <CardHeader>
@@ -122,40 +138,50 @@ export function ProcedureRequests() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {procedureRequests.map((request) => (
-              <TableRow key={request.id}>
+            {recentRequests.map((request) => (
+              <TableRow key={request.desired_procedures.id}>
                 <TableCell className="font-medium">
-                  {request.patient_name}
+                  {request.patient_name} {request.patient_last_name}
                 </TableCell>
                 <TableCell>
                   <div className="font-medium">{request.procedure_name}</div>
-                  {request.notes && (
-                    <div className="text-xs text-muted-foreground line-clamp-1 max-w-xs">
-                      {request.notes}
-                    </div>
-                  )}
+                  <div className="text-xs text-muted-foreground line-clamp-1 max-w-xs">
+                    {request.desired_procedures.notes || "No notes provided"}
+                  </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={getTimelineColor(request.treatment_timeline)}>
-                    {request.treatment_timeline}
+                  <Badge
+                    className="capitalize"
+                    variant={getTimelineColor(
+                      request.desired_procedures.treatment_timeline ||
+                        "not sure"
+                    )}
+                  >
+                    {request.desired_procedures.treatment_timeline}
                   </Badge>
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Progress 
-                      value={request.pain_level * 10} 
+                    <Progress
+                      value={(request.desired_procedures.pain_level || 0) * 10}
                       className="h-2 w-16"
                     />
-                    <span className="text-sm font-medium">{request.pain_level}/10</span>
+                    <span className="text-sm font-medium">
+                      {request.desired_procedures.pain_level || 0}/10
+                    </span>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={getDiagnosisColor(request.diagnosis_status)}>
-                    {request.diagnosis_status}
+                  <Badge
+                    variant={getDiagnosisColor(
+                      request.desired_procedures.diagnosis_status || "awaiting"
+                    )}
+                  >
+                    {request.desired_procedures.diagnosis_status}
                   </Badge>
                 </TableCell>
                 <TableCell className="text-sm text-muted-foreground">
-                  {request.createdAt.toLocaleDateString()}
+                  {request.desired_procedures.createdAt.toLocaleDateString()}
                 </TableCell>
               </TableRow>
             ))}
@@ -163,5 +189,5 @@ export function ProcedureRequests() {
         </Table>
       </CardContent>
     </Card>
-  )
+  );
 }

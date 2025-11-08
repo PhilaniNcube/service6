@@ -1,9 +1,9 @@
 import "server-only";
 import db from "@/drizzle/client";
 import { users } from "@/drizzle/tables";
-import { eq } from "drizzle-orm";
+import { eq, asc, desc } from "drizzle-orm";
 import { cache } from "react";
-import { currentUser } from "@clerk/nextjs/server";
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { cacheTag } from "next/cache";
 
 /**
@@ -20,7 +20,6 @@ export async function getCurrentUser() {
   "use cache: private";
   cacheTag("profile");
 
-
   try {
     const clerkUser = await currentUser();
 
@@ -34,9 +33,9 @@ export async function getCurrentUser() {
       .where(eq(users.clerk_id, clerkUser.id))
       .limit(1);
 
-      if (!user) {
-        return null;
-      }
+    if (!user) {
+      return null;
+    }
 
     return user;
   } catch (error) {
@@ -51,7 +50,6 @@ export async function getCurrentUser() {
  * @returns The user object or null if not found
  */
 export const getUserByClerkId = cache(async (clerkId: string) => {
-
   try {
     const [user] = await db
       .select()
@@ -92,7 +90,6 @@ export const getUserByEmail = cache(async (email: string) => {
  * @returns The user object or null if not found
  */
 export const getUserById = cache(async (id: number) => {
-
   try {
     const [user] = await db
       .select()
@@ -105,4 +102,41 @@ export const getUserById = cache(async (id: number) => {
     console.error("Error fetching user by id:", error);
     throw new Error("Failed to fetch user data");
   }
+});
+
+// fetch all users for the admin dashboard
+export const getAllUsers = cache(async () => {
+  try {
+    const allUsers = await db
+      .select()
+      .from(users)
+      .orderBy(asc(users.createdAt));
+    return allUsers;
+  } catch (error) {
+    console.error("Error fetching all users:", error);
+    throw new Error("Failed to fetch user data");
+  }
+});
+
+// fetch the most recent users for the admin dashboard
+export const getRecentUsers = cache(async (limit: number = 5) => {
+  try {
+    const recentUsers = await db
+      .select()
+      .from(users)
+      .orderBy(desc(users.createdAt))
+      .limit(limit);
+    return recentUsers;
+  } catch (error) {
+    console.error("Error fetching recent users:", error);
+    throw new Error("Failed to fetch user data");
+  }
+});
+
+
+// fetch all users from clerk including their public metadata
+export const getAllClerkUsers = cache(async () => {
+  const clerk = await clerkClient();
+  const allClerkUsers = await clerk.users.getUserList({ limit: 100 });
+  return allClerkUsers;
 });
