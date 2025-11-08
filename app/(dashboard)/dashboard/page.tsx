@@ -1,9 +1,9 @@
-import { checkRole } from "@/lib/roles";
-import { redirect } from "next/navigation";
-import React, { Suspense } from "react";
-import { DashboardStats } from "./_components/dashboard-stats";
+
+import  { Suspense } from "react";
 import { RecentPatientsTable } from "./_components/recent-patients-table";
+import { RecentPatientsTableFallback } from "./_components/recent-patients-table-fallback";
 import { ProcedureRequests } from "./_components/procedure-requests";
+import { ProcedureRequestsFallback } from "./_components/procedure-requests-fallback";
 import { MedicalOverview } from "./_components/medical-overview";
 
 const DashboardHome = async () => {
@@ -19,12 +19,12 @@ const DashboardHome = async () => {
       {/* Stats Overview */}
       {/* <DashboardStats /> */}
 
-      <Suspense fallback={<div>Loading recent patients...</div>}>
+      <Suspense fallback={<RecentPatientsTableFallback />}>
         <RecentPatientsTable />
       </Suspense>
 
       {/* Procedure Requests */}
-      <Suspense fallback={<div>Loading procedure requests...</div>}>
+      <Suspense fallback={<ProcedureRequestsFallback />}>
         <ProcedureRequests />
       </Suspense>
 
