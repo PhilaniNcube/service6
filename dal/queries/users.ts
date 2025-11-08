@@ -50,8 +50,6 @@ export async function getCurrentUser() {
  * @returns The user object or null if not found
  */
 export const getUserByClerkId = async (clerkId: string) => {
-
-
   try {
     const [user] = await db
       .select()
@@ -135,10 +133,43 @@ export const getRecentUsers = cache(async (limit: number = 5) => {
   }
 });
 
-
 // fetch all users from clerk including their public metadata
 export const getAllClerkUsers = cache(async () => {
   const clerk = await clerkClient();
   const allClerkUsers = await clerk.users.getUserList({ limit: 100 });
   return allClerkUsers;
+});
+
+export const getDoctorUsersfromClerk = cache(async () => {
+  const clerk = await clerkClient();
+
+  // Fetch all users - Clerk doesn't support filtering by public_metadata in the query parameter
+  const allUsers = await clerk.users.getUserList({
+    limit: 100,
+  });
+
+  // Filter users where publicMetadata.role === 'doctor'
+  const doctorUsers = allUsers.data.filter((user) => {
+    return (user.publicMetadata as { role?: string })?.role === "doctor";
+  });
+
+  console.log(JSON.stringify(doctorUsers, null, 2));
+
+  // Return in the same format as getUserList (with data property)
+  return {
+    data: doctorUsers,
+    totalCount: doctorUsers.length,
+  };
+});
+
+// get the data for the doctor overview component
+export const getDoctorUserByIdFromClerk = cache(async (clerkId: string) => {
+  const clerk = await clerkClient();
+  try {
+    const doctorUser = await clerk.users.getUser(clerkId);
+    return doctorUser;
+  } catch (error) {
+    console.error("Error fetching doctor user by clerk ID:", error);
+    throw new Error("Failed to fetch doctor user data");
+  }
 });

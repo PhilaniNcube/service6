@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { Suspense } from "react";
+import DoctorsList from "./_components/doctors-list";
 
-const DoctorsPage = () => {
+const DoctorsPage = async () => {
   return (
-    <div>DoctorsPage</div>
-  )
-}
+    <div>
+      <Suspense fallback={<div>Loading doctors...</div>}>
+        <DoctorsList />
+      </Suspense>
+    </div>
+  );
+};
 
-export default DoctorsPage
+export default DoctorsPage;

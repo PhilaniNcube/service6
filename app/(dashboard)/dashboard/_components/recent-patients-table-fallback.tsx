@@ -49,7 +49,7 @@ export function RecentPatientsTableFallback() {
                   <Skeleton className="h-4 w-[120px]" />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className="h-6 w-[80px] rounded-full" />
+                  <Skeleton className="h-6 w-20 rounded-full" />
                 </TableCell>
                 <TableCell>
                   <Skeleton className="h-6 w-[90px] rounded-full" />
