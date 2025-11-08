@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Stethoscope, Clock, Activity, CheckCircle2 } from "lucide-react";
 import { format } from "date-fns";
+import { cacheLife } from "next/cache";
 
 interface ClientDesiredProceduresProps {
   params: Promise<{ id: string }>;
@@ -25,6 +26,7 @@ const diagnosisStatusVariants = {
 
 export async function ClientDesiredProcedures({ params }: ClientDesiredProceduresProps) {
   "use cache";
+  cacheLife("minutes")
   const resolvedParams = await params;
   const procedures = await getUserProceduresByClerkId(resolvedParams.id);
 

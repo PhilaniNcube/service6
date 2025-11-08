@@ -4,11 +4,12 @@ import { medical_background } from "@/drizzle/tables";
 import { eq } from "drizzle-orm";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { cacheTag } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
+
 
 export async function getMedicalHistorySummaryByClerkId(clerkId: string) {
   "use cache: private";
-
+  cacheLife("minutes");
   cacheTag(`medical_history-${clerkId}`);
 
   const user = await currentUser();

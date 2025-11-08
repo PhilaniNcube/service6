@@ -3,12 +3,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, User, Calendar } from "lucide-react";
 import { format } from "date-fns";
+import { cacheLife } from "next/cache";
 
 interface ClientOverviewProps {
   params: Promise<{ id: string }>;
 }
 
 export async function ClientOverview({ params }: ClientOverviewProps) {
+  "use cache";
+  cacheLife("minutes")
   const resolvedParams = await params;
   const user = await getUserByClerkId(resolvedParams.id);
 

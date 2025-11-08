@@ -7,12 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertCircle, Pill, Scissors, FileText } from "lucide-react";
 import { format } from "date-fns";
+import { cacheLife } from "next/cache";
 
 interface ClientMedicalHistoryProps {
   params: Promise<{ id: string }>;
 }
 
 export async function ClientMedicalHistory({ params }: ClientMedicalHistoryProps) {
+ 
 
   const resolvedParams = await params;
   const [allergies, medications, pastSurgeries, medicalBackground] = await Promise.all([
