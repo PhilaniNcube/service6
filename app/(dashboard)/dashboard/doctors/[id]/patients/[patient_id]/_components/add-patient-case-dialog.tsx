@@ -267,7 +267,7 @@ export function AddPatientCaseDialog({
                 onValueChange={(value) => form.setValue("procedure_id", value)}
                 disabled={pending}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a procedure" />
                 </SelectTrigger>
                 <SelectContent>
@@ -295,15 +295,15 @@ export function AddPatientCaseDialog({
           <Field>
             <FieldLabel>Or create a new procedure</FieldLabel>
             <FieldContent>
-              <button
+              <Button
                 type="button"
-                className="text-xs underline underline-offset-4 text-muted-foreground mb-2"
+                className="text-xs underline underline-offset-4 mb-2"
                 onClick={() => setIsAddingProcedure((v) => !v)}
               >
                 {isAddingProcedure
                   ? "Hide new procedure form"
                   : "Add a new procedure"}
-              </button>
+              </Button>
 
               {isAddingProcedure && (
                 <form
@@ -381,7 +381,7 @@ export function AddPatientCaseDialog({
                 }
                 disabled={pending}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select timeline" />
                 </SelectTrigger>
                 <SelectContent>
