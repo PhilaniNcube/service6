@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import DoctorOverview from "./_components/doctor-overview";
 import DoctorDetails from "./_components/doctor-details";
+import ReferringPhysicianCard from "./_components/referring-physician-card";
 import {
   Card,
   CardContent,
@@ -104,12 +105,17 @@ const DoctorLoadingFallback = () => (
   </div>
 );
 
-const DoctorPage = ({ params }: { params: Promise<{ id: string }> }) => {
+const DoctorPage = ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
   return (
-    <div>
+    <div className="space-y-6">
       <Suspense fallback={<DoctorLoadingFallback />}>
         <DoctorOverview params={params} />
         <DoctorDetails paramsPromise={params} />
+        <ReferringPhysicianCard params={params} />
       </Suspense>
     </div>
   );

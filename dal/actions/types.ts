@@ -47,3 +47,22 @@ export type AddReferringPhysicianState = {
     alternative_contact_number?: string[];
   };
 };
+
+export type CreatePatientState = {
+  success: boolean;
+  message: string;
+  errors?: {
+    user_id?: string[];
+    referring_physician_id?: string[];
+    patient_consent?: string[];
+  };
+};
+
+export type AddPatientToReferringPhysicianState = {
+  success: boolean;
+  message: string;
+  errors?: {
+    patient_id?: string[];
+    referring_physician_id?: string[];
+  };
+};

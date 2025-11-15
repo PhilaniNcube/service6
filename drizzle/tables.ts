@@ -267,17 +267,12 @@ export type PatientConsent = (typeof patient_consent)[number];
 
 export const patients = sqliteTable("patients", {
   id: integer("id").primaryKey({ autoIncrement: true }),
+  user_id: integer("user_id").references(() => users.id).notNull(),
   referring_physician_id: integer("referring_physician_id")
     .references(() => referring_physicians.id)
     .notNull(),
-  full_name: text("full_name").notNull(),
-  date_of_birth: integer("date_of_birth", { mode: "timestamp" }).notNull(),
-  gender: text("gender").$type<(typeof genders)[number]>(),
-  nationality: text("nationality").notNull(),
-  current_location: text("current_location").notNull(),
   patient_consent:
     text("patient_consent").$type<(typeof patient_consent)[number]>(),
-  patient_language: text("patient_language").notNull(),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .$default(() => new Date()),

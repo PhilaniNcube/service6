@@ -27,3 +27,5 @@ export * from "./allergies";
 export * from "./medications";
 export * from "./past-surgeries";
 export * from "./specialties";
+export * from "./referrals";
+export * from "./patients";

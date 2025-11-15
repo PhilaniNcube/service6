@@ -48,16 +48,18 @@ const DoctorDetails = async ({
   }
 
   return (
-    <div className="mt-6 space-y-6">
-      <Card>
+    <div className="mt-6 grid gap-6 lg:grid-cols-3">
+      <Card className="lg:col-span-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <User className="h-5 w-5" /> Profile Details
           </CardTitle>
-          <CardDescription>Information synced from the medical CRM</CardDescription>
+          <CardDescription>
+            Information synced from the medical CRM
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <dl className="grid gap-4 sm:grid-cols-2">
+          <dl className="grid gap-4">
             <div>
               <dt className="text-sm font-medium text-muted-foreground">
                 Full name
@@ -69,8 +71,7 @@ const DoctorDetails = async ({
                 Email address
               </dt>
               <dd className="flex items-center gap-2 text-base">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <span>{user.email}</span>
+                <span className="">{user.email}</span>
               </dd>
             </div>
             <div>
@@ -95,7 +96,7 @@ const DoctorDetails = async ({
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="lg:col-span-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5" /> Contact preferences
@@ -141,14 +142,16 @@ const DoctorDetails = async ({
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="lg:col-span-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Fingerprint className="h-5 w-5" /> Account metadata
           </CardTitle>
-          <CardDescription>Identifiers and lifecycle timestamps</CardDescription>
+          <CardDescription>
+            Identifiers and lifecycle timestamps
+          </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+        <CardContent className="grid gap-4">
           <div>
             <p className="text-sm font-medium text-muted-foreground">
               Clerk ID
@@ -164,9 +167,7 @@ const DoctorDetails = async ({
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-muted-foreground" />
             <div>
-              <p className="text-xs uppercase text-muted-foreground">
-                Created
-              </p>
+              <p className="text-xs uppercase text-muted-foreground">Created</p>
               <p className="text-base font-medium">
                 {formatDate(user.createdAt)}
               </p>
@@ -175,9 +176,7 @@ const DoctorDetails = async ({
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-muted-foreground" />
             <div>
-              <p className="text-xs uppercase text-muted-foreground">
-                Updated
-              </p>
+              <p className="text-xs uppercase text-muted-foreground">Updated</p>
               <p className="text-base font-medium">
                 {formatDate(user.updatedAt)}
               </p>

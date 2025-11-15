@@ -23,5 +23,8 @@ export * from "./past_surgeries";
 export * from "./medical-history";
 export * from "./dashboard-medical-overview";
 export * from "./specialties";
+export * from "./patients";
+export * from "./candidate-patients";
+export * from "./patients";
 
 
