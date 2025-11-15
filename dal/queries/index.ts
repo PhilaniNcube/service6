@@ -24,7 +24,9 @@ export * from "./medical-history";
 export * from "./dashboard-medical-overview";
 export * from "./specialties";
 export * from "./patients";
+export * from "./patient-cases";
 export * from "./candidate-patients";
 export * from "./patients";
+export * from "./appointments";
 
 

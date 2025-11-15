@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { startTransition, useActionState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -72,12 +72,6 @@ export function AddPatientCaseDialog({
     createPatientCase,
     initialState
   );
-  const [procedureState, procedureAction, procedurePending] = useActionState<
-    CreateProcedureState,
-    FormData
-  >(createProcedure, { success: false, message: "" });
-
-  const [isAddingProcedure, setIsAddingProcedure] = useState(false);
 
   const form = useForm<AddPatientCaseFormValues>({
     resolver: zodResolver(formSchema),
@@ -96,10 +90,16 @@ export function AddPatientCaseDialog({
   const caseComplexity = form.watch("case_complexity");
   const preferredTimeline = form.watch("preferred_timeline");
 
+  const handleAction: typeof formAction = async (formData) => {
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="sm" >
+        <Button size="sm">
           <Plus className="mr-2 h-4 w-4" />
           Add Case
         </Button>
@@ -109,9 +109,8 @@ export function AddPatientCaseDialog({
           <DialogTitle>New Patient Case</DialogTitle>
         </DialogHeader>
         <form
-          action={formAction}
+          action={handleAction}
           className="space-y-4"
-          onSubmit={form.handleSubmit(() => {})}
         >
           <input type="hidden" name="patient_id" value={patientId} />
 
@@ -254,7 +253,10 @@ export function AddPatientCaseDialog({
             </FieldContent>
           </Field>
 
-          <Field>
+      
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field>
             <FieldLabel>Procedure</FieldLabel>
             <FieldContent>
               <input
@@ -285,120 +287,48 @@ export function AddPatientCaseDialog({
                   })),
                 ]}
               />
-              <FieldDescription>
-                Choose an existing procedure. If needed, you can add a new one
-                below.
-              </FieldDescription>
+          
             </FieldContent>
           </Field>
-
-          <Field>
-            <FieldLabel>Or create a new procedure</FieldLabel>
-            <FieldContent>
-              <Button
-                type="button"
-                className="text-xs underline underline-offset-4 mb-2"
-                onClick={() => setIsAddingProcedure((v) => !v)}
-              >
-                {isAddingProcedure
-                  ? "Hide new procedure form"
-                  : "Add a new procedure"}
-              </Button>
-
-              {isAddingProcedure && (
-                <form
-                  action={procedureAction}
-                  className="space-y-3 rounded-md border bg-muted/40 p-3"
+            <Field>
+              <FieldLabel>Preferred timeline</FieldLabel>
+              <FieldContent>
+                <input
+                  type="hidden"
+                  name="preferred_timeline"
+                  value={preferredTimeline}
+                />
+                <Select
+                  value={preferredTimeline}
+                  onValueChange={(value) =>
+                    form.setValue(
+                      "preferred_timeline",
+                      value as TreatmentTimeline
+                    )
+                  }
+                  disabled={pending}
                 >
-                  <Field>
-                    <FieldLabel htmlFor="procedure_name">Name</FieldLabel>
-                    <FieldContent>
-                      <Input
-                        id="procedure_name"
-                        name="procedure_name"
-                        disabled={procedurePending}
-                      />
-                    </FieldContent>
-                  </Field>
-                  <Field>
-                    <FieldLabel htmlFor="procedure_description">
-                      Description
-                    </FieldLabel>
-                    <FieldContent>
-                      <Textarea
-                        id="procedure_description"
-                        name="procedure_description"
-                        disabled={procedurePending}
-                      />
-                    </FieldContent>
-                  </Field>
-
-                  {procedureState.message && (
-                    <div
-                      className={`text-xs rounded-md border px-2 py-1 ${
-                        procedureState.success
-                          ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                          : "bg-red-50 text-red-800 border-red-200"
-                      }`}
-                    >
-                      {procedureState.message}
-                    </div>
-                  )}
-
-                  <div className="flex justify-end gap-2 pt-1">
-                    <Button
-                      type="submit"
-                      size="sm"
-                      variant="outline"
-                      disabled={procedurePending}
-                    >
-                      {procedurePending && (
-                        <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-                      )}
-                      Save procedure
-                    </Button>
-                  </div>
-                </form>
-              )}
-            </FieldContent>
-          </Field>
-
-          <Field>
-            <FieldLabel>Preferred timeline</FieldLabel>
-            <FieldContent>
-              <input
-                type="hidden"
-                name="preferred_timeline"
-                value={preferredTimeline}
-              />
-              <Select
-                value={preferredTimeline}
-                onValueChange={(value) =>
-                  form.setValue(
-                    "preferred_timeline",
-                    value as TreatmentTimeline
-                  )
-                }
-                disabled={pending}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select timeline" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="immediate">Immediate</SelectItem>
-                  <SelectItem value="within a month">Within a month</SelectItem>
-                  <SelectItem value="within 3 months">
-                    Within 3 months
-                  </SelectItem>
-                  <SelectItem value="within 6 months">
-                    Within 6 months
-                  </SelectItem>
-                  <SelectItem value="not sure">Not sure</SelectItem>
-                  <SelectItem value="researching">Researching</SelectItem>
-                </SelectContent>
-              </Select>
-            </FieldContent>
-          </Field>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select timeline" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="immediate">Immediate</SelectItem>
+                    <SelectItem value="within a month">
+                      Within a month
+                    </SelectItem>
+                    <SelectItem value="within 3 months">
+                      Within 3 months
+                    </SelectItem>
+                    <SelectItem value="within 6 months">
+                      Within 6 months
+                    </SelectItem>
+                    <SelectItem value="not sure">Not sure</SelectItem>
+                    <SelectItem value="researching">Researching</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FieldContent>
+            </Field>
+          </div>
 
           {state.message && (
             <div
@@ -418,7 +348,7 @@ export function AddPatientCaseDialog({
             </Button>
             <Button type="submit" disabled={pending}>
               {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {pending ? "Saving..." : "Save case"}
+              {pending ? "Saving..." : "Save Case"}
             </Button>
           </div>
         </form>

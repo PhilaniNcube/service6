@@ -6,6 +6,7 @@ import { getReferringPhysicianByClerkId } from "@/dal/queries/referring-physicia
 import { getPatientsByReferringPhysicianId } from "@/dal/queries/patients";
 import { Mail, User, Users } from "lucide-react";
 import { AddPatientCaseDialog } from "./_components/add-patient-case-dialog";
+import { PatientCasesServer } from "./_components/patient-cases-server";
 import { getProcedures } from "@/dal/queries/procedures";
 
 interface PageProps {
@@ -115,6 +116,11 @@ const DoctorPatientPage = async ({ params }: PageProps) => {
           </CardContent>
         </Card>
       </div>
+
+      <PatientCasesServer
+        patientId={patient.id}
+        referringPhysicianId={referring.id}
+      />
     </div>
   );
 };

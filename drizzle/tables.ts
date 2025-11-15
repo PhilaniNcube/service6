@@ -325,3 +325,30 @@ export const patient_cases = sqliteTable("patient_cases", {
 
 export type PatientCase = typeof patient_cases.$inferSelect;
 export type NewPatientCase = typeof patient_cases.$inferInsert;
+
+export const appointments = sqliteTable("appointments", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  patient_id: integer("patient_id")
+    .references(() => patients.id)
+    .notNull(),
+  patient_case_id: integer("patient_case_id")
+    .references(() => patient_cases.id)
+    .notNull(),
+  referring_physician_id: integer("referring_physician_id")
+    .references(() => referring_physicians.id)
+    .notNull(),
+  scheduled_at: integer("scheduled_at", { mode: "timestamp" })
+    .notNull(),
+  notes: text("notes"),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+});
+
+export type Appointment = typeof appointments.$inferSelect;
+export type NewAppointment = typeof appointments.$inferInsert;
+
+

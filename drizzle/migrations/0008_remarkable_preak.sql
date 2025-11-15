@@ -1,0 +1,1 @@
+ALTER TABLE `appointments` ADD `patient_case_id` integer NOT NULL REFERENCES patient_cases(id);

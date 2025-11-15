@@ -50,6 +50,20 @@
       "when": 1763197261018,
       "tag": "0006_fast_ultimates",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1763235779386,
+      "tag": "0007_cultured_wiccan",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1763235971246,
+      "tag": "0008_remarkable_preak",
+      "breakpoints": true
     }
   ]
 }
