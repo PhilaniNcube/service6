@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import {
   Calendar,
   Fingerprint,
-  Mail,
   MapPin,
   Phone,
   Shield,

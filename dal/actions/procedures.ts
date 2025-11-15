@@ -3,9 +3,11 @@
 import db from "@/drizzle/client";
 import {
   desired_procedures,
+  procedures,
   treatment_timelines,
   users,
   type NewDesiredProcedure,
+  type NewProcedure,
 } from "@/drizzle/tables";
 import { eq } from "drizzle-orm/sql/expressions/conditions";
 import { z } from "zod";
@@ -35,6 +37,64 @@ export type CreateDesiredProcedureState = {
     pain_level?: string[];
     diagnosis_status?: string[];
   };
+};
+
+// Simple procedure creation for admin/doctor flows
+const createProcedureSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  description: z.string().max(2000).optional().nullable(),
+});
+
+export type CreateProcedureInput = z.infer<typeof createProcedureSchema>;
+
+export type CreateProcedureState = {
+  success: boolean;
+  message: string;
+  errors?: {
+    name?: string[];
+    description?: string[];
+  };
+};
+
+export const createProcedure = async (
+  prevState: CreateProcedureState,
+  formData: FormData
+): Promise<CreateProcedureState> => {
+  try {
+    const raw = {
+      name: formData.get("procedure_name"),
+      description: formData.get("procedure_description"),
+    } as Record<string, unknown>;
+
+    const parsed = createProcedureSchema.safeParse(raw);
+    if (!parsed.success) {
+      return {
+        success: false,
+        message: "Validation failed. Please check your inputs.",
+        errors: parsed.error.flatten().fieldErrors,
+      };
+    }
+
+    const newProcedure: NewProcedure = {
+      name: parsed.data.name,
+      description: parsed.data.description ?? undefined,
+    };
+
+    await db.insert(procedures).values(newProcedure).returning();
+
+    revalidatePath("/dashboard");
+
+    return {
+      success: true,
+      message: "Procedure created successfully.",
+    };
+  } catch (error) {
+    console.error("Error creating procedure:", error);
+    return {
+      success: false,
+      message: "Something went wrong while creating the procedure.",
+    };
+  }
 };
 
 export const createDesiredProcedure = async (

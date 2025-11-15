@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import DoctorOverview from "./_components/doctor-overview";
 import DoctorDetails from "./_components/doctor-details";
 import ReferringPhysicianCard from "./_components/referring-physician-card";
+import DoctorPatientsCard from "./_components/doctor-patients-card";
 import {
   Card,
   CardContent,
@@ -105,17 +106,16 @@ const DoctorLoadingFallback = () => (
   </div>
 );
 
-const DoctorPage = ({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) => {
+const DoctorPage = ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <div className="space-y-6">
       <Suspense fallback={<DoctorLoadingFallback />}>
         <DoctorOverview params={params} />
         <DoctorDetails paramsPromise={params} />
-        <ReferringPhysicianCard params={params} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <ReferringPhysicianCard params={params} />
+          <DoctorPatientsCard params={params} />
+        </div>
       </Suspense>
     </div>
   );
