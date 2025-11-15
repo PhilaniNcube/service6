@@ -1,17 +1,11 @@
 import { getDoctorUserByIdFromClerk } from "@/dal/queries/users";
-import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
+
 import {
   Mail,
   Phone,
-  Shield,
-  User,
-  Clock,
-  CheckCircle,
-  XCircle,
 } from "lucide-react";
 
 const DoctorOverview = async ({

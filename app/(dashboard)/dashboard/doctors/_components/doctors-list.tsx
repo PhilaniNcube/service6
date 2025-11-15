@@ -11,6 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import { Route } from "next";
 
 const DoctorsList = async () => {
   const doctors = await getDoctorUsersfromClerk();
@@ -87,7 +88,7 @@ const DoctorsList = async () => {
                       {new Date(doctor.createdAt).toLocaleDateString()}
                     </TableCell>
                     <TableCell>
-                      <Link href={`/dashboard/doctors/${doctor.id}`}>View</Link>
+                      <Link href={`/dashboard/doctors/${doctor.id}` as Route}>View</Link>
                     </TableCell>
                   </TableRow>
                 );
