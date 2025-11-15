@@ -21,9 +21,7 @@ const createPatientSchema = z.object({
     .refine((val) => Number.isInteger(val) && val > 0, {
       message: "Invalid referring physician",
     }),
-  patient_consent: z.enum(["written", "verbal", "pending", "emergency"], {
-    required_error: "Patient consent is required",
-  }),
+  patient_consent: z.enum(["written", "verbal", "pending", "emergency"]),
 });
 
 export type CreatePatientInput = z.infer<typeof createPatientSchema>;
