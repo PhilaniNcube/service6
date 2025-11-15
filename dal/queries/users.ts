@@ -1,7 +1,7 @@
 import "server-only";
 import db from "@/drizzle/client";
-import { users } from "@/drizzle/tables";
-import { eq, asc, desc } from "drizzle-orm";
+import { referring_physicians, users } from "@/drizzle/tables";
+import { asc, desc, eq, inArray } from "drizzle-orm";
 import { cache } from "react";
 import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { cacheTag } from "next/cache";
@@ -162,6 +162,42 @@ export const getDoctorUsersfromClerk = cache(async () => {
   };
 });
 
+export const getDoctorUsersWithReferringFlag = cache(async () => {
+  const clerk = await clerkClient();
+
+  const allUsers = await clerk.users.getUserList({
+    limit: 100,
+  });
+
+  const doctorUsers = allUsers.data.filter((user) => {
+    return (user.publicMetadata as { role?: string })?.role === "doctor";
+  });
+
+  const clerkIds = doctorUsers.map((user) => user.id);
+
+  if (clerkIds.length === 0) {
+    return {
+      data: doctorUsers.map((user) => ({ user, isReferring: false })),
+      totalCount: 0,
+    };
+  }
+
+  const referringRows = await db
+    .select({ clerk_id: referring_physicians.clerk_id })
+    .from(referring_physicians)
+    .where(inArray(referring_physicians.clerk_id, clerkIds));
+
+  const referringSet = new Set(referringRows.map((row) => row.clerk_id));
+
+  return {
+    data: doctorUsers.map((user) => ({
+      user,
+      isReferring: referringSet.has(user.id),
+    })),
+    totalCount: doctorUsers.length,
+  };
+});
+
 // get the data for the doctor overview component
 export const getDoctorUserByIdFromClerk = cache(async (clerkId: string) => {
   const clerk = await clerkClient();
@@ -172,4 +208,14 @@ export const getDoctorUserByIdFromClerk = cache(async (clerkId: string) => {
     console.error("Error fetching doctor user by clerk ID:", error);
     throw new Error("Failed to fetch doctor user data");
   }
+});
+
+export const isDoctorReferringByClerkId = cache(async (clerkId: string) => {
+  const [row] = await db
+    .select({ id: referring_physicians.id })
+    .from(referring_physicians)
+    .where(eq(referring_physicians.clerk_id, clerkId))
+    .limit(1);
+
+  return !!row;
 });

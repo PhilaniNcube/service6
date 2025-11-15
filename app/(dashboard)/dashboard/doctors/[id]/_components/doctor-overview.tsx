@@ -1,4 +1,4 @@
-import { getDoctorUserByIdFromClerk } from "@/dal/queries/users";
+import { getDoctorUserByIdFromClerk, isDoctorReferringByClerkId } from "@/dal/queries/users";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,6 +16,7 @@ const DoctorOverview = async ({
   const { id } = await params;
 
   const doctor = await getDoctorUserByIdFromClerk(id);
+  const isReferring = await isDoctorReferringByClerkId(id);
 
   if (!doctor) {
     return (
@@ -68,6 +69,9 @@ const DoctorOverview = async ({
                     {doctor.banned ? "Banned" : "Active"}
                   </Badge>
                   {doctor.locked && <Badge variant="outline">Locked</Badge>}
+                  {isReferring && (
+                    <Badge variant="outline">Referring Physician</Badge>
+                  )}
                 </div>
                 <p className="text-sm text-muted-foreground mt-1">
                   Role: {role.charAt(0).toUpperCase() + role.slice(1)}

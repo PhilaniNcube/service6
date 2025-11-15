@@ -1,4 +1,4 @@
-import { getDoctorUsersfromClerk } from "@/dal/queries/users";
+import { getDoctorUsersWithReferringFlag } from "@/dal/queries/users";
 import React from "react";
 import {
   Table,
@@ -14,7 +14,7 @@ import Link from "next/link";
 import { Route } from "next";
 
 const DoctorsList = async () => {
-  const doctors = await getDoctorUsersfromClerk();
+  const doctors = await getDoctorUsersWithReferringFlag();
 
   return (
     <div className="space-y-4">
@@ -30,6 +30,7 @@ const DoctorsList = async () => {
               <TableHead>Doctor</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Status</TableHead>
+              <TableHead>Referring</TableHead>
               <TableHead>Joined</TableHead>
               <TableHead>View</TableHead>
             </TableRow>
@@ -38,40 +39,40 @@ const DoctorsList = async () => {
             {doctors.data.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={4}
+                  colSpan={6}
                   className="text-center text-muted-foreground"
                 >
                   No doctors found
                 </TableCell>
               </TableRow>
             ) : (
-              doctors.data.map((doctor) => {
+              doctors.data.map(({ user, isReferring }) => {
                 const email =
-                  doctor.emailAddresses.find(
-                    (e) => e.id === doctor.primaryEmailAddressId
-                  )?.emailAddress || doctor.emailAddresses[0]?.emailAddress;
+                  user.emailAddresses.find(
+                    (e) => e.id === user.primaryEmailAddressId
+                  )?.emailAddress || user.emailAddresses[0]?.emailAddress;
                 const initials =
-                  `${doctor.firstName?.[0] || ""}${
-                    doctor.lastName?.[0] || ""
+                  `${user.firstName?.[0] || ""}${
+                    user.lastName?.[0] || ""
                   }`.toUpperCase() || "DR";
 
                 return (
-                  <TableRow key={doctor.id}>
+                  <TableRow key={user.id}>
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <Avatar>
                           <AvatarImage
-                            src={doctor.imageUrl}
-                            alt={`${doctor.firstName} ${doctor.lastName}`}
+                            src={user.imageUrl}
+                            alt={`${user.firstName} ${user.lastName}`}
                           />
                           <AvatarFallback>{initials}</AvatarFallback>
                         </Avatar>
                         <div>
                           <div className="font-medium">
-                            {doctor.firstName} {doctor.lastName}
+                            {user.firstName} {user.lastName}
                           </div>
                           <div className="text-sm text-muted-foreground">
-                            ID: {doctor.id.slice(0, 8)}...
+                            ID: {user.id.slice(0, 8)}...
                           </div>
                         </div>
                       </div>
@@ -79,16 +80,23 @@ const DoctorsList = async () => {
                     <TableCell>{email}</TableCell>
                     <TableCell>
                       <Badge
-                        variant={doctor.banned ? "destructive" : "default"}
+                        variant={user.banned ? "destructive" : "default"}
                       >
-                        {doctor.banned ? "Banned" : "Active"}
+                        {user.banned ? "Banned" : "Active"}
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      {new Date(doctor.createdAt).toLocaleDateString()}
+                      {isReferring ? (
+                        <Badge variant="outline">Referring Physician</Badge>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">—</span>
+                      )}
                     </TableCell>
                     <TableCell>
-                      <Link href={`/dashboard/doctors/${doctor.id}` as Route}>View</Link>
+                      {new Date(user.createdAt).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                      <Link href={`/dashboard/doctors/${user.id}` as Route}>View</Link>
                     </TableCell>
                   </TableRow>
                 );
