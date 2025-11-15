@@ -21,3 +21,9 @@
  */
 
 export * from "./users";
+export * from "./referring-physicians";
+export * from "./procedures";
+export * from "./allergies";
+export * from "./medications";
+export * from "./past-surgeries";
+export * from "./specialties";

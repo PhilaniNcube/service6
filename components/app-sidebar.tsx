@@ -65,6 +65,11 @@ const data = {
       url: "/dashboard/appointments",
       icon: IconTimelineEvent,
     },
+    {
+      title: "Specialties",
+      url: "/dashboard/specialties",
+      icon: IconListDetails,
+    },
  
   ],
 

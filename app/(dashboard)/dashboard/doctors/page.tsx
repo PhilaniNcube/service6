@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import Link from "next/link";
 import DoctorsList from "./_components/doctors-list";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -62,7 +63,17 @@ const DoctorsListFallback = () => (
 
 const DoctorsPage = async () => {
   return (
-    <div>
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold tracking-tight">Doctors</h1>
+        <Link
+          href={{ pathname: "/dashboard/doctors/referring-physicians" }}
+          className="inline-flex items-center rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+        >
+          Add referring physician
+        </Link>
+      </div>
+
       <Suspense fallback={<DoctorsListFallback />}>
         <DoctorsList />
       </Suspense>

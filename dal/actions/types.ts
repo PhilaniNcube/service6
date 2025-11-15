@@ -28,3 +28,22 @@ export type UpdateUserRoleState = {
   success: boolean;
   message: string;
 };
+
+export type AddReferringPhysicianState = {
+  success: boolean;
+  message: string;
+  errors?: {
+    user_id?: string[];
+    clerk_id?: string[];
+    full_name?: string[];
+    qualification?: string[];
+    specialty?: string[];
+    medical_practice?: string[];
+    medical_council_number?: string[];
+    country_of_practice?: string[];
+    phone?: string[];
+    email?: string[];
+    preferred_contact_method?: string[];
+    alternative_contact_number?: string[];
+  };
+};

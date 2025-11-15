@@ -15,5 +15,13 @@
  * const user = await getUserByClerkId(clerkId);
  * ```
  */
+export * from "./procedures";
+export * from "./users";
+export * from "./allergies";
+export * from "./medications";
+export * from "./past_surgeries";
+export * from "./medical-history";
+export * from "./dashboard-medical-overview";
+export * from "./specialties";
 
 
