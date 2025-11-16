@@ -153,7 +153,7 @@ const ReferralsCard = ({
 }) => (
   <Card className="col-span-1 lg:col-span-1">
     <CardHeader>
-      <CardTitle>Recent Referrals</CardTitle>
+      <CardTitle>Patient Cases</CardTitle>
       <p className="text-sm text-muted-foreground">
         Latest patient cases for your referred patients
       </p>
