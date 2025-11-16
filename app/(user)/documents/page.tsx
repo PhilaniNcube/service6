@@ -10,6 +10,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getDocumentsForUser } from "@/dal/queries";
+import { getPublicR2Url } from "@/lib/r2";
+import Link from "next/link";
+import { Route } from "next";
 
 const DocumentsPage = async () => {
   const user = await getCurrentUser();
@@ -47,9 +50,14 @@ const DocumentsPage = async () => {
             ) : (
               documents.map((doc) => (
                 <TableRow key={doc.id}>
-                  <TableCell>{doc.document_type}</TableCell>
+                  <TableCell className="capitalize">
+                    {/* format the document type to capitalize each word */}
+                    {doc.document_type.split("_").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
+                    </TableCell>
                   <TableCell className="max-w-xs truncate">
-                    {doc.storage_key}
+                    <Link target="_blank" href={getPublicR2Url(doc.storage_key) as Route}>
+                      {doc.storage_key}
+                    </Link>
                   </TableCell>
                   <TableCell>{doc.file_type}</TableCell>
                   <TableCell>{doc.file_size_bytes}</TableCell>
