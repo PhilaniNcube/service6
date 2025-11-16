@@ -19,7 +19,7 @@ export function AuthButtons() {
 
   return (
     <div className="flex items-center gap-2">
-      <SignInButton mode="modal">
+      <SignInButton mode="modal" forceRedirectUrl={`/profile`}>
         <Button variant="ghost" size="sm">
           Sign In
         </Button>

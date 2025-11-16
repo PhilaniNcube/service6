@@ -39,6 +39,9 @@ export function AddAppointmentDialog({
     initialState
   );
 
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [appointmentTime, setAppointmentTime] = useState("");
+
   const handleAction: typeof formAction = async (formData) => {
     if (!selectedDate) {
       return;
@@ -47,12 +50,14 @@ export function AddAppointmentDialog({
     // Ensure we pass an ISO string for the server action
     formData.set("scheduled_at", selectedDate.toISOString());
 
+    if (appointmentTime) {
+      formData.set("appointment_time", appointmentTime);
+    }
+
     startTransition(() => {
       formAction(formData);
     });
   };
-
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
   const today = useMemo(() => {
     const now = new Date();
@@ -82,7 +87,7 @@ export function AddAppointmentDialog({
           />
 
           <Field>
-            <FieldLabel htmlFor="scheduled_at">Scheduled date &amp; time</FieldLabel>
+            <FieldLabel htmlFor="scheduled_at">Scheduled date</FieldLabel>
             <FieldContent>
               <Popover>
                 <PopoverTrigger asChild>
@@ -115,6 +120,29 @@ export function AddAppointmentDialog({
               <FieldError
                 errors={[
                   ...(state.errors?.scheduled_at || []).map((message) => ({
+                    message,
+                  })),
+                ]}
+              />
+            </FieldContent>
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor="appointment_time">Appointment time</FieldLabel>
+            <FieldContent>
+              <input
+                id="appointment_time"
+                name="appointment_time"
+                type="time"
+                className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                value={appointmentTime}
+                onChange={(e) => setAppointmentTime(e.target.value)}
+                disabled={pending}
+                required
+              />
+              <FieldError
+                errors={[
+                  ...(state.errors?.appointment_time || []).map((message) => ({
                     message,
                   })),
                 ]}

@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Suspense>
-        <ClerkProvider>
+        <ClerkProvider afterSignInUrl="/profile" afterSignOutUrl="/">
           <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >

@@ -176,25 +176,30 @@ export const medications = sqliteTable("medications", {
 export type Medication = typeof medications.$inferSelect;
 export type NewMedication = typeof medications.$inferInsert;
 
-// create a new table for medication linked to medical_background were there is a one to many relationship 
-export const medical_background_medications = sqliteTable("medical_background_medications", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  user_id: integer("user_id")
-    .references(() => users.id)
-    .notNull(),
-  clerk_id: text("clerk_id")
-    .references(() => users.clerk_id)
-    .notNull(),  
-  medical_background_id: integer("medical_background_id")
-    .references(() => medical_background.id)
-    .notNull(),
-  medication_id: integer("medication_id")
-    .references(() => medications.id)
-    .notNull(),
-});
+// create a new table for medication linked to medical_background were there is a one to many relationship
+export const medical_background_medications = sqliteTable(
+  "medical_background_medications",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    user_id: integer("user_id")
+      .references(() => users.id)
+      .notNull(),
+    clerk_id: text("clerk_id")
+      .references(() => users.clerk_id)
+      .notNull(),
+    medical_background_id: integer("medical_background_id")
+      .references(() => medical_background.id)
+      .notNull(),
+    medication_id: integer("medication_id")
+      .references(() => medications.id)
+      .notNull(),
+  }
+);
 
-export type MedicalBackgroundMedication = typeof medical_background_medications.$inferSelect;
-export type NewMedicalBackgroundMedication = typeof medical_background_medications.$inferInsert;
+export type MedicalBackgroundMedication =
+  typeof medical_background_medications.$inferSelect;
+export type NewMedicalBackgroundMedication =
+  typeof medical_background_medications.$inferInsert;
 
 // create a table for other medical conditions which should then be linked to medical_background
 // this is supposed to be a list of the following conditions:
@@ -261,13 +266,20 @@ export const referring_physicians = sqliteTable("referring_physicians", {
 export type ReferringPhysician = typeof referring_physicians.$inferSelect;
 export type NewReferringPhysician = typeof referring_physicians.$inferInsert;
 
-export const patient_consent = ["written", "verbal", "pending", "emergency"] as const;
+export const patient_consent = [
+  "written",
+  "verbal",
+  "pending",
+  "emergency",
+] as const;
 
 export type PatientConsent = (typeof patient_consent)[number];
 
 export const patients = sqliteTable("patients", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  user_id: integer("user_id").references(() => users.id).notNull(),
+  user_id: integer("user_id")
+    .references(() => users.id)
+    .notNull(),
   referring_physician_id: integer("referring_physician_id")
     .references(() => referring_physicians.id)
     .notNull(),
@@ -284,7 +296,12 @@ export const patients = sqliteTable("patients", {
 export type Patient = typeof patients.$inferSelect;
 export type NewPatient = typeof patients.$inferInsert;
 
-export const complexity = ["straightforward", "moderate", "complex", "highly complex"];
+export const complexity = [
+  "straightforward",
+  "moderate",
+  "complex",
+  "highly complex",
+];
 
 export type CaseComplexity = (typeof complexity)[number];
 
@@ -314,7 +331,7 @@ export const patient_cases = sqliteTable("patient_cases", {
   procedure_id: integer("procedure_id")
     .references(() => procedures.id)
     .notNull(),
-  preferred_timeline: text("preferred_timeline").$type<TreatmentTimeline>(),  
+  preferred_timeline: text("preferred_timeline").$type<TreatmentTimeline>(),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .$default(() => new Date()),
@@ -337,8 +354,8 @@ export const appointments = sqliteTable("appointments", {
   referring_physician_id: integer("referring_physician_id")
     .references(() => referring_physicians.id)
     .notNull(),
-  scheduled_at: integer("scheduled_at", { mode: "timestamp" })
-    .notNull(),
+  scheduled_at: integer("scheduled_at", { mode: "timestamp" }).notNull(),
+  appointment_time: text("appointment_time"),
   notes: text("notes"),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
@@ -350,5 +367,3 @@ export const appointments = sqliteTable("appointments", {
 
 export type Appointment = typeof appointments.$inferSelect;
 export type NewAppointment = typeof appointments.$inferInsert;
-
-

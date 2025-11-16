@@ -50,12 +50,14 @@ const ProfileCard = async () => {
                 {user.first_name} {user.last_name}
               </CardTitle>
               {role === "doctor" && (
-                <Badge
-                  variant="secondary"
-                  className="bg-linear-to-r from-primary/10 to-accent/10 text-primary border-primary/20"
-                >
-                  Doctor
-                </Badge>
+                <Link href="/doctors">
+                  <Badge
+                    variant="secondary"
+                    className="bg-linear-to-r from-primary/10 to-accent/10 text-primary border-primary/20"
+                  >
+                    Doctor
+                  </Badge>
+                </Link>
               )}
               {role === "client" && (
                 <Badge

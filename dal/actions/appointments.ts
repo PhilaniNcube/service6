@@ -37,6 +37,9 @@ const createAppointmentSchema = z.object({
     .string()
     .min(1, "Scheduled date and time is required")
     .transform((val) => new Date(val)),
+  appointment_time: z
+    .string()
+    .min(1, "Appointment time is required"),
   notes: z.string().optional().nullable(),
 });
 
@@ -52,6 +55,7 @@ export async function createAppointment(
       patient_case_id: formData.get("patient_case_id") as string,
       referring_physician_id: formData.get("referring_physician_id") as string,
       scheduled_at: formData.get("scheduled_at") as string,
+      appointment_time: formData.get("appointment_time") as string,
       notes: (formData.get("notes") as string) || undefined,
     };
 
@@ -70,6 +74,7 @@ export async function createAppointment(
       patient_case_id,
       referring_physician_id,
       scheduled_at,
+      appointment_time,
       notes,
     } = validated.data;
 
@@ -78,6 +83,7 @@ export async function createAppointment(
       patient_case_id,
       referring_physician_id,
       scheduled_at,
+      appointment_time,
       notes,
     });
 

@@ -35,7 +35,7 @@ export function CaseAppointments({
               className="text-xs text-muted-foreground max-w-2xl flex flex-col gap-2 p-4 rounded-md border border-muted-foreground/10 "
             >
               <span>{format(new Date(a.scheduled_at), "PP")}</span>
-              {a.notes && <span className="truncate max-w-[200px]">{a.notes}</span>}
+              {a.notes && <span className="truncate max-w-[200px]">{a.notes}</span>} @ {a.appointment_time}
             </li>
           ))}
         </ul>
