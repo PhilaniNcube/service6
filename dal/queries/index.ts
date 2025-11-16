@@ -28,5 +28,6 @@ export * from "./patient-cases";
 export * from "./candidate-patients";
 export * from "./patients";
 export * from "./appointments";
+export * from "./documents";
 
 

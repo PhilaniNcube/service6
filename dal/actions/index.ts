@@ -29,3 +29,4 @@ export * from "./past-surgeries";
 export * from "./specialties";
 export * from "./referrals";
 export * from "./patients";
+export * from "./documents";

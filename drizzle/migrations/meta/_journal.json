@@ -71,6 +71,13 @@
       "when": 1763301667123,
       "tag": "0009_huge_master_chief",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1763320269897,
+      "tag": "0010_rich_onslaught",
+      "breakpoints": true
     }
   ]
 }

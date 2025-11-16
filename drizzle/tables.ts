@@ -367,3 +367,55 @@ export const appointments = sqliteTable("appointments", {
 
 export type Appointment = typeof appointments.$inferSelect;
 export type NewAppointment = typeof appointments.$inferInsert;
+
+export const document_types = [
+  "passport",
+  "birth_certificate",
+  "prescription",
+  "xray",
+  "bank_statement",
+  // other potential document types you may want later
+  "id_card",
+  "drivers_license",
+  "medical_report",
+  "insurance_card",
+  "utility_bill",
+] as const;
+
+export type DocumentType = (typeof document_types)[number];
+
+export const file_types = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+  "video/mp4",
+  "other",
+] as const;
+
+export type FileType = (typeof file_types)[number];
+
+export const documents = sqliteTable("documents", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  user_id: integer("user_id")
+    .references(() => users.id)
+    .notNull(),
+  clerk_id: text("clerk_id")
+    .references(() => users.clerk_id)
+    .notNull(),
+  storage_key: text("storage_key").notNull(),
+  document_type: text("document_type").$type<DocumentType>().notNull(),
+  file_type: text("file_type").$type<FileType>().notNull(),
+  file_size_bytes: integer("file_size_bytes").notNull(),
+  width: integer("width"),
+  height: integer("height"),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+});
+
+export type Document = typeof documents.$inferSelect;
+export type NewDocument = typeof documents.$inferInsert;
