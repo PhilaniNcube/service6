@@ -86,6 +86,7 @@ export function AppointmentsTableClient({
 
   const router = useRouter();
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data: appointments,
     columns,
