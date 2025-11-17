@@ -1,6 +1,8 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { getDoctorAppointments } from "@/dal/queries/appointments";
+import Link from "next/link";
+import { format } from "date-fns";
 
 const DoctorAppointmentsPage = async () => {
   const { userId } = await auth();
@@ -12,9 +14,9 @@ const DoctorAppointmentsPage = async () => {
       {appts.length === 0 ? (
         <p className="text-muted-foreground">You have no upcoming appointments.</p>
       ) : (
-        <ul className="space-y-2 text-sm">
+        <div className="space-y-2 text-sm">
           {appts.map((appt) => (
-            <li
+            <Link href={`/doctors/appointments/${appt.id}`}
               key={appt.id}
               className="flex items-center justify-between rounded border px-3 py-2"
             >
@@ -22,11 +24,11 @@ const DoctorAppointmentsPage = async () => {
                 {appt.patient_first_name} {appt.patient_last_name}
               </span>
               <span className="text-xs text-muted-foreground">
-                {appt.scheduled_at?.toLocaleString?.() ?? "No date"}
+                {format(new Date(appt.scheduled_at), "PPP")}
               </span>
-            </li>
+            </Link>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

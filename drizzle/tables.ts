@@ -29,6 +29,8 @@ export const users = sqliteTable("users", {
     .$default(() => new Date()),
 });
 
+export const referring_users = users;
+
 export type ContactMethod = (typeof contact_methods)[number];
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;

@@ -1,8 +1,44 @@
 import "server-only";
 
 import db from "@/drizzle/client";
-import { appointments, patients, referring_physicians, users } from "@/drizzle/tables";
+import { appointments, patient_cases, patients, procedures, referring_physicians, users } from "@/drizzle/tables";
 import { and, eq } from "drizzle-orm";
+
+export async function getAppointmentDetailById(appointmentId: number) {
+  const rows = await db
+    .select({
+      appointment: appointments,
+      patient: patients,
+      patientUser: users,
+      patientCase: patient_cases,
+      procedure: procedures,
+      referringPhysician: referring_physicians,
+    })
+    .from(appointments)
+    .innerJoin(patients, eq(appointments.patient_id, patients.id))
+    .innerJoin(users, eq(patients.user_id, users.id))
+    .innerJoin(patient_cases, eq(appointments.patient_case_id, patient_cases.id))
+    .innerJoin(procedures, eq(patient_cases.procedure_id, procedures.id))
+    .innerJoin(
+      referring_physicians,
+      eq(appointments.referring_physician_id, referring_physicians.id)
+    )
+    .where(eq(appointments.id, appointmentId))
+    .limit(1);
+
+  if (!rows.length) return null;
+
+  const row = rows[0];
+
+  return {
+    appointment: row.appointment,
+    patient: row.patient,
+    patientUser: row.patientUser,
+    patientCase: row.patientCase,
+    procedure: row.procedure,
+    referringPhysician: row.referringPhysician,
+  };
+}
 
 export async function getAppointmentsByPatientCaseId(patientCaseId: number) {
   const rows = await db

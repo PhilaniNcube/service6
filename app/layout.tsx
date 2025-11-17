@@ -27,16 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Suspense>
-        <ClerkProvider afterSignInUrl="/profile" afterSignOutUrl="/">
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Suspense>
+          <ClerkProvider afterSignInUrl="/profile" afterSignOutUrl="/">
             {children}
             <Toaster />
-          </body>
-        </ClerkProvider>
-      </Suspense>
+          </ClerkProvider>
+        </Suspense>
+      </body>
     </html>
   );
 }
