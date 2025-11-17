@@ -86,3 +86,23 @@ export async function getDoctorAppointments(clerkId: string) {
 
   return rows;
 }
+
+export async function getAllAppointmentsForAdmin() {
+  const rows = await db
+    .select({
+      id: appointments.id,
+      scheduled_at: appointments.scheduled_at,
+      appointment_time: appointments.appointment_time,
+      notes: appointments.notes,
+      patient_first_name: users.first_name,
+      patient_last_name: users.last_name,
+      procedure_name: procedures.name,
+    })
+    .from(appointments)
+    .innerJoin(patients, eq(appointments.patient_id, patients.id))
+    .innerJoin(users, eq(patients.user_id, users.id))
+    .innerJoin(patient_cases, eq(appointments.patient_case_id, patient_cases.id))
+    .innerJoin(procedures, eq(patient_cases.procedure_id, procedures.id));
+
+  return rows;
+}
