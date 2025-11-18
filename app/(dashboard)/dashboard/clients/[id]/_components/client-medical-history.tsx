@@ -12,6 +12,7 @@ import { cacheLife } from "next/cache";
 import { UploadDocumentDialog } from "./upload-document-dialog";
 import { getPublicR2Url } from "@/lib/r2";
 import Link from "next/link";
+import { Route } from "next";
 
 interface ClientMedicalHistoryProps {
   params: Promise<{ id: string }>;
@@ -252,7 +253,7 @@ export async function ClientMedicalHistory({ params }: ClientMedicalHistoryProps
                   {documents.map((doc) => (
                     <Link
                       key={doc.id}
-                      href={getPublicR2Url(doc.storage_key)}
+                      href={getPublicR2Url(doc.storage_key) as Route}
                       target="_blank"
                       className="block p-4 border rounded-lg hover:bg-accent/50 transition-colors"
                     >
