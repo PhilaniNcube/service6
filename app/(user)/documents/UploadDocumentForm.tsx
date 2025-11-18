@@ -22,7 +22,7 @@ type UploadResult = {
 const UploadDocumentForm: React.FC = () => {
   const { userId } = useAuth();
   const [file, setFile] = useState<File | null>(null);
-  const [documentType, setDocumentType] = useState<string>("passport");
+  const [documentType, setDocumentType] = useState<string>("valid_passport");
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<UploadResult | null>(null);
@@ -93,20 +93,32 @@ const UploadDocumentForm: React.FC = () => {
                 <SelectValue placeholder="Select a document type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="passport">Passport</SelectItem>
-                <SelectItem value="birth_certificate">
-                  Birth certificate
+                <SelectItem value="valid_passport">Valid Passport</SelectItem>
+                <SelectItem value="visa">Visa (if available)</SelectItem>
+                <SelectItem value="passport_sized_photographs">
+                  Recent Passport-Sized Photographs
                 </SelectItem>
-                <SelectItem value="prescription">Prescription</SelectItem>
-                <SelectItem value="xray">X-ray</SelectItem>
-                <SelectItem value="bank_statement">Bank statement</SelectItem>
-                <SelectItem value="id_card">ID card</SelectItem>
-                <SelectItem value="drivers_license">
-                  Driver&apos;s license
+                <SelectItem value="referral_letter">
+                  Referral Letter (if available)
                 </SelectItem>
-                <SelectItem value="medical_report">Medical report</SelectItem>
-                <SelectItem value="insurance_card">Insurance card</SelectItem>
-                <SelectItem value="utility_bill">Utility bill</SelectItem>
+                <SelectItem value="laboratory_results">
+                  Recent Laboratory Results (within the last 3-6 months)
+                </SelectItem>
+                <SelectItem value="biopsy_results">
+                  Biopsy results (If available)
+                </SelectItem>
+                <SelectItem value="medical_imaging_reports">
+                  Medical Imaging Reports and Digital Files (CT scan, MRI, X-ray reports)
+                </SelectItem>
+                <SelectItem value="medical_imaging_video_image">
+                  Upload video/image of Medical imaging
+                </SelectItem>
+                <SelectItem value="proof_of_financial_means">
+                  Proof of Financial means
+                </SelectItem>
+                <SelectItem value="travel_insurance">
+                  Travel insurance (If available)
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>

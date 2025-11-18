@@ -2,12 +2,16 @@ import { getUserAllergiesByClerkId } from "@/dal/queries/allergies";
 import { getUserMedicationsByClerkId } from "@/dal/queries/medications";
 import { getUserPastSurgeriesByClerkId } from "@/dal/queries/past_surgeries";
 import { getMedicalHistorySummaryByClerkId } from "@/dal/queries/medical-history";
+import { getDocumentsByClerkId } from "@/dal/queries/documents";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle, Pill, Scissors, FileText } from "lucide-react";
+import { AlertCircle, Pill, Scissors, FileText, File } from "lucide-react";
 import { format } from "date-fns";
 import { cacheLife } from "next/cache";
+import { UploadDocumentDialog } from "./upload-document-dialog";
+import { getPublicR2Url } from "@/lib/r2";
+import Link from "next/link";
 
 interface ClientMedicalHistoryProps {
   params: Promise<{ id: string }>;
@@ -17,11 +21,12 @@ export async function ClientMedicalHistory({ params }: ClientMedicalHistoryProps
  
 
   const resolvedParams = await params;
-  const [allergies, medications, pastSurgeries, medicalBackground] = await Promise.all([
+  const [allergies, medications, pastSurgeries, medicalBackground, documents] = await Promise.all([
     getUserAllergiesByClerkId(resolvedParams.id),
     getUserMedicationsByClerkId(resolvedParams.id),
     getUserPastSurgeriesByClerkId(resolvedParams.id),
     getMedicalHistorySummaryByClerkId(resolvedParams.id),
+    getDocumentsByClerkId(resolvedParams.id),
   ]);
 
   return (
@@ -32,7 +37,7 @@ export async function ClientMedicalHistory({ params }: ClientMedicalHistoryProps
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="allergies" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="allergies" className="flex items-center gap-2">
               <AlertCircle className="h-4 w-4" />
               Allergies
@@ -66,6 +71,15 @@ export async function ClientMedicalHistory({ params }: ClientMedicalHistoryProps
               {medicalBackground.length > 0 && (
                 <Badge variant="secondary" className="ml-1">
                   {medicalBackground.length}
+                </Badge>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="documents" className="flex items-center gap-2">
+              <File className="h-4 w-4" />
+              Documents
+              {documents.length > 0 && (
+                <Badge variant="secondary" className="ml-1">
+                  {documents.length}
                 </Badge>
               )}
             </TabsTrigger>
@@ -219,6 +233,48 @@ export async function ClientMedicalHistory({ params }: ClientMedicalHistoryProps
                 ))}
               </div>
             )}
+          </TabsContent>
+
+          <TabsContent value="documents" className="mt-4">
+            <div className="space-y-4">
+              <div className="flex justify-end">
+                <UploadDocumentDialog clerkId={resolvedParams.id} />
+              </div>
+              
+              {documents.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  <File className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                  <p>No documents uploaded</p>
+                  <p className="text-sm mt-1">Upload documents using the button above</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {documents.map((doc) => (
+                    <Link
+                      key={doc.id}
+                      href={getPublicR2Url(doc.storage_key)}
+                      target="_blank"
+                      className="block p-4 border rounded-lg hover:bg-accent/50 transition-colors"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-base">
+                            {doc.document_type.split("_").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
+                          </h4>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {doc.file_type} • {(doc.file_size_bytes / 1024).toFixed(1)} KB
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Uploaded on {format(new Date(doc.createdAt), "MMMM d, yyyy")}
+                          </p>
+                        </div>
+                        <Badge variant="secondary">View</Badge>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </TabsContent>
         </Tabs>
       </CardContent>

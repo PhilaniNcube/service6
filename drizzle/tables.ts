@@ -371,17 +371,16 @@ export type Appointment = typeof appointments.$inferSelect;
 export type NewAppointment = typeof appointments.$inferInsert;
 
 export const document_types = [
-  "passport",
-  "birth_certificate",
-  "prescription",
-  "xray",
-  "bank_statement",
-  // other potential document types you may want later
-  "id_card",
-  "drivers_license",
-  "medical_report",
-  "insurance_card",
-  "utility_bill",
+  "valid_passport",
+  "visa",
+  "passport_sized_photographs",
+  "referral_letter",
+  "laboratory_results",
+  "biopsy_results",
+  "medical_imaging_reports",
+  "medical_imaging_video_image",
+  "proof_of_financial_means",
+  "travel_insurance",
 ] as const;
 
 export type DocumentType = (typeof document_types)[number];

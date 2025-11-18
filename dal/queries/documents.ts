@@ -12,3 +12,12 @@ export async function getDocumentsForUser(userId: number) {
 
   return rows;
 }
+
+export async function getDocumentsByClerkId(clerkId: string) {
+  const rows = await db
+    .select()
+    .from(documents)
+    .where(eq(documents.clerk_id, clerkId));
+
+  return rows;
+}
