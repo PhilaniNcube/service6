@@ -1,7 +1,7 @@
 import "server-only";
 
 import db from "@/drizzle/client";
-import { appointments, patient_cases, patients, procedures, referring_physicians, users } from "@/drizzle/tables";
+import { appointments, documents, patient_cases, patients, procedures, referring_physicians, users } from "@/drizzle/tables";
 import { and, eq } from "drizzle-orm";
 
 export async function getAppointmentDetailById(appointmentId: number) {
@@ -30,6 +30,11 @@ export async function getAppointmentDetailById(appointmentId: number) {
 
   const row = rows[0];
 
+  const patientDocuments = await db
+    .select()
+    .from(documents)
+    .where(eq(documents.user_id, row.patientUser.id));
+
   return {
     appointment: row.appointment,
     patient: row.patient,
@@ -37,6 +42,7 @@ export async function getAppointmentDetailById(appointmentId: number) {
     patientCase: row.patientCase,
     procedure: row.procedure,
     referringPhysician: row.referringPhysician,
+    documents: patientDocuments,
   };
 }
 

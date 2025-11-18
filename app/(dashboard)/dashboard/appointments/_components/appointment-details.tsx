@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getAppointmentDetailById } from "@/dal/queries/appointments";
-import { ArrowLeft, Calendar, CheckCircle, Clock, Clock3, Edit, FileText, Mail, MapPin, Phone, Stethoscope, XCircle } from "lucide-react";
+import { getPublicR2Url } from "@/lib/r2";
+import { ArrowLeft, Calendar, CheckCircle, Clock, Edit, FileText, Mail, MapPin, Phone, Stethoscope, XCircle } from "lucide-react";
 import Link from "next/link";
 
 
@@ -28,22 +29,22 @@ export async function AppointmentDetails({
     );
   }
 
-  const { appointment, patientUser, patient, patientCase, procedure, referringPhysician } = detail;
+  const { appointment, patientUser, patient, patientCase, procedure, referringPhysician, documents } = detail;
 
- const getStatusColor = (status: string) => {
-    switch (status) {
-      case "scheduled":
-        return "bg-blue-500/10 text-blue-500"
-      case "confirmed":
-        return "bg-green-500/10 text-green-500"
-      case "cancelled":
-        return "bg-red-500/10 text-red-500"
-      case "completed":
-        return "bg-emerald-500/10 text-emerald-500"
-      default:
-        return "bg-muted text-muted-foreground"
-    }
-  }
+//  const getStatusColor = (status: string) => {
+//     switch (status) {
+//       case "scheduled":
+//         return "bg-blue-500/10 text-blue-500"
+//       case "confirmed":
+//         return "bg-green-500/10 text-green-500"
+//       case "cancelled":
+//         return "bg-red-500/10 text-red-500"
+//       case "completed":
+//         return "bg-emerald-500/10 text-emerald-500"
+//       default:
+//         return "bg-muted text-muted-foreground"
+//     }
+//   }
 
   const getConsentColor = (consent: string) => {
     switch (consent) {
@@ -195,9 +196,10 @@ export async function AppointmentDetails({
 
             {/* Patient & Case Information */}
             <Tabs defaultValue="patient" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="patient">Patient Information</TabsTrigger>
                 <TabsTrigger value="case">Case Details</TabsTrigger>
+                <TabsTrigger value="documents">Documents</TabsTrigger>
               </TabsList>
               <TabsContent value="patient" className="mt-4">
                 <Card>
@@ -300,6 +302,45 @@ export async function AppointmentDetails({
                         </div>
                       </div>
                     </div> */}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="documents" className="mt-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Patient Documents</CardTitle>
+                    <CardDescription>Files uploaded for this patient</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {!documents || documents.length === 0 ? (
+                      <p className="text-sm text-muted-foreground">
+                        No documents have been uploaded for this patient.
+                      </p>
+                    ) : (
+                      <div className="space-y-3">
+                        {documents.map((doc) => (
+                          <a
+                            href={getPublicR2Url(doc.storage_key)}
+                            key={doc.id}
+                            className="flex items-center cursor-pointer hover:bg-slate-100 justify-between rounded-lg border bg-card p-3 text-sm"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="rounded-full bg-primary/10 p-2">
+                                <FileText className="h-4 w-4 text-primary" />
+                              </div>
+                              <div  className="cursor-pointer">
+                                <p className="font-medium text-foreground">
+                                  {doc.document_type}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  {doc.file_type} • {(doc.file_size_bytes / 1024).toFixed(1)} KB
+                                </p>
+                              </div>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </TabsContent>
