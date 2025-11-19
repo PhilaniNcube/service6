@@ -36,9 +36,9 @@ const sidebarLinks = [
     icon: Calendar,
   },
   {
-    title: "Settings",
-    href: "/settings",
-    icon: Settings,
+    title: "Documents",
+    href: "/documents",
+    icon: FileText,
   },
 ]
 
