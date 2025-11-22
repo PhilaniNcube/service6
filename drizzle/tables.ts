@@ -420,3 +420,59 @@ export const documents = sqliteTable("documents", {
 
 export type Document = typeof documents.$inferSelect;
 export type NewDocument = typeof documents.$inferInsert;
+
+
+export const invoice_statuses = [
+  "draft",
+  "pending",
+  "paid",
+  "overdue",
+  "cancelled",
+] as const;
+export type InvoiceStatus = (typeof invoice_statuses)[number];
+
+export const invoices = sqliteTable("invoices", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  patient_id: integer("patient_id")
+    .references(() => patients.id)
+    .notNull(),
+  patient_case_id: integer("patient_case_id")
+    .references(() => patient_cases.id), // Optional, if an invoice is for multiple cases or general fees
+  total_amount: integer("total_amount").notNull(), // in cents
+  currency: text("currency").$default(() => "ZAR"),
+  status: text("status").$type<InvoiceStatus>().notNull(),
+  due_date: integer("due_date", { mode: "timestamp" }),
+  issued_at: integer("issued_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+  paid_at: integer("paid_at", { mode: "timestamp" }),
+  notes: text("notes"),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+});
+
+export type Invoice = typeof invoices.$inferSelect;
+export type NewInvoice = typeof invoices.$inferInsert;
+
+export const invoice_items = sqliteTable("invoice_items", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  invoice_id: integer("invoice_id")
+    .references(() => invoices.id)
+    .notNull(),
+  description: text("description").notNull(),
+  quantity: integer("quantity").notNull(),
+  unit_price: integer("unit_price").notNull(), // in cents
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+});
+
+export type InvoiceItem = typeof invoice_items.$inferSelect;
+export type NewInvoiceItem = typeof invoice_items.$inferInsert;
