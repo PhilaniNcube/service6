@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, User, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import { cacheLife } from "next/cache";
+import { getPatientByUserId } from "@/dal/queries/patients";
+import { CreateInvoiceDialog } from "./create-invoice-dialog";
 
 interface ClientOverviewProps {
   params: Promise<{ id: string }>;
@@ -14,6 +16,7 @@ export async function ClientOverview({ params }: ClientOverviewProps) {
   cacheLife("minutes")
   const resolvedParams = await params;
   const user = await getUserByClerkId(resolvedParams.id);
+  const patient = user ? await getPatientByUserId(user.id) : null;
 
   if (!user) {
     return (
@@ -28,12 +31,17 @@ export async function ClientOverview({ params }: ClientOverviewProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <User className="h-5 w-5" />
-          Client Information
-        </CardTitle>
-        <CardDescription>Personal details and contact information</CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0">
+        <div className="space-y-1.5">
+          <CardTitle className="flex items-center gap-2">
+            <User className="h-5 w-5" />
+            Client Information
+          </CardTitle>
+          <CardDescription>
+            Personal details and contact information
+          </CardDescription>
+        </div>
+        {patient && <CreateInvoiceDialog patientId={patient.id} />}
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -66,6 +66,11 @@ const data = {
       icon: IconTimelineEvent,
     },
     {
+      title: "Invoices",
+      url: "/dashboard/invoices",
+      icon: IconFileDescription,
+    },
+    {
       title: "Specialties",
       url: "/dashboard/specialties",
       icon: IconListDetails,

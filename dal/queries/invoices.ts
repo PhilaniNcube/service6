@@ -1,13 +1,13 @@
 import "server-only";
 import db from "@/drizzle/client";
-import { invoice_items, invoices, patients } from "@/drizzle/tables";
+import { invoice_items, invoices, patients, users } from "@/drizzle/tables";
 import { count, desc, eq } from "drizzle-orm";
 import { checkRole } from "@/lib/roles";
 import { getCurrentUser } from "@/dal/queries/users";
 import { cacheTag } from "next/cache";
 
 export async function getAllInvoices(page = 1, limit = 10) {
-  "use cache";
+  "use cache: private";
   cacheTag("invoices");
   const isAdmin = await checkRole("admin");
   if (!isAdmin) {
@@ -17,8 +17,13 @@ export async function getAllInvoices(page = 1, limit = 10) {
   const offset = (page - 1) * limit;
 
   const data = await db
-    .select()
+    .select({
+      invoice: invoices,
+      patient: users,
+    })
     .from(invoices)
+    .innerJoin(patients, eq(invoices.patient_id, patients.id))
+    .innerJoin(users, eq(patients.user_id, users.id))
     .limit(limit)
     .offset(offset)
     .orderBy(desc(invoices.createdAt));
@@ -42,7 +47,7 @@ export async function getInvoicesForPatient(
   page = 1,
   limit = 10
 ) {
-  "use cache";
+  "use cache: private";
   cacheTag("invoices", `patient-invoices-${patientId}`);
   const isAdmin = await checkRole("admin");
   const user = await getCurrentUser();

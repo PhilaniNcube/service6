@@ -34,7 +34,6 @@ export const getPatients = cache(async () => {
   }));
 });
 
-
 export const getPatientsByReferringPhysicianId = cache(
   async (referringPhysicianId: number) => {
     const rows = await db
@@ -67,3 +66,13 @@ export const getPatientsByReferringPhysicianId = cache(
     }));
   }
 );
+
+export const getPatientByUserId = cache(async (userId: number) => {
+  const [patient] = await db
+    .select()
+    .from(patients)
+    .where(eq(patients.user_id, userId))
+    .limit(1);
+
+  return patient || null;
+});

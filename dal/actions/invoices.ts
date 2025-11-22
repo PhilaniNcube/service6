@@ -13,6 +13,8 @@ import {
   UpdateInvoiceSchema,
   CreateInvoiceItemSchema,
   UpdateInvoiceItemSchema,
+  createInvoiceWithItemsSchema,
+  CreateInvoiceWithItemsSchema,
 } from "@/lib/schemas";
 import { revalidateTag } from "next/cache";
 
@@ -101,6 +103,51 @@ export async function deleteInvoice(id: number) {
   } catch (error) {
     console.error("Error deleting invoice:", error);
     return { success: false, message: "Failed to delete invoice" };
+  }
+}
+
+export async function createInvoiceWithItems(data: CreateInvoiceWithItemsSchema) {
+  try {
+    const isAdmin = await checkRole("admin");
+    if (!isAdmin) {
+      return { success: false, message: "Unauthorized" };
+    }
+
+    const validated = createInvoiceWithItemsSchema.safeParse(data);
+    if (!validated.success) {
+      return {
+        success: false,
+        message: "Invalid data",
+        errors: validated.error.flatten(),
+      };
+    }
+
+    const { items, ...invoiceData } = validated.data;
+
+    const result = await db.transaction(async (tx) => {
+      const [newInvoice] = await tx
+        .insert(invoices)
+        .values(invoiceData)
+        .returning();
+
+      if (items.length > 0) {
+        await tx.insert(invoice_items).values(
+          items.map((item) => ({
+            ...item,
+            invoice_id: newInvoice.id,
+          }))
+        );
+      }
+      return newInvoice;
+    });
+
+    revalidateTag("invoices", "max");
+    revalidateTag(`patient-invoices-${invoiceData.patient_id}`, "max");
+
+    return { success: true, data: result };
+  } catch (error) {
+    console.error("Error creating invoice with items:", error);
+    return { success: false, message: "Failed to create invoice" };
   }
 }
 

@@ -69,3 +69,11 @@ export const updateInvoiceItemSchema = createInvoiceItemSchema
   });
 
 export type UpdateInvoiceItemSchema = z.infer<typeof updateInvoiceItemSchema>;
+
+export const createInvoiceWithItemsSchema = createInvoiceSchema.extend({
+  items: z.array(createInvoiceItemSchema.omit({ invoice_id: true })),
+});
+
+export type CreateInvoiceWithItemsSchema = z.infer<
+  typeof createInvoiceWithItemsSchema
+>;
