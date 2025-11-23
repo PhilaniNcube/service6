@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/drizzle/client";
-import { invoice_items, invoices } from "@/drizzle/tables";
+import { invoice_items, invoices, InvoiceStatus } from "@/drizzle/tables";
 import { eq } from "drizzle-orm";
 import { checkRole } from "@/lib/roles";
 import {
@@ -228,5 +228,28 @@ export async function deleteInvoiceItem(id: number) {
   } catch (error) {
     console.error("Error deleting invoice item:", error);
     return { success: false, message: "Failed to delete invoice item" };
+  }
+}
+
+export async function updateInvoiceStatus(invoiceId: number, status: InvoiceStatus) {
+  try {
+    const isAdmin = await checkRole("admin");
+    if (!isAdmin) {
+      return { success: false, message: "Unauthorized" };
+    }
+
+    const [updatedInvoice] = await db
+      .update(invoices)
+      .set({ status: status, updatedAt: new Date() })
+      .where(eq(invoices.id, invoiceId))
+      .returning();
+
+    revalidateTag("invoices", "max");
+    revalidateTag(`invoice-${invoiceId}`, "max");
+
+    return { success: true, data: updatedInvoice };
+  } catch (error) {
+    console.error("Error updating invoice status:", error);
+    return { success: false, message: "Failed to update invoice status" };
   }
 }

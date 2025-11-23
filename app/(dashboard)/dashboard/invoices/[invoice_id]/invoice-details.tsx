@@ -26,8 +26,7 @@ export async function InvoiceDetails({ params }: { params: Promise<{ invoice_id:
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Invoice #{invoice.id}</h1>
+      <div className="flex items-center justify-end">
         <span className={`px-3 py-1 rounded-full text-sm font-medium ${
           invoice.status === 'paid' ? 'bg-green-100 text-green-800' : 
           invoice.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
