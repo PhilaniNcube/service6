@@ -1,8 +1,9 @@
 import React from 'react'
+import { InvoiceDetails } from './invoice-details'
 
-const InvoicePage = () => {
+const InvoicePage = async ({ params }: { params: Promise<{ invoice_id: string }> }) => {
   return (
-    <div>InvoicePage</div>
+    <InvoiceDetails params={params} />
   )
 }
 

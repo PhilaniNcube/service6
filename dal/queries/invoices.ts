@@ -6,14 +6,10 @@ import { checkRole } from "@/lib/roles";
 import { getCurrentUser } from "@/dal/queries/users";
 import { cacheTag } from "next/cache";
 
-export async function getAllInvoices(page = 1, limit = 10) {
-  "use cache: private";
+export async function getAllInvoicesCached(page = 1, limit = 10) {
+  "use cache";
   cacheTag("invoices");
-  const isAdmin = await checkRole("admin");
-  if (!isAdmin) {
-    throw new Error("Unauthorized");
-  }
-
+  
   const offset = (page - 1) * limit;
 
   const data = await db
@@ -42,31 +38,21 @@ export async function getAllInvoices(page = 1, limit = 10) {
   };
 }
 
-export async function getInvoicesForPatient(
+export async function getAllInvoices(page = 1, limit = 10) {
+  const isAdmin = await checkRole("admin");
+  if (!isAdmin) {
+    throw new Error("Unauthorized");
+  }
+  return getAllInvoicesCached(page, limit);
+}
+
+export async function getInvoicesForPatientCached(
   patientId: number,
   page = 1,
   limit = 10
 ) {
-  "use cache: private";
+  "use cache";
   cacheTag("invoices", `patient-invoices-${patientId}`);
-  const isAdmin = await checkRole("admin");
-  const user = await getCurrentUser();
-
-  if (!user) {
-    throw new Error("Unauthorized");
-  }
-
-  if (!isAdmin) {
-    const [patient] = await db
-      .select()
-      .from(patients)
-      .where(eq(patients.id, patientId))
-      .limit(1);
-
-    if (!patient || patient.user_id !== user.id) {
-      throw new Error("Unauthorized");
-    }
-  }
 
   const offset = (page - 1) * limit;
 
@@ -95,9 +81,11 @@ export async function getInvoicesForPatient(
   };
 }
 
-export async function getInvoiceById(invoiceId: number) {
-  "use cache";
-  cacheTag("invoices", `invoice-${invoiceId}`);
+export async function getInvoicesForPatient(
+  patientId: number,
+  page = 1,
+  limit = 10
+) {
   const isAdmin = await checkRole("admin");
   const user = await getCurrentUser();
 
@@ -105,11 +93,52 @@ export async function getInvoiceById(invoiceId: number) {
     throw new Error("Unauthorized");
   }
 
+  if (!isAdmin) {
+    const [patient] = await db
+      .select()
+      .from(patients)
+      .where(eq(patients.id, patientId))
+      .limit(1);
+
+    if (!patient || patient.user_id !== user.id) {
+      throw new Error("Unauthorized");
+    }
+  }
+
+  return getInvoicesForPatientCached(patientId, page, limit);
+}
+
+export async function getInvoiceByIdCached(invoiceId: number) {
+  "use cache";
+  cacheTag("invoices", `invoice-${invoiceId}`);
+
   const [invoice] = await db
     .select()
     .from(invoices)
     .where(eq(invoices.id, invoiceId))
     .limit(1);
+
+  if (!invoice) {
+    return null;
+  }
+
+  const items = await db
+    .select()
+    .from(invoice_items)
+    .where(eq(invoice_items.invoice_id, invoiceId));
+
+  return { ...invoice, items };
+}
+
+export async function getInvoiceById(invoiceId: number) {
+  const isAdmin = await checkRole("admin");
+  const user = await getCurrentUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const invoice = await getInvoiceByIdCached(invoiceId);
 
   if (!invoice) {
     return null;
@@ -127,10 +156,5 @@ export async function getInvoiceById(invoiceId: number) {
     }
   }
 
-  const items = await db
-    .select()
-    .from(invoice_items)
-    .where(eq(invoice_items.invoice_id, invoiceId));
-
-  return { ...invoice, items };
+  return invoice;
 }

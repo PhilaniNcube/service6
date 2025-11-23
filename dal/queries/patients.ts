@@ -76,3 +76,26 @@ export const getPatientByUserId = cache(async (userId: number) => {
 
   return patient || null;
 });
+
+export const getPatientById = cache(async (patientId: number) => {
+  const [row] = await db
+    .select({
+      id: patients.id,
+      user_id: patients.user_id,
+      referring_physician_id: patients.referring_physician_id,
+      patient_consent: patients.patient_consent,
+      createdAt: patients.createdAt,
+      updatedAt: patients.updatedAt,
+      first_name: users.first_name,
+      last_name: users.last_name,
+      email: users.email,
+      phone_number: users.phone_number,
+      country: users.country,
+    })
+    .from(patients)
+    .leftJoin(users, eq(patients.user_id, users.id))
+    .where(eq(patients.id, patientId))
+    .limit(1);
+
+  return row || null;
+});
