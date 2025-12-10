@@ -19,10 +19,20 @@ type UploadResult = {
   documentId?: number;
 };
 
-const UploadDocumentForm: React.FC = () => {
+interface UploadDocumentFormProps {
+  defaultDocumentType?: string;
+  onSuccess?: () => void;
+  className?: string;
+}
+
+const UploadDocumentForm: React.FC<UploadDocumentFormProps> = ({
+  defaultDocumentType = "valid_passport",
+  onSuccess,
+  className,
+}) => {
   const { userId } = useAuth();
   const [file, setFile] = useState<File | null>(null);
-  const [documentType, setDocumentType] = useState<string>("valid_passport");
+  const [documentType, setDocumentType] = useState<string>(defaultDocumentType);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<UploadResult | null>(null);
@@ -59,6 +69,10 @@ const UploadDocumentForm: React.FC = () => {
         url: data.url ?? null,
         documentId: data.documentId,
       });
+
+      if (onSuccess) {
+        onSuccess();
+      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err?.message || "An unexpected error occurred");
@@ -68,7 +82,7 @@ const UploadDocumentForm: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className={`space-y-4 ${className}`}>
       <form onSubmit={handleSubmit} className="space-y-4 max-w-3xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
