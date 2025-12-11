@@ -1,7 +1,11 @@
+
 import React, { Suspense } from "react";
 import { ClientOverview } from "./_components/client-overview";
-import { ClientMedicalHistory } from "./_components/client-medical-history";
 import { ClientDesiredProcedures } from "./_components/client-desired-procedures";
+import { ClientMedicalHistory } from "./_components/client-medical-history";
+import { ClientOverviewSkeleton } from "./_components/client-overview.skeleton";
+import { ClientDesiredProceduresSkeleton } from "./_components/client-desired-procedures.skeleton";
+import { ClientMedicalHistorySkeleton } from "./_components/client-medical-history.skeleton";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const paramsPromise = params;
@@ -19,15 +23,15 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
       <div className="grid gap-6">
         {/* Client Overview */}
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<ClientOverviewSkeleton />}>
           <ClientOverview params={paramsPromise} />
         </Suspense>
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<ClientDesiredProceduresSkeleton />}>
           <ClientDesiredProcedures params={paramsPromise} />
         </Suspense>
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<ClientMedicalHistorySkeleton />}>
           <ClientMedicalHistory params={paramsPromise} />
         </Suspense>
       </div>
@@ -36,3 +40,5 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 };
 
 export default page;
+
+
