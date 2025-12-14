@@ -15,6 +15,7 @@ import {
   Wind, 
   Scissors
 } from "lucide-react"
+import { Route } from "next"
 
 const categories = [
   {
@@ -177,7 +178,7 @@ export default function TreatmentsPage() {
             {categories.map((category) => (
               <Link
                 key={category.title}
-                href={category.href}
+                href={category.href as Route}
                 className="group relative overflow-hidden rounded-2xl border bg-card p-6 transition-all hover:shadow-lg hover:-translate-y-1 block"
               >
                 <div className={`flex h-12 w-12 items-center justify-center rounded-lg ${category.bgColor} mb-4`}>
