@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Heart } from "lucide-react"
 import { MobileNav } from "./mobile-nav"
+import { MainNav } from "./main-nav"
 import Link from "next/link"
 import { Route } from "next"
 import { Suspense } from "react"
@@ -8,6 +9,7 @@ import { AuthButtons } from "./auth-buttons"
 
 export function Navigation() {
   const navLinks = [
+    { href: "/treatments", label: "Treatments" },
     { href: "#services", label: "Services" },
     { href: "#how-it-works", label: "How It Works" },
     { href: "#about", label: "About" },
@@ -26,16 +28,8 @@ export function Navigation() {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href as Route<string>}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <div className="hidden items-center gap-4 md:flex">
+          <MainNav />
           <Suspense fallback={<Button size="sm" disabled>Loading...</Button>}>
             <AuthButtons />
           </Suspense>
