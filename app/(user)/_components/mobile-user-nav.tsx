@@ -46,7 +46,7 @@ export function MobileUserNav() {
           <SheetTitle>
             <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
               <Home className="h-5 w-5" />
-              <span>Services6 Medical</span>
+              <span>ApexMed</span>
             </Link>
           </SheetTitle>
         </SheetHeader>

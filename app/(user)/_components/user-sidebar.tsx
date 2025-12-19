@@ -56,7 +56,7 @@ export function UserSidebar() {
                   <Home className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Services6 Medical</span>
+                  <span className="truncate font-semibold">ApexMed</span>
                   <span className="truncate text-xs">Patient Portal</span>
                 </div>
               </Link>

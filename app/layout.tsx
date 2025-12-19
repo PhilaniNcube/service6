@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Services6",
+  title: "ApexMed",
   description: "Medical Tourism Simplified",
 };
 

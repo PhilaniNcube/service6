@@ -101,10 +101,10 @@ export function ContactForm() {
                 <div>
                   <div className="font-semibold text-card-foreground mb-1">Email Us</div>
                   <a
-                    href="mailto:info@Services6medical.com"
+                    href="mailto:info@apexmed.com"
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    info@Services6medical.com
+                    info@apexmed.com
                   </a>
                 </div>
               </div>
