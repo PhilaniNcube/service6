@@ -12,6 +12,7 @@ export function Navigation() {
     { href: "/treatments", label: "Treatments" },
     { href: "#services", label: "Services" },
     { href: "#how-it-works", label: "How It Works" },
+    { href: "/meet-our-team", label: "Team" },
     { href: "#about", label: "About" },
     { href: "#contact", label: "Contact" },
   ]
