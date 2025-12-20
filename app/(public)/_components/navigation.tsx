@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button"
-import { Heart } from "lucide-react"
 import { MobileNav } from "./mobile-nav"
 import { MainNav } from "./main-nav"
 import Link from "next/link"
-import { Route } from "next"
+
 import { Suspense } from "react"
 import { AuthButtons } from "./auth-buttons"
 import Image from "next/image"
