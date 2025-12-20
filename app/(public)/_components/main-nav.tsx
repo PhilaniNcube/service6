@@ -124,6 +124,13 @@ export function MainNav() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
+            <Link href={"/blog" as Route} className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
+              Blog
+            </Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild>
             <Link href="#about" className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
               About
             </Link>

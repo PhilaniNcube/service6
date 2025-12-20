@@ -14,12 +14,13 @@ export function Navigation() {
     { href: "#services", label: "Services" },
     { href: "#how-it-works", label: "How It Works" },
     { href: "/meet-our-team", label: "Team" },
+    { href: "/blog", label: "Blog" },
     { href: "#about", label: "About" },
     { href: "#contact", label: "Contact" },
   ]
 
   return (
-    <nav className="container mx-auto px-4 py-6">
+    <header className="container mx-auto px-4 py-6">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -43,6 +44,6 @@ export function Navigation() {
         {/* Mobile Navigation */}
         <MobileNav navLinks={navLinks} />
       </div>
-    </nav>
+    </header>
   )
 }
