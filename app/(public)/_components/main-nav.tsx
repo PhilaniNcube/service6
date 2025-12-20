@@ -86,7 +86,7 @@ export function MainNav() {
         <NavigationMenuItem>
           <NavigationMenuTrigger className="bg-transparent">Treatments</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[600px] md:grid-cols-2 lg:w-[900px] lg:grid-cols-3 xl:w-[1000px] xl:grid-cols-4">
+            <ul className="grid w-100 gap-3 p-4 md:w-150 md:grid-cols-2 lg:w-225 lg:grid-cols-3 xl:w-250 xl:grid-cols-4">
               {treatments.map((treatment) => (
                 <ListItem
                   key={treatment.title}
