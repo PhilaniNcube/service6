@@ -4,9 +4,6 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   typedRoutes: true,
-  experimental: {
-    turbopackFileSystemCacheForDev: true,
-  },
   // Allow ngrok domains
   async headers() {
     return [

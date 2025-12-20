@@ -11,16 +11,16 @@ import Image from "next/image"
 export function Navigation() {
   const navLinks = [
     { href: "/treatments", label: "Treatments" },
-    { href: "#services", label: "Services" },
-    { href: "#how-it-works", label: "How It Works" },
+    { href: "/#services", label: "Services" },
+    { href: "/#how-it-works", label: "How It Works" },
     { href: "/meet-our-team", label: "Team" },
     { href: "/blog", label: "Blog" },
-    { href: "#about", label: "About" },
-    { href: "#contact", label: "Contact" },
+    { href: "/#about", label: "About" },
+    { href: "/#contact", label: "Contact" },
   ]
 
   return (
-    <header className="container mx-auto px-4 py-6">
+    <header className="container mx-auto px-4 py-6 sticky top-0 z-50 bg-background">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">

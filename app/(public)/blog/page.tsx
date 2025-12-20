@@ -63,7 +63,7 @@ export default function BlogPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}` as Route}
-                className="group relative overflow-hidden rounded-2xl border bg-card hover:shadow-lg hover:-translate-y-1 transition-all duration-300 block flex flex-col h-full"
+                className="group relative overflow-hidden rounded-2xl border bg-card hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col h-full"
               >
                 {/* Image */}
                 <div className="relative aspect-video w-full overflow-hidden">
@@ -75,7 +75,7 @@ export default function BlogPage() {
                   />
                 </div>
                 
-                <div className="p-6 flex flex-col flex-grow">
+                <div className="p-6 flex flex-col grow">
                   {/* Category Badge */}
                   <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${post.bgColor} mb-4 w-fit`}>
                     <Tag className={`h-3.5 w-3.5 ${post.color}`} />

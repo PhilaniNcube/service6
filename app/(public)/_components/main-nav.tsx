@@ -103,14 +103,14 @@ export function MainNav() {
         {/* Other Links */}
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="#services" className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
+            <Link href="/#services" className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
               Services
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="#how-it-works" className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
+            <Link href="/#how-it-works" className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
               How It Works
             </Link>
           </NavigationMenuLink>
@@ -131,14 +131,14 @@ export function MainNav() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="#about" className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
+            <Link href="/#about" className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
               About
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="#contact" className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
+            <Link href="/#contact" className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
               Contact
             </Link>
           </NavigationMenuLink>
