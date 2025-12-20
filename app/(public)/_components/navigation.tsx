@@ -19,7 +19,7 @@ export function Navigation() {
   ]
 
   return (
-    <header className="container mx-auto px-4 py-6 sticky top-0 z-50 bg-background">
+    <header className="container mx-auto px-4 py-5 sticky top-0 z-50 bg-background">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
