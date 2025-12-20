@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm run db:migrate:prod && next build",
     "start": "next start",
     "lint": "eslint",
     "db:generate": "dotenv -e .env.local -- drizzle-kit generate",
     "db:migrate": "dotenv -e .env.local -- drizzle-kit migrate",
     "db:migrate:run": "dotenv -e .env.local -- node drizzle/migrate.mjs",
+    "db:migrate:prod": "node drizzle/migrate.mjs",
     "db:seed:procedures": "dotenv -e .env.local -- node scripts/seed-procedures.mjs",
     "db:push": "dotenv -e .env.local -- drizzle-kit push",
     "db:studio": "dotenv -e .env.local -- drizzle-kit studio"
