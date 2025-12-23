@@ -30,3 +30,4 @@ export * from "./specialties";
 export * from "./referrals";
 export * from "./patients";
 export * from "./documents";
+export * from "./contact";

@@ -2,27 +2,50 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useActionState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Phone, MapPin } from "lucide-react"
+import { Mail, Phone } from "lucide-react"
+import { Field, FieldLabel, FieldError } from "@/components/ui/field"
+import { sendContactEmail } from "@/dal/actions"
+import { toast } from "sonner"
+
+const contactFormSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(10, "Phone number must be at least 10 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+})
+
+type ContactFormData = z.infer<typeof contactFormSchema>
 
 export function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
+  const [state, formAction, pending] = useActionState(sendContactEmail, {
+    success: false,
     message: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission
-    console.log("Form submitted:", formData)
-  }
+  const {
+    register,
+    formState: { errors },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+  })
+
+  useEffect(() => {
+    if (state.success) {
+      toast.success(state.message)
+      reset()
+    } else if (state.message) {
+      toast.error(state.message)
+    }
+  }, [state, reset])
 
   return (
     <section className="pb-16 bg-muted/30" id="contact">
@@ -39,54 +62,68 @@ export function ContactForm() {
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <Card className="p-8 bg-card">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form action={formAction} className="space-y-6">
                 <div className="grid gap-6 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Full Name</Label>
+                  <Field data-invalid={!!errors.name || !!state.errors?.name}>
+                    <FieldLabel htmlFor="name">Full Name</FieldLabel>
                     <Input
                       id="name"
                       placeholder="John Doe"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
+                      {...register("name")}
+                      disabled={pending}
                     />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
+                    <FieldError>
+                      {errors.name?.message || state.errors?.name?.[0]}
+                    </FieldError>
+                  </Field>
+
+                  <Field data-invalid={!!errors.email || !!state.errors?.email}>
+                    <FieldLabel htmlFor="email">Email Address</FieldLabel>
                     <Input
                       id="email"
                       type="email"
                       placeholder="john@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required
+                      {...register("email")}
+                      disabled={pending}
                     />
-                  </div>
+                    <FieldError>
+                      {errors.email?.message || state.errors?.email?.[0]}
+                    </FieldError>
+                  </Field>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
+
+                <Field data-invalid={!!errors.phone || !!state.errors?.phone}>
+                  <FieldLabel htmlFor="phone">Phone Number</FieldLabel>
                   <Input
                     id="phone"
                     type="tel"
-                    placeholder="+234 123 456 7890"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    required
+                    placeholder="+27 123 456 789"
+                    {...register("phone")}
+                    disabled={pending}
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Tell us about your medical needs</Label>
+                  <FieldError>
+                    {errors.phone?.message || state.errors?.phone?.[0]}
+                  </FieldError>
+                </Field>
+
+                <Field data-invalid={!!errors.message || !!state.errors?.message}>
+                  <FieldLabel htmlFor="message">
+                    Tell us about your medical needs
+                  </FieldLabel>
                   <Textarea
                     id="message"
                     placeholder="Please describe your condition and what treatment you're seeking..."
                     rows={6}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    required
+                    {...register("message")}
+                    disabled={pending}
                   />
-                </div>
-                <Button type="submit" size="lg" className="w-full">
-                  Request Consultation
+                  <FieldError>
+                    {errors.message?.message || state.errors?.message?.[0]}
+                  </FieldError>
+                </Field>
+
+                <Button type="submit" size="lg" className="w-full" disabled={pending}>
+                  {pending ? "Sending..." : "Request Consultation"}
                 </Button>
               </form>
             </Card>
@@ -101,10 +138,10 @@ export function ContactForm() {
                 <div>
                   <div className="font-semibold text-card-foreground mb-1">Email Us</div>
                   <a
-                    href="mailto:info@apexmed.com"
+                    href="mailto:info@apexmedsa.co.za"
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    info@apexmed.com
+                    info@apexmedsa.co.za
                   </a>
                 </div>
               </div>
@@ -123,18 +160,6 @@ export function ContactForm() {
                   >
                     +27 12 345 6789
                   </a>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-6 bg-card">
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                  <MapPin className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <div className="font-semibold text-card-foreground mb-1">Visit Us</div>
-                  <p className="text-sm text-muted-foreground">Cape Town, South Africa</p>
                 </div>
               </div>
             </Card>
