@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { User, FileText, Calendar, Settings, Home } from "lucide-react"
+import { User, FileText, Calendar, Home } from "lucide-react"
 import { Route } from "next"
 import { usePathname } from "next/navigation"
 import {
@@ -18,6 +18,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { UserButton } from "@clerk/nextjs"
+import Image from "next/image"
 
 const sidebarLinks = [
   {
@@ -56,7 +57,13 @@ export function UserSidebar() {
                   <Home className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">ApexMed</span>
+                  <Image
+                    src="/logo.webp"
+                    alt="Patient Portal Logo"
+                    width={100}
+                    height={24}
+                    className="mb-1"
+                  /> 
                   <span className="truncate text-xs">Patient Portal</span>
                 </div>
               </Link>

@@ -1,29 +1,16 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
-  IconCamera,
-  IconChartBar,
   IconClipboard,
   IconDashboard,
-  IconDatabase,
-  IconFileAi,
   IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
   IconListDetails,
-  IconReport,
-  IconSearch,
-  IconSettings,
-  IconTimeDuration90,
   IconTimelineEvent,
   IconUserHeart,
-  IconUsers,
-} from "@tabler/icons-react"
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
+} from "@tabler/icons-react";
+import { NavMain } from "@/components/nav-main";
+
 import {
   Sidebar,
   SidebarContent,
@@ -32,11 +19,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { StethoscopeIcon } from "lucide-react"
-import Link from "next/link"
-import { User } from "@clerk/nextjs/server"
-import { UserButton } from "@clerk/nextjs"
+} from "@/components/ui/sidebar";
+
+import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
+import Image from "next/image";
 
 const data = {
   user: {
@@ -75,10 +62,8 @@ const data = {
       url: "/dashboard/specialties",
       icon: IconListDetails,
     },
- 
   ],
-
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -88,11 +73,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:p-1.5!"
+              className="data-[slot=sidebar-menu-button]:p-2.5!"
             >
-              <Link href="/">
-                <StethoscopeIcon className="size-5!" />
-                <span className="text-base font-semibold">Services6</span>
+              <Link href="/" className="">
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <Image
+                    src="/logo.webp"
+                    alt="Patient Portal Logo"
+                    width={100}
+                    height={24}
+                    className=""
+                  />
+                </div>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -100,11 +92,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-       
       </SidebarContent>
       <SidebarFooter>
-       <UserButton />
+        <UserButton />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
