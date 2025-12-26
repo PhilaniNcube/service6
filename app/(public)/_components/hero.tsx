@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { SignUpButton } from "@clerk/nextjs";
 import { ArrowRight, Heart } from "lucide-react";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -27,13 +29,12 @@ export function Hero() {
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row">
-              <Button size="lg" className="gap-2">
-                Start Your Journey
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button size="lg" variant="outline">
-                Learn More
-              </Button>
+              <SignUpButton>
+                <Button size="lg" className="gap-2">
+                  Get Started
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </SignUpButton>
             </div>
           </div>
 
