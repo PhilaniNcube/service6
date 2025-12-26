@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import { Suspense } from "react";
+import { GoogleTagManager } from '@next/third-parties/google';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
           </ClerkProvider>
         </Suspense>
       </body>
+      <GoogleTagManager gtmId="GTM-WX67KHX3" />
     </html>
   );
 }
