@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from "next/link"
 import { 
   Sparkles, 
@@ -16,6 +17,34 @@ import {
   Scissors
 } from "lucide-react"
 import { Route } from "next"
+
+export const metadata: Metadata = {
+  title: 'Medical Treatments & Specialties - Comprehensive Healthcare Services | ApexMed',
+  description: 'Explore our comprehensive range of medical specialties including cosmetic surgery, orthopedics, cardiac care, neurosurgery, ophthalmology, dental, and more. World-class specialists in South Africa.',
+  keywords: [
+    'medical treatments South Africa',
+    'surgical specialties',
+    'cosmetic surgery',
+    'orthopedic surgery',
+    'cardiac surgery',
+    'neurosurgery',
+    'ophthalmology',
+    'dental surgery',
+    'bariatric surgery',
+    'general surgery',
+    'medical specialties',
+  ],
+  openGraph: {
+    title: 'Medical Treatments & Specialties | ApexMed',
+    description: 'Comprehensive range of medical specialties with world-class specialists in South Africa.',
+    url: 'https://www.apexmedsa.co.za/treatments',
+    siteName: 'ApexMed',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://www.apexmedsa.co.za/treatments',
+  },
+}
 
 const categories = [
   {
@@ -157,8 +186,35 @@ const categories = [
 ]
 
 export default function TreatmentsPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalOrganization',
+    name: 'ApexMed',
+    description: 'Comprehensive medical treatments and specialties in South Africa',
+    url: 'https://www.apexmedsa.co.za/treatments',
+    medicalSpecialty: categories.map((cat) => cat.title),
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Medical Specialties',
+      itemListElement: categories.map((cat, index) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'MedicalProcedure',
+          name: cat.title,
+          description: cat.description,
+        },
+        position: index + 1,
+      })),
+    },
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="bg-muted/30 py-20 md:py-32">
         <div className="container px-4 text-center">
@@ -200,6 +256,6 @@ export default function TreatmentsPage() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   )
 }

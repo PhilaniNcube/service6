@@ -1,11 +1,78 @@
+import type { Metadata } from 'next'
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, Tag, ArrowLeft } from "lucide-react"
 import { Route } from "next"
 
+export const metadata: Metadata = {
+  title: 'Medical Tourism Insurance Guide - Essential Coverage for Healthcare Abroad | ApexMed',
+  description: 'Complete guide to medical tourism insurance. Learn about essential coverage, what to look for, and how to protect yourself when traveling for healthcare abroad.',
+  keywords: [
+    'medical tourism insurance',
+    'healthcare travel insurance',
+    'surgery abroad insurance',
+    'medical travel coverage',
+    'international healthcare insurance',
+    'travel medical insurance',
+    'medical tourism guide',
+    'patient safety abroad',
+  ],
+  openGraph: {
+    title: 'ApexMed Medical Tourism Insurance Guide',
+    description: 'Essential insurance coverage for medical tourism. Protect your health and investment when traveling for healthcare abroad.',
+    url: 'https://www.apexmedsa.co.za/blog/medical-tourism-insurance-guide',
+    siteName: 'ApexMed',
+    images: [
+      {
+        url: '/images/blog/medical-tourism-insurance.png',
+        width: 1200,
+        height: 630,
+        alt: 'Medical Tourism Insurance Guide',
+      },
+    ],
+    type: 'article',
+    publishedTime: '2025-12-20',
+    authors: ['ApexMed'],
+  },
+  alternates: {
+    canonical: 'https://www.apexmedsa.co.za/blog/medical-tourism-insurance-guide',
+  },
+}
+
 export default function MedicalTourismInsuranceGuidePage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: 'ApexMed Medical Tourism Insurance Guide',
+    description: 'Ensuring your safety, confidence, and peace of mind while receiving care abroad',
+    image: 'https://www.apexmedsa.co.za/images/blog/medical-tourism-insurance.png',
+    datePublished: '2025-12-20',
+    dateModified: '2025-12-20',
+    author: {
+      '@type': 'Organization',
+      name: 'ApexMed',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ApexMed',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.apexmedsa.co.za/logo.png',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://www.apexmedsa.co.za/blog/medical-tourism-insurance-guide',
+    },
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="flex flex-col min-h-screen">
       {/* Back to Blog Link */}
       <div className="container px-4 py-8">
         <Link 
@@ -188,6 +255,6 @@ export default function MedicalTourismInsuranceGuidePage() {
           </article>
         </div>
       </section>
-    </div>
+    </>
   )
 }

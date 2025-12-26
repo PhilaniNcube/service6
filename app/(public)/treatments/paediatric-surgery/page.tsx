@@ -1,4 +1,18 @@
+import type { Metadata } from 'next'
 import { TreatmentList } from "../_components/treatment-list"
+
+export const metadata: Metadata = {
+  title: 'Paediatric Surgery in South Africa - Children\'s Surgery Specialists | ApexMed',
+  description: 'Expert paediatric surgery for infants, children, and adolescents. Congenital defect repair, appendectomy, hernia repair. Specialized children\'s surgical care.',
+  keywords: ['paediatric surgery South Africa', 'children\'s surgery', 'congenital defects', 'pediatric hernia repair', 'infant surgery', 'child surgery'],
+  openGraph: {
+    title: 'Paediatric Surgery | ApexMed',
+    url: 'https://www.apexmedsa.co.za/treatments/paediatric-surgery',
+  },
+  alternates: {
+    canonical: 'https://www.apexmedsa.co.za/treatments/paediatric-surgery',
+  },
+}
 
 const procedures = [
   "Congenital Hernia Repair (Inguinal, Umbilical)",
@@ -24,11 +38,26 @@ const procedures = [
 ]
 
 export default function PaediatricSurgeryPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalProcedure',
+    name: 'Paediatric Surgery',
+    description: 'Specialized surgical care for infants, children, and adolescents',
+    procedureType: procedures,
+    medicalSpecialty: 'Pediatric Surgery',
+  }
+
   return (
-    <TreatmentList
-      title="Paediatric Surgery"
-      description="Specialized and compassionate surgical care for infants, children, and adolescents, addressing congenital and acquired conditions."
-      procedures={procedures}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <TreatmentList
+        title="Paediatric Surgery"
+        description="Specialized and compassionate surgical care for infants, children, and adolescents, addressing congenital and acquired conditions."
+        procedures={procedures}
+      />
+    </>
   )
 }

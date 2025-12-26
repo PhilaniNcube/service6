@@ -1,7 +1,33 @@
+import type { Metadata } from 'next'
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, Tag, ArrowRight } from "lucide-react"
 import { Route } from "next"
+
+export const metadata: Metadata = {
+  title: 'ApexMed Blog - Medical Tourism Insights & Healthcare Guides',
+  description: 'Expert insights on medical tourism, healthcare abroad, patient guides, and the latest news in international healthcare excellence. Learn about procedures, destinations, and medical travel tips.',
+  keywords: [
+    'medical tourism blog',
+    'healthcare abroad',
+    'medical travel guides',
+    'surgery information',
+    'patient resources',
+    'healthcare insights',
+    'medical tourism tips',
+    'international healthcare',
+  ],
+  openGraph: {
+    title: 'ApexMed Blog - Medical Tourism Insights & Healthcare Guides',
+    description: 'Expert insights on medical tourism, patient guides, and international healthcare excellence.',
+    url: 'https://www.apexmedsa.co.za/blog',
+    siteName: 'ApexMed',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://www.apexmedsa.co.za/blog',
+  },
+}
 
 interface BlogPost {
   slug: string
@@ -41,8 +67,41 @@ const blogPosts: BlogPost[] = [
 ]
 
 export default function BlogPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'ApexMed Blog',
+    description: 'Insights, guides, and the latest news in medical tourism and healthcare excellence',
+    url: 'https://www.apexmedsa.co.za/blog',
+    publisher: {
+      '@type': 'Organization',
+      name: 'ApexMed',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.apexmedsa.co.za/logo.png',
+      },
+    },
+    blogPost: blogPosts.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.date,
+      url: `https://www.apexmedsa.co.za/blog/${post.slug}`,
+      image: `https://www.apexmedsa.co.za${post.image}`,
+      author: {
+        '@type': 'Organization',
+        name: 'ApexMed',
+      },
+    })),
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="bg-muted/30 py-20 md:py-32">
         <div className="container px-4 text-center">
@@ -117,6 +176,7 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   )
 }

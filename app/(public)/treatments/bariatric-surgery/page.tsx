@@ -1,4 +1,18 @@
+import type { Metadata } from 'next'
 import { TreatmentList } from "../_components/treatment-list"
+
+export const metadata: Metadata = {
+  title: 'Bariatric Surgery in South Africa - Weight Loss Surgery | ApexMed',
+  description: 'Expert bariatric surgery for weight loss. Gastric sleeve, gastric bypass, lap band, gastric balloon. Affordable weight loss surgery with experienced surgeons.',
+  keywords: ['bariatric surgery South Africa', 'weight loss surgery', 'gastric sleeve', 'gastric bypass', 'lap band', 'gastric balloon', 'obesity surgery'],
+  openGraph: {
+    title: 'Bariatric Surgery | ApexMed',
+    url: 'https://www.apexmedsa.co.za/treatments/bariatric-surgery',
+  },
+  alternates: {
+    canonical: 'https://www.apexmedsa.co.za/treatments/bariatric-surgery',
+  },
+}
 
 const procedures = [
   {

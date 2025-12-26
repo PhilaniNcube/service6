@@ -1,4 +1,18 @@
+import type { Metadata } from 'next'
 import { TreatmentList } from "../_components/treatment-list"
+
+export const metadata: Metadata = {
+  title: 'Vascular Surgery in South Africa - Artery & Vein Treatment | ApexMed',
+  description: 'Expert vascular surgery. Aneurysm repair, carotid surgery, peripheral artery bypass, varicose vein treatment, DVT surgery. Leading vascular surgeons.',
+  keywords: ['vascular surgery South Africa', 'aneurysm repair', 'carotid surgery', 'varicose veins', 'peripheral artery disease', 'DVT treatment'],
+  openGraph: {
+    title: 'Vascular Surgery | ApexMed',
+    url: 'https://www.apexmedsa.co.za/treatments/vascular-surgery',
+  },
+  alternates: {
+    canonical: 'https://www.apexmedsa.co.za/treatments/vascular-surgery',
+  },
+}
 
 const procedures = [
   "Endovascular Aneurysm Repair (EVAR/TEVAR)",
@@ -15,11 +29,26 @@ const procedures = [
 ]
 
 export default function VascularSurgeryPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalProcedure',
+    name: 'Vascular Surgery',
+    description: 'Advanced vascular treatments for arteries, veins, and lymphatic system',
+    procedureType: procedures,
+    medicalSpecialty: 'Vascular Surgery',
+  }
+
   return (
-    <TreatmentList
-      title="Vascular Surgery"
-      description="Advanced vascular treatments for conditions affecting your arteries, veins, and lymphatic system, improving circulation and vascular health."
-      procedures={procedures}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <TreatmentList
+        title="Vascular Surgery"
+        description="Advanced vascular treatments for conditions affecting your arteries, veins, and lymphatic system, improving circulation and vascular health."
+        procedures={procedures}
+      />
+    </>
   )
 }

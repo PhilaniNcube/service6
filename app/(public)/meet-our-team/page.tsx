@@ -1,10 +1,70 @@
-
+import type { Metadata } from 'next'
 import React from 'react';
 import Image from 'next/image';
 
+export const metadata: Metadata = {
+  title: 'Meet Our Team - Expert Medical Directors & Specialists | ApexMed',
+  description: 'Meet the expert medical directors behind ApexMed. Dr. Paul M Wondoh and Dr. Rogers Byebwa, both Specialist General Surgeons with Fellowship qualifications and international experience.',
+  keywords: [
+    'medical team South Africa',
+    'specialist surgeons',
+    'medical directors',
+    'FCS SA surgeons',
+    'general surgeons',
+    'medical tourism team',
+    'healthcare professionals',
+    'surgeon qualifications',
+  ],
+  openGraph: {
+    title: 'Meet Our Team - Expert Medical Directors | ApexMed',
+    description: 'Led by Dr. Paul M Wondoh and Dr. Rogers Byebwa, both Specialist General Surgeons with extensive international experience.',
+    url: 'https://www.apexmedsa.co.za/meet-our-team',
+    siteName: 'ApexMed',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://www.apexmedsa.co.za/meet-our-team',
+  },
+}
+
 export default function MeetOurTeamPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'Meet Our Team',
+    description: 'ApexMed leadership team of medical specialists',
+    url: 'https://www.apexmedsa.co.za/meet-our-team',
+    mainEntity: {
+      '@type': 'Organization',
+      name: 'ApexMed',
+      founder: [
+        {
+          '@type': 'Person',
+          name: 'Dr Paul M Wondoh',
+          jobTitle: 'Founder and Director',
+          description: 'Specialist General Surgeon with Fellowship of the College of Surgeons of South Africa (FCS SA) and Master of Medicine in Surgery (MMed)',
+          image: 'https://www.apexmedsa.co.za/Paul.jpeg',
+          qualification: ['FCS SA', 'MMed'],
+        },
+        {
+          '@type': 'Person',
+          name: 'Dr Rogers Byebwa',
+          jobTitle: 'Director',
+          description: 'Specialist General Surgeon with international experience in Canada, Fellowship of the College of Surgeons of South Africa (FCS SA) and Master of Medicine in Surgery (MMed)',
+          image: 'https://www.apexmedsa.co.za/Rodgers.jpeg',
+          qualification: ['FCS SA', 'MMed'],
+        },
+      ],
+    },
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="bg-muted/30 py-20 md:py-32">
         <div className="container px-4 text-center">
@@ -87,6 +147,6 @@ export default function MeetOurTeamPage() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

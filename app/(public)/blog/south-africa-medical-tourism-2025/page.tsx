@@ -1,11 +1,86 @@
+import type { Metadata } from 'next'
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, Tag, ArrowLeft } from "lucide-react"
 import { Route } from "next"
 
+export const metadata: Metadata = {
+  title: 'Why South Africa Is One of the World\'s Best Medical Tourism Destinations in 2025 | ApexMed Blog',
+  description: 'Discover why thousands of international patients choose South Africa for world-class surgery—from plastic and orthopedic surgery to cardiac, ENT, and dental care. Expert specialists, affordable costs, and short waiting times.',
+  keywords: [
+    'South Africa medical tourism',
+    'medical tourism 2025',
+    'South African surgeons',
+    'healthcare South Africa',
+    'medical travel Africa',
+    'cosmetic surgery South Africa',
+    'affordable surgery',
+    'orthopedic surgery South Africa',
+    'cardiac surgery Africa',
+  ],
+  openGraph: {
+    title: 'Why South Africa Is One of the World\'s Best Medical Tourism Destinations in 2025',
+    description: 'World-class surgery, expert specialists, affordable costs, and short waiting times make South Africa a premier medical tourism destination.',
+    url: 'https://www.apexmedsa.co.za/blog/south-africa-medical-tourism-2025',
+    siteName: 'ApexMed',
+    images: [
+      {
+        url: '/images/blog/south-africa-medical-tourism.png',
+        width: 1200,
+        height: 630,
+        alt: 'Medical Tourism in South Africa',
+      },
+    ],
+    type: 'article',
+    publishedTime: '2025-12-20',
+    authors: ['ApexMed'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Why South Africa Is One of the World\'s Best Medical Tourism Destinations in 2025',
+    description: 'Expert specialists, affordable costs, and world-class facilities.',
+    images: ['/images/blog/south-africa-medical-tourism.png'],
+  },
+  alternates: {
+    canonical: 'https://www.apexmedsa.co.za/blog/south-africa-medical-tourism-2025',
+  },
+}
+
 export default function SouthAfricaMedicalTourism2025Page() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: 'Why South Africa Is One of the World\'s Best Medical Tourism Destinations in 2025',
+    description: 'Discover why thousands of international patients choose South Africa for world-class surgery—from plastic and orthopedic surgery to cardiac, ENT, and dental care.',
+    image: 'https://www.apexmedsa.co.za/images/blog/south-africa-medical-tourism.png',
+    datePublished: '2025-12-20',
+    dateModified: '2025-12-20',
+    author: {
+      '@type': 'Organization',
+      name: 'ApexMed',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ApexMed',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.apexmedsa.co.za/logo.png',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': 'https://www.apexmedsa.co.za/blog/south-africa-medical-tourism-2025',
+    },
+    keywords: 'medical tourism, South Africa, healthcare, surgery, affordable medical care',
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="flex flex-col min-h-screen">
       {/* Back to Blog Link */}
       <div className="container px-4 py-8">
         <Link 
@@ -296,6 +371,6 @@ export default function SouthAfricaMedicalTourism2025Page() {
           </article>
         </div>
       </section>
-    </div>
+    </>
   )
 }
