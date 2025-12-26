@@ -45,6 +45,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://www.apexmedsa.co.za',
   },
+  verification: {
+    google: 'lAlV6hq1485RGeRGY0vvNIohSoCBcullHwkK6fwLJxw',
+  },
   robots: {
     index: true,
     follow: true,
