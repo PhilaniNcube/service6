@@ -40,7 +40,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ApexMed - Premium Medical Tourism in South Africa',
     description: 'World-class medical care in South Africa. Expert surgeons, affordable procedures, seamless service.',
-    images: ['/images/twitter-image.png'],
   },
   alternates: {
     canonical: 'https://www.apexmedsa.co.za',
