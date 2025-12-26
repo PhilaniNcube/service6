@@ -47,11 +47,25 @@ const procedures = [
 ]
 
 export default function BariatricSurgeryPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalProcedure',
+    name: 'Bariatric Surgery',
+    description: 'Effective weight-loss solutions for obesity',
+    medicalSpecialty: 'Bariatric Surgery',
+  }
+
   return (
-    <TreatmentList
-      title="Bariatric (Weight-Loss) Surgery"
-      description="Life-changing weight loss surgery options tailored to your needs, helping you achieve sustainable health and wellness."
-      procedures={procedures}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <TreatmentList
+        title="Bariatric (Weight-Loss) Surgery"
+        description="Life-changing weight loss surgery options tailored to your needs, helping you achieve sustainable health and wellness."
+        procedures={procedures}
+      />
+    </>
   )
 }

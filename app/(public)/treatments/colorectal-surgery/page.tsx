@@ -1,4 +1,18 @@
+import type { Metadata } from 'next'
 import { TreatmentList } from "../_components/treatment-list"
+
+export const metadata: Metadata = {
+  title: 'Colorectal Surgery in South Africa - Colon & Rectal Specialists | ApexMed',
+  description: 'Expert colorectal surgery. Colon cancer surgery, rectal cancer treatment, hemorrhoidectomy, fistula surgery, IBD surgery. Specialized colorectal surgeons.',
+  keywords: ['colorectal surgery South Africa', 'colon cancer surgery', 'rectal cancer', 'hemorrhoids treatment', 'fistula surgery', 'IBD surgery', 'stoma surgery'],
+  openGraph: {
+    title: 'Colorectal Surgery | ApexMed',
+    url: 'https://www.apexmedsa.co.za/treatments/colorectal-surgery',
+  },
+  alternates: {
+    canonical: 'https://www.apexmedsa.co.za/treatments/colorectal-surgery',
+  },
+}
 
 const procedures = [
   "Hemicolectomy (Right/Left)",
@@ -17,11 +31,26 @@ const procedures = [
 ]
 
 export default function ColorectalSurgeryPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalProcedure',
+    name: 'Colorectal Surgery',
+    description: 'Specialized surgical care for colon, rectum, and anus conditions',
+    procedureType: procedures,
+    medicalSpecialty: 'Colorectal Surgery',
+  }
+
   return (
-    <TreatmentList
-      title="Colorectal Surgery"
-      description="Specialized surgical care for conditions affecting the colon, rectum, and anus, including cancer, inflammatory bowel disease, and proctological conditions."
-      procedures={procedures}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <TreatmentList
+        title="Colorectal Surgery"
+        description="Specialized surgical care for conditions affecting the colon, rectum, and anus, including cancer, inflammatory bowel disease, and proctological conditions."
+        procedures={procedures}
+      />
+    </>
   )
 }
