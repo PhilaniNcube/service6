@@ -102,7 +102,7 @@ export default function SouthAfricaMedicalTourism2025Page() {
             </div>
             
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl text-balance mb-6">
-              Why South Africa Is One of the World's Best Medical Tourism Destinations in 2025
+              Why South Africa Is One of the World&apos;s Best Medical Tourism Destinations in 2025
             </h1>
             
             <p className="text-xl text-muted-foreground mb-8">
@@ -148,7 +148,7 @@ export default function SouthAfricaMedicalTourism2025Page() {
                 <li>Advanced technology and surgical outcomes comparable to Europe & the USA</li>
               </ul>
               <p>
-                ApexMed connects international patients to South Africa's finest medical specialists, ensuring a seamless journey from initial consultation to recovery.
+                ApexMed connects international patients to South Africa&apos;s finest medical specialists, ensuring a seamless journey from initial consultation to recovery.
               </p>
 
               <h2 className="text-2xl font-bold text-foreground mt-12 mb-4">1. South Africa Has World-Class Medical Specialists</h2>
@@ -167,7 +167,7 @@ export default function SouthAfricaMedicalTourism2025Page() {
               </p>
 
               <h2 className="text-2xl font-bold text-foreground mt-12 mb-4">2. Premium Private Hospitals That Match Global Standards</h2>
-              <p>South Africa's top private hospital groups include:</p>
+              <p>South Africa&apos;s top private hospital groups include:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Netcare</li>
                 <li>Life Healthcare</li>
@@ -251,7 +251,7 @@ export default function SouthAfricaMedicalTourism2025Page() {
               </p>
 
               <h2 className="text-2xl font-bold text-foreground mt-12 mb-4">5. Advanced Technology & Surgical Innovation</h2>
-              <p>South Africa's private health sector features:</p>
+              <p>South Africa&apos;s private health sector features:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Robotic surgery</li>
                 <li>Endoscopic and minimally invasive surgery</li>
@@ -266,7 +266,7 @@ export default function SouthAfricaMedicalTourism2025Page() {
 
               <h2 className="text-2xl font-bold text-foreground mt-12 mb-4">6. English-Speaking Country With Excellent Patient Communication</h2>
               <p>
-                South Africa's medical staff communicate in fluent English, making consultations and surgery discussions clear and safe for international patients.
+                South Africa&apos;s medical staff communicate in fluent English, making consultations and surgery discussions clear and safe for international patients.
               </p>
               <p>
                 ApexMed provides translations for patients that are not fluent in English.
@@ -371,6 +371,7 @@ export default function SouthAfricaMedicalTourism2025Page() {
           </article>
         </div>
       </section>
+      </div>
     </>
   )
 }

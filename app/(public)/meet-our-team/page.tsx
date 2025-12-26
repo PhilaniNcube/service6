@@ -147,6 +147,7 @@ export default function MeetOurTeamPage() {
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 }

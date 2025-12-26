@@ -157,7 +157,7 @@ export default function MedicalTourismInsuranceGuidePage() {
 
               <h2 className="text-2xl font-bold text-foreground mt-12 mb-4">2. Surgical Complications Insurance (Highly Recommended)</h2>
               <p>
-                Even in world-class hospitals, unexpected complications can happen. This insurance ensures you're financially protected.
+                Even in world-class hospitals, unexpected complications can happen. This insurance ensures you&apos;re financially protected.
               </p>
 
               <h3 className="text-xl font-semibold text-foreground mt-8 mb-3">Covers:</h3>
@@ -248,13 +248,14 @@ export default function MedicalTourismInsuranceGuidePage() {
               <div className="bg-emerald-50 border-l-4 border-emerald-600 p-6 my-8 rounded-r-lg">
                 <p className="text-foreground font-medium mb-2">Need help with insurance coverage?</p>
                 <p className="text-sm">
-                  Contact ApexMed today and we'll guide you through choosing the right protection for your medical journey.
+                  Contact ApexMed today and we&apos;ll guide you through choosing the right protection for your medical journey.
                 </p>
               </div>
             </div>
           </article>
         </div>
       </section>
+      </div>
     </>
   )
 }
