@@ -15,7 +15,7 @@ export async function Footer() {
               <span className="text-lg font-semibold text-foreground">ApexMed</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Connecting African patients with world-class healthcare in South Africa.
+              Connecting patients with world-class healthcare in South Africa.
             </p>
           </div>
 

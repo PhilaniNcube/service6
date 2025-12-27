@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card"
 const steps = [
   {
     number: "01",
-    title: "Initial Consultation",
+    title: "Initial Free Consultation",
     description: "Share your medical needs and we'll assess the best treatment options in South Africa.",
     linear: "from-orange-500 to-red-500",
   },

@@ -148,7 +148,7 @@ export default function SouthAfricaMedicalTourism2025Page() {
                 <li>Advanced technology and surgical outcomes comparable to Europe & the USA</li>
               </ul>
               <p>
-                ApexMed connects international patients to South Africa&apos;s finest medical specialists, ensuring a seamless journey from initial consultation to recovery.
+                ApexMed connects international patients to South Africa&apos;s finest medical specialists, ensuring a seamless journey from Initial Free Consultation to recovery.
               </p>
 
               <h2 className="text-2xl font-bold text-foreground mt-12 mb-4">1. South Africa Has World-Class Medical Specialists</h2>
