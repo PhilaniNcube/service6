@@ -14,6 +14,7 @@ export function Navigation() {
     { href: "/#how-it-works", label: "How It Works" },
     { href: "/meet-our-team", label: "Team" },
     { href: "/blog", label: "Blog" },
+    { href: "/faqs", label: "FAQs" },
     { href: "/#about", label: "About" },
     { href: "/#contact", label: "Contact" },
   ]
