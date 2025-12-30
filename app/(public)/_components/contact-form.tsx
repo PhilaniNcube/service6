@@ -155,10 +155,10 @@ export function ContactForm() {
                 <div>
                   <div className="font-semibold text-card-foreground mb-1">Call Us</div>
                   <a
-                    href="tel:+27123456789"
+                    href="tel:+27648721834"
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    +27 12 345 6789
+                    +27 64 872 1834
                   </a>
                 </div>
               </div>
