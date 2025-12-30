@@ -1,3 +1,5 @@
+"use cache"
+
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -5,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Privacy Policy for ApexMed Medical Tourism',
 }
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
   return (
     <div className="container mx-auto py-12 px-4 max-w-4xl">
       <h1 className="text-4xl font-bold mb-8">Privacy Policy</h1>
@@ -18,7 +20,7 @@ export default function PrivacyPolicyPage() {
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold text-foreground">1. Introduction</h2>
           <p>
-            Welcome to ApexMed ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about our policy, or our practices with regards to your personal information, please contact us.
+            Welcome to ApexMed (&#34;we,&#34; &#34;our,&#34; or &#34;us&#34;). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about our policy, or our practices with regards to your personal information, please contact us.
           </p>
         </section>
 
