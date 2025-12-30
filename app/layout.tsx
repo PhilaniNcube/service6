@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import { Suspense } from "react";
 import { GoogleTagManager } from '@next/third-parties/google';
+import { CookieBanner } from "@/components/cookie-banner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
           <ClerkProvider afterSignInUrl="/profile" afterSignOutUrl="/">
             {children}
             <Toaster />
+            <CookieBanner />
           </ClerkProvider>
         </Suspense>
       </body>
