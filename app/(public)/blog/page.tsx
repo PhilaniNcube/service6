@@ -43,6 +43,28 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: "affordable-ivf-treatment-packages-south-africa",
+    title: "Affordable IVF Treatment Packages in South Africa (2025 Guide)",
+    excerpt: "South Africa offers international-standard IVF fertility care at 40-70% lower costs than Europe or the USA. Discover affordable packages and high success rates.",
+    date: "2025-12-30",
+    category: "Fertility Treatment",
+    readTime: "8 min read",
+    color: "text-purple-600",
+    bgColor: "bg-purple-50",
+    image: "/images/blog/ivf.webp",
+  },
+  {
+    slug: "knee-and-hip-replacement-surgeries-south-africa",
+    title: "Knee and Hip Replacement Surgeries in South Africa (2025 Medical Tourism Guide)",
+    excerpt: "South Africa is a leading destination for knee and hip replacement surgery, offering international-standard care, modern implants, and 40-60% lower costs.",
+    date: "2025-12-30",
+    category: "Orthopaedic Surgery",
+    readTime: "10 min read",
+    color: "text-blue-600",
+    bgColor: "bg-blue-50",
+    image: "/images/blog/knee.webp",
+  },
+  {
     slug: "south-africa-medical-tourism-2025",
     title: "Why South Africa Is One of the World's Best Medical Tourism Destinations in 2025",
     excerpt: "Discover why thousands of international patients choose South Africa for world-class surgery—from plastic and orthopedic surgery to cardiac, ENT, and dental care.",
