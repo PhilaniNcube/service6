@@ -23,13 +23,13 @@ export async function Footer() {
             <h3 className="font-semibold text-foreground mb-4">Services</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Specialist Coordination
+                <Link href="/treatments" className="hover:text-primary transition-colors">
+              Treatments
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Travel Arrangements
+                <Link href="/#how-it-works" className="hover:text-primary transition-colors">
+                  How It Works
                 </Link>
               </li>
               <li>
@@ -48,23 +48,19 @@ export async function Footer() {
           <div>
             <h3 className="font-semibold text-foreground mb-4">Company</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
+             
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  About Us
+                <Link href="/meet-our-team" className="hover:text-primary transition-colors">
+                 Meet Our Team
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Our Team
+                <Link href="/blog" className="hover:text-primary transition-colors">
+                  Blog
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Testimonials
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/#contact" className="hover:text-primary transition-colors">
                   Contact
                 </Link>
               </li>
@@ -75,7 +71,7 @@ export async function Footer() {
             <h3 className="font-semibold text-foreground mb-4">Legal</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/privacy-policy" className="hover:text-primary transition-colors">
                   Privacy Policy
                 </Link>
               </li>
