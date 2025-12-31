@@ -2,6 +2,8 @@
 
 import { z } from "zod";
 import { Resend } from "resend";
+import db from "@/drizzle/client";
+import { leads } from "@/drizzle/tables";
 
 /**
  * Contact Form Action
@@ -146,6 +148,20 @@ export async function sendContactEmail(
         success: false,
         message: "Failed to send email. Please try again later.",
       };
+    }
+
+    // Save to leads table in database
+    try {
+      await db.insert(leads).values({
+        full_name: name,
+        email: email,
+        phone_number: phone,
+        message: message,
+      });
+    } catch (dbError) {
+      console.error("Database error while saving lead:", dbError);
+      // We still return success since the email was sent successfully
+      // The lead just wasn't saved to the database
     }
 
     return {

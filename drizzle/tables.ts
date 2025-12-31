@@ -476,3 +476,17 @@ export const invoice_items = sqliteTable("invoice_items", {
 
 export type InvoiceItem = typeof invoice_items.$inferSelect;
 export type NewInvoiceItem = typeof invoice_items.$inferInsert;
+
+export const leads = sqliteTable("leads", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  full_name: text("full_name").notNull(),
+  email: text("email").notNull(),
+  phone_number: text("phone_number"),
+  message: text("message"),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+});
+
+export type Lead = typeof leads.$inferSelect;
+export type NewLead = typeof leads.$inferInsert;
