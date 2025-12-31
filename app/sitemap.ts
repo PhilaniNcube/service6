@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/meet-our-team',
     '/treatments',
     '/faqs',
+    '/accommodation',
     '/blog/affordable-ivf-treatment-packages-south-africa',
     '/blog/knee-and-hip-replacement-surgeries-south-africa',
     '/blog/south-africa-medical-tourism-2025',

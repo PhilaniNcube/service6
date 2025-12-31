@@ -33,15 +33,11 @@ export async function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link href="/accommodation" className="hover:text-primary transition-colors">
                   Accommodation
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Documentation
-                </Link>
-              </li>
+             
             </ul>
           </div>
 
@@ -75,16 +71,7 @@ export async function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Medical Disclaimer
-                </Link>
-              </li>
+             
             </ul>
           </div>
         </div>
