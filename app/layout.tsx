@@ -34,7 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Suspense>
-          <ClerkProvider afterSignInUrl="/profile" afterSignOutUrl="/">
+          <ClerkProvider signInFallbackRedirectUrl="/profile" afterSignOutUrl="/">
             {children}
             <Toaster />
             <CookieBanner />
