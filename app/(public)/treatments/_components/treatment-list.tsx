@@ -19,7 +19,7 @@ export function TreatmentList({
   ctaLink = "/contact" as Route,
 }: TreatmentListProps) {
   return (
-    <div className="container py-12 md:py-20">
+    <div className="container mx-auto py-12 md:py-20">
       <div className="mx-auto max-w-4xl">
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">{title}</h1>
