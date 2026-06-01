@@ -92,7 +92,7 @@ export async function sendContactEmail(
 
     // Send email
     const { error } = await resend.emails.send({
-      from: "Apex Med SA Contact Form <onboarding@resend.dev>",
+      from: "Apex Med SA Contact Form <info@apexmedsa.co.za>",
       to: adminEmail,
       replyTo: email,
       subject: `New Contact Form Submission from ${name}`,
