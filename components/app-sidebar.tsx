@@ -7,6 +7,7 @@ import {
   IconFileDescription,
   IconListDetails,
   IconTimelineEvent,
+  IconUserCheck,
   IconUserHeart,
 } from "@tabler/icons-react";
 import { NavMain } from "@/components/nav-main";
@@ -46,6 +47,11 @@ const data = {
       title: "Doctors",
       url: "/dashboard/doctors",
       icon: IconClipboard,
+    },
+    {
+      title: "Requests",
+      url: "/dashboard/doctors/requests",
+      icon: IconUserCheck,
     },
     {
       title: "Appointments",

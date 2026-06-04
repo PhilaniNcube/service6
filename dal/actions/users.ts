@@ -1,16 +1,17 @@
 "use server";
 
 import db from "@/drizzle/client";
-import { users, type ContactMethod, medical_background } from "@/drizzle/tables";
-import { eq } from "drizzle-orm";
+import { users, type ContactMethod, medical_background, doctor_requests } from "@/drizzle/tables";
+import { eq, and } from "drizzle-orm";
 import {  revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
-import { clerkClient } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import type { Roles } from "@/types/global";
 import type {
   UpdateUserState,
   AddMedicalBackgroundState,
-  UpdateUserRoleState,
+  RequestDoctorRoleState,
+  ReviewDoctorRequestState,
 } from "./types";
 
 // Validation schema for user update
@@ -194,9 +195,9 @@ export async function addMedicalBackground(
  * @returns State object with success status and message
  */
 export async function updateUserRoleToDoctor(
-  prevState: UpdateUserRoleState,
+  prevState: RequestDoctorRoleState,
   formData: FormData
-): Promise<UpdateUserRoleState> {
+): Promise<RequestDoctorRoleState> {
   try {
     const clerk_id = formData.get("clerk_id") as string;
 
@@ -207,28 +208,208 @@ export async function updateUserRoleToDoctor(
       };
     }
 
-    // Update the user's public metadata in Clerk
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.clerk_id, clerk_id))
+      .limit(1);
+
+    if (!user) {
+      return {
+        success: false,
+        message: "User not found",
+      };
+    }
+
+    const [existingRequest] = await db
+      .select()
+      .from(doctor_requests)
+      .where(
+        and(
+          eq(doctor_requests.clerk_id, clerk_id),
+          eq(doctor_requests.status, "pending")
+        )
+      )
+      .limit(1);
+
+    if (existingRequest) {
+      return {
+        success: false,
+        message: "You already have a pending request",
+      };
+    }
+
+    await db.insert(doctor_requests).values({
+      user_id: user.id,
+      clerk_id,
+      status: "pending",
+    });
+
+    revalidateTag("profile", "max");
+    revalidateTag("doctor-requests", "max");
+    revalidatePath("/profile");
+
+    return {
+      success: true,
+      message: "Your request to become a doctor has been submitted for approval.",
+    };
+  } catch (error) {
+    console.error("Error requesting doctor role:", error);
+    return {
+      success: false,
+      message:
+        "An error occurred while submitting your request. Please try again.",
+    };
+  }
+}
+
+export async function approveDoctorRequest(
+  prevState: ReviewDoctorRequestState,
+  formData: FormData
+): Promise<ReviewDoctorRequestState> {
+  try {
+    const request_id = formData.get("request_id") as string;
+
+    if (!request_id) {
+      return {
+        success: false,
+        message: "Request ID is required",
+      };
+    }
+
+    const { sessionClaims } = await auth();
+    const adminClerkId = sessionClaims?.sub;
+
+    if (!adminClerkId || sessionClaims?.metadata?.role !== "admin") {
+      return {
+        success: false,
+        message: "Unauthorized",
+      };
+    }
+
+    const [request] = await db
+      .select()
+      .from(doctor_requests)
+      .where(eq(doctor_requests.id, Number(request_id)))
+      .limit(1);
+
+    if (!request) {
+      return {
+        success: false,
+        message: "Request not found",
+      };
+    }
+
+    if (request.status !== "pending") {
+      return {
+        success: false,
+        message: "Request has already been reviewed",
+      };
+    }
+
     const client = await clerkClient();
-    await client.users.updateUserMetadata(clerk_id, {
+    await client.users.updateUserMetadata(request.clerk_id, {
       publicMetadata: {
         role: "doctor" as Roles,
       },
     });
 
-    // Revalidate to update the UI
-    revalidateTag("profile", "max");
-    revalidatePath("/profile");
+    await db
+      .update(doctor_requests)
+      .set({
+        status: "approved",
+        reviewed_by: adminClerkId,
+        reviewed_at: new Date(),
+        updatedAt: new Date(),
+      })
+      .where(eq(doctor_requests.id, Number(request_id)));
+
+    revalidateTag("doctor-requests", "max");
+    revalidateTag("check-role", "max");
+    revalidatePath("/dashboard/doctors/requests");
+    revalidatePath("/dashboard/doctors");
 
     return {
       success: true,
-      message: "Role updated to doctor successfully!",
+      message: "Doctor request approved successfully.",
     };
   } catch (error) {
-    console.error("Error updating user role:", error);
+    console.error("Error approving doctor request:", error);
     return {
       success: false,
       message:
-        "An error occurred while updating your role. Please try again.",
+        "An error occurred while approving the request. Please try again.",
+    };
+  }
+}
+
+export async function rejectDoctorRequest(
+  prevState: ReviewDoctorRequestState,
+  formData: FormData
+): Promise<ReviewDoctorRequestState> {
+  try {
+    const request_id = formData.get("request_id") as string;
+
+    if (!request_id) {
+      return {
+        success: false,
+        message: "Request ID is required",
+      };
+    }
+
+    const { sessionClaims } = await auth();
+    const adminClerkId = sessionClaims?.sub;
+
+    if (!adminClerkId || sessionClaims?.metadata?.role !== "admin") {
+      return {
+        success: false,
+        message: "Unauthorized",
+      };
+    }
+
+    const [request] = await db
+      .select()
+      .from(doctor_requests)
+      .where(eq(doctor_requests.id, Number(request_id)))
+      .limit(1);
+
+    if (!request) {
+      return {
+        success: false,
+        message: "Request not found",
+      };
+    }
+
+    if (request.status !== "pending") {
+      return {
+        success: false,
+        message: "Request has already been reviewed",
+      };
+    }
+
+    await db
+      .update(doctor_requests)
+      .set({
+        status: "rejected",
+        reviewed_by: adminClerkId,
+        reviewed_at: new Date(),
+        updatedAt: new Date(),
+      })
+      .where(eq(doctor_requests.id, Number(request_id)));
+
+    revalidateTag("doctor-requests", "max");
+    revalidatePath("/dashboard/doctors/requests");
+
+    return {
+      success: true,
+      message: "Doctor request rejected.",
+    };
+  } catch (error) {
+    console.error("Error rejecting doctor request:", error);
+    return {
+      success: false,
+      message:
+        "An error occurred while rejecting the request. Please try again.",
     };
   }
 }

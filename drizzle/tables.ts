@@ -490,3 +490,36 @@ export const leads = sqliteTable("leads", {
 
 export type Lead = typeof leads.$inferSelect;
 export type NewLead = typeof leads.$inferInsert;
+
+export const doctor_request_statuses = [
+  "pending",
+  "approved",
+  "rejected",
+] as const;
+
+export type DoctorRequestStatus = (typeof doctor_request_statuses)[number];
+
+export const doctor_requests = sqliteTable("doctor_requests", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  user_id: integer("user_id")
+    .references(() => users.id)
+    .notNull(),
+  clerk_id: text("clerk_id")
+    .references(() => users.clerk_id)
+    .notNull(),
+  status: text("status")
+    .$type<DoctorRequestStatus>()
+    .notNull()
+    .$default(() => "pending"),
+  reviewed_by: text("reviewed_by"),
+  reviewed_at: integer("reviewed_at", { mode: "timestamp" }),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .$default(() => new Date()),
+});
+
+export type DoctorRequest = typeof doctor_requests.$inferSelect;
+export type NewDoctorRequest = typeof doctor_requests.$inferInsert;

@@ -37,7 +37,7 @@ export function UpdateRoleButton({ clerkId }: UpdateRoleButtonProps) {
         className="gap-2"
       >
         <UserCog className="h-4 w-4" />
-        {pending ? "Updating..." : "Sign Up As A Doctor"}
+        {pending ? "Submitting..." : "Sign Up As A Doctor"}
       </Button>
     </form>
   );

@@ -1,6 +1,6 @@
 import "server-only";
 import db from "@/drizzle/client";
-import { referring_physicians, users } from "@/drizzle/tables";
+import { doctor_requests, referring_physicians, users } from "@/drizzle/tables";
 import { asc, desc, eq, inArray } from "drizzle-orm";
 import { cache } from "react";
 import { clerkClient, currentUser } from "@clerk/nextjs/server";
@@ -227,3 +227,69 @@ export const isDoctorReferringByClerkId = cache(async (clerkId: string) => {
 
   return !!row;
 });
+
+export async function getPendingDoctorRequests() {
+  "use cache: private";
+  cacheTag("doctor-requests");
+
+  try {
+    const requests = await db
+      .select({
+        id: doctor_requests.id,
+        clerk_id: doctor_requests.clerk_id,
+        status: doctor_requests.status,
+        created_at: doctor_requests.createdAt,
+        user_first_name: users.first_name,
+        user_last_name: users.last_name,
+        user_email: users.email,
+      })
+      .from(doctor_requests)
+      .innerJoin(users, eq(doctor_requests.clerk_id, users.clerk_id))
+      .where(eq(doctor_requests.status, "pending"))
+      .orderBy(desc(doctor_requests.createdAt));
+
+    return requests;
+  } catch (error) {
+    unstable_rethrow(error);
+    console.error("Error fetching pending doctor requests:", error);
+    throw new Error("Failed to fetch pending doctor requests");
+  }
+}
+
+export async function getDoctorRequestByClerkId(clerkId: string) {
+  "use cache: private";
+  cacheTag("doctor-requests");
+
+  try {
+    const [request] = await db
+      .select()
+      .from(doctor_requests)
+      .where(eq(doctor_requests.clerk_id, clerkId))
+      .orderBy(desc(doctor_requests.createdAt))
+      .limit(1);
+
+    return request || null;
+  } catch (error) {
+    unstable_rethrow(error);
+    console.error("Error fetching doctor request:", error);
+    throw new Error("Failed to fetch doctor request");
+  }
+}
+
+export async function getPendingDoctorRequestCount() {
+  "use cache: private";
+  cacheTag("doctor-requests");
+
+  try {
+    const result = await db
+      .select({ count: doctor_requests.id })
+      .from(doctor_requests)
+      .where(eq(doctor_requests.status, "pending"));
+
+    return result.length;
+  } catch (error) {
+    unstable_rethrow(error);
+    console.error("Error counting pending doctor requests:", error);
+    throw new Error("Failed to count pending doctor requests");
+  }
+}

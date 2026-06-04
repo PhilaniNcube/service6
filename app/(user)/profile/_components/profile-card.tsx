@@ -8,8 +8,8 @@ import { ProfileEditDialog } from "./profile-edit-dialog";
 import { redirect } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Mail, Phone, MapPin, Users, Heart } from "lucide-react";
-import { getCurrentUser } from "@/dal/queries/users";
+import { Mail, Phone, MapPin, Users, Heart, Clock } from "lucide-react";
+import { getCurrentUser, getDoctorRequestByClerkId } from "@/dal/queries/users";
 import { UpdateRoleButton } from "./update-role-button";
 import { getUserRole } from "@/lib/roles";
 import Link from "next/link";
@@ -23,6 +23,14 @@ const ProfileCard = async () => {
   if (!user) {
     redirect("/");
   }
+
+  const doctorRequest =
+    role !== "doctor" && role !== "admin"
+      ? await getDoctorRequestByClerkId(user.clerk_id)
+      : null;
+
+  const hasPendingRequest =
+    doctorRequest?.status === "pending";
 
   const initials =
     `${user.first_name?.[0] || ""}${user.last_name?.[0] || ""}`.toUpperCase() ||
@@ -82,7 +90,16 @@ const ProfileCard = async () => {
             </div>
           </div>
           <div className="flex gap-2">
-            {role !== "doctor" && role !== "admin" && (
+            {role !== "doctor" && role !== "admin" && hasPendingRequest && (
+              <Badge
+                variant="outline"
+                className="gap-1.5 border-amber-500/30 text-amber-600 bg-amber-50"
+              >
+                <Clock className="h-3.5 w-3.5" />
+                Request Pending
+              </Badge>
+            )}
+            {role !== "doctor" && role !== "admin" && !hasPendingRequest && (
               <UpdateRoleButton clerkId={user.clerk_id} />
             )}
             <ProfileEditDialog user={user} />

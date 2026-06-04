@@ -66,3 +66,13 @@ export type AddPatientToReferringPhysicianState = {
     referring_physician_id?: string[];
   };
 };
+
+export type RequestDoctorRoleState = {
+  success: boolean;
+  message: string;
+};
+
+export type ReviewDoctorRequestState = {
+  success: boolean;
+  message: string;
+};
