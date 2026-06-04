@@ -31,7 +31,7 @@ const features = [
 export function WhyChooseUs() {
   return (
     <section id="about" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl text-balance mb-6">
@@ -70,7 +70,7 @@ export function WhyChooseUs() {
               />
             </div>
             <Card className="absolute -bottom-6 -left-6 p-6 bg-card shadow-lg">
-              
+
               <div className="text-sm text-muted-foreground">
                 Compassion and Care
               </div>

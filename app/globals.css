@@ -120,3 +120,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom spacing for public route containers to increase whitespace on desktop */
+.public-route-wrapper .container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .public-route-wrapper .container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .public-route-wrapper .container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .public-route-wrapper .container {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .public-route-wrapper .container {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+}

@@ -20,18 +20,18 @@ export function Navigation() {
   ]
 
   return (
-    <header className="container mx-auto px-4 py-5 sticky top-0 z-50 bg-background">
+    <header className="container mx-auto px-4 md:px-8 lg:px-16 py-5 sticky top-0 z-50 bg-background">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <Image 
+          <Image
             src="/logo.webp"
             alt="ApexMed"
             width={1128}
             height={405}
-            className="w-36 object-cover" 
+            className="w-36 object-cover"
           />
-        </Link> 
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-4 md:flex">

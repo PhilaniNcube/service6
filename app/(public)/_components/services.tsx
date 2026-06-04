@@ -49,7 +49,7 @@ const services = [
 export function Services() {
   return (
     <section id="services" className="py-20 md:py-32 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <div className="mx-auto max-w-2xl text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl text-balance">
             Comprehensive Medical Tourism Services

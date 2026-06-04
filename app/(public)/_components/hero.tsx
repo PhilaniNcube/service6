@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-linear-to-br from-blue-50 via-white to-orange-50">
       {/* Hero Content */}
-      <div className="container mx-auto px-4 py-20 md:py-32">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16 py-20 md:py-32">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 rounded-full bg-accent/10 border border-accent/20 px-4 py-2 text-sm font-medium text-accent">

@@ -143,7 +143,7 @@ export default function FAQsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <div className="container mx-auto px-4 py-12 md:py-20">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16 py-12 md:py-20">
         <div className="mx-auto max-w-4xl">
           {/* Header */}
           <div className="mb-12 text-center">

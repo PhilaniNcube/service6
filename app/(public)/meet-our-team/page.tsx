@@ -67,7 +67,7 @@ export default function MeetOurTeamPage() {
       <div className="flex flex-col min-h-screen">
         {/* Hero Section */}
         <section className="bg-muted/30 py-20 md:py-32">
-          <div className="container mx-auto px-4 text-center">
+          <div className="container mx-auto px-4 md:px-8 lg:px-16 text-center">
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl text-balance mb-6">
               Meet Our Team
             </h1>
@@ -79,7 +79,7 @@ export default function MeetOurTeamPage() {
 
         {/* Team Section */}
         <section className="py-20 bg-background">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-8 lg:px-16">
             <div className="grid gap-16 lg:grid-cols-2 items-start">
 
               {/* Dr Paul M Wondoh */}

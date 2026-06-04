@@ -4,6 +4,7 @@ import { Services } from './_components/services'
 import { TouristTravel } from './_components/tourist-travel'
 import { HowItWorks } from './_components/how-it-works'
 import { WhyChooseUs } from './_components/why-choose-us'
+import { Testimonials } from './_components/testimonials'
 
 export const metadata: Metadata = {
   title: 'ApexMed - Premium Medical Tourism in South Africa | World-Class Healthcare',
@@ -106,6 +107,7 @@ const page = () => {
         <TouristTravel />
         <HowItWorks />
         <WhyChooseUs />
+        <Testimonials />
       </div>
     </>
   )

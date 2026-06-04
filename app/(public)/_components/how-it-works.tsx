@@ -30,7 +30,7 @@ const steps = [
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="py-20 md:py-32 bg-linear-to-br from-slate-50 to-blue-50">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <div className="mx-auto max-w-2xl text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl text-balance">
             Your Journey to Better Health

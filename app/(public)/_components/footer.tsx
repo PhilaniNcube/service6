@@ -2,10 +2,10 @@ import { Heart } from "lucide-react"
 import Link from "next/link";
 
 export async function Footer() {
-    "use cache";
+  "use cache";
   return (
     <footer className="border-t bg-background">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16 py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -24,7 +24,7 @@ export async function Footer() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/treatments" className="hover:text-primary transition-colors">
-              Treatments
+                  Treatments
                 </Link>
               </li>
               <li>
@@ -37,17 +37,17 @@ export async function Footer() {
                   Accommodation
                 </Link>
               </li>
-             
+
             </ul>
           </div>
 
           <div>
             <h3 className="font-semibold text-foreground mb-4">Company</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-             
+
               <li>
                 <Link href="/meet-our-team" className="hover:text-primary transition-colors">
-                 Meet Our Team
+                  Meet Our Team
                 </Link>
               </li>
               <li>
@@ -71,7 +71,7 @@ export async function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-             
+
             </ul>
           </div>
         </div>

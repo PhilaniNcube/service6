@@ -49,7 +49,7 @@ export function ContactForm() {
 
   return (
     <section className="pb-16 bg-muted/30" id="contact">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <div className="mx-auto max-w-2xl text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl text-balance">
             Start Your Healthcare Journey Today

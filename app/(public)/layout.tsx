@@ -6,7 +6,7 @@ import { ContactForm } from "./_components/contact-form";
 
 const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <div className="public-route-wrapper">
       <Navigation />
       <main className="min-h-screen">{children}</main>
       <ContactForm />
