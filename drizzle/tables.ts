@@ -318,6 +318,18 @@ export const referral_reason = [
   "other",
 ] as const;
 
+export const referral_statuses = [
+  "submitted",
+  "under_review",
+  "approved",
+  "in_treatment",
+  "completed",
+  "follow_up",
+  "cancelled",
+] as const;
+
+export type ReferralStatus = (typeof referral_statuses)[number];
+
 export const patient_cases = sqliteTable("patient_cases", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   patient_id: integer("patient_id")
@@ -334,6 +346,7 @@ export const patient_cases = sqliteTable("patient_cases", {
     .references(() => procedures.id)
     .notNull(),
   preferred_timeline: text("preferred_timeline").$type<TreatmentTimeline>(),
+  status: text("status").$type<ReferralStatus>().$default(() => "submitted"),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .$default(() => new Date()),

@@ -158,3 +158,18 @@ export async function getInvoiceById(invoiceId: number) {
 
   return invoice;
 }
+
+export async function getInvoicesForReferringPhysician(referringPhysicianId: number) {
+  const data = await db
+    .select({
+      invoice: invoices,
+      patient: users,
+    })
+    .from(invoices)
+    .innerJoin(patients, eq(invoices.patient_id, patients.id))
+    .innerJoin(users, eq(patients.user_id, users.id))
+    .where(eq(patients.referring_physician_id, referringPhysicianId))
+    .orderBy(desc(invoices.createdAt));
+
+  return data;
+}

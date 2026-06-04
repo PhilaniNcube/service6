@@ -7,6 +7,9 @@ import { appointments, referring_physicians } from "@/drizzle/tables";
 import db from "@/drizzle/client";
 import { and, count, eq, gte, lt } from "drizzle-orm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { type Route } from "next";
 
 async function getDoctorContext() {
   const { userId } = await auth();
@@ -60,6 +63,28 @@ async function getDoctorContext() {
       )
     );
 
+  // Get referral status breakdown
+  const allReferrals = (
+    await Promise.all(
+      patients.map((patient) => getPatientCasesByPatientId(patient.id))
+    )
+  ).flat();
+
+  const statusBreakdown = allReferrals.reduce(
+    (acc, referral) => {
+      const status = referral.status || "submitted";
+      acc[status] = (acc[status] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
+  // Get referrals this month
+  const referralsThisMonth = allReferrals.filter((ref) => {
+    const createdAt = new Date(ref.createdAt);
+    return createdAt >= startOfMonth(startOfToday) && createdAt < startOfNextMonth(startOfToday);
+  }).length;
+
   return {
     doctorUser,
     patients,
@@ -69,6 +94,9 @@ async function getDoctorContext() {
     totalAppointments,
     proceduresThisMonth,
     patientCases,
+    statusBreakdown,
+    totalReferrals: allReferrals.length,
+    referralsThisMonth,
   };
 }
 
@@ -185,6 +213,72 @@ const ReferralsCard = ({
   </Card>
 );
 
+const statusColors: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+  submitted: "default",
+  under_review: "secondary",
+  approved: "outline",
+  in_treatment: "default",
+  completed: "secondary",
+  follow_up: "outline",
+  cancelled: "destructive",
+};
+
+const ReferralStatusCard = ({
+  statusBreakdown,
+  totalReferrals,
+  referralsThisMonth,
+}: {
+  statusBreakdown: Record<string, number>;
+  totalReferrals: number;
+  referralsThisMonth: number;
+}) => (
+  <Card className="col-span-1 lg:col-span-2">
+    <CardHeader>
+      <CardTitle>Referral Analytics</CardTitle>
+      <p className="text-sm text-muted-foreground">
+        Overview of your referral activity
+      </p>
+    </CardHeader>
+    <CardContent className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-1">
+          <p className="text-sm text-muted-foreground">Total Referrals</p>
+          <p className="text-2xl font-bold">{totalReferrals}</p>
+        </div>
+        <div className="space-y-1">
+          <p className="text-sm text-muted-foreground">This Month</p>
+          <p className="text-2xl font-bold">{referralsThisMonth}</p>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <p className="text-sm font-medium">Status Breakdown</p>
+        <div className="flex flex-wrap gap-2">
+          {Object.entries(statusBreakdown).map(([status, count]) => (
+            <Badge
+              key={status}
+              variant={statusColors[status] || "outline"}
+              className="capitalize"
+            >
+              {status.replace("_", " ")}: {count}
+            </Badge>
+          ))}
+          {Object.keys(statusBreakdown).length === 0 && (
+            <p className="text-sm text-muted-foreground">No referrals yet</p>
+          )}
+        </div>
+      </div>
+      <div className="pt-2">
+        <Link
+          href={"/doctors/referrals" as Route}
+          className="text-sm text-primary hover:underline"
+        >
+          View full referral pipeline →
+        </Link>
+      </div>
+    </CardContent>
+  </Card>
+);
+
 const DoctorsHomePage = async () => {
   const context = await getDoctorContext();
 
@@ -207,6 +301,9 @@ const DoctorsHomePage = async () => {
     totalAppointments,
     proceduresThisMonth,
     patientCases,
+    statusBreakdown,
+    totalReferrals,
+    referralsThisMonth,
   } = context;
 
   return (
@@ -236,6 +333,14 @@ const DoctorsHomePage = async () => {
 
       <section className="grid gap-4 lg:grid-cols-3">
         <ScheduleCard appointments={todayAppointments} />
+        <ReferralStatusCard
+          statusBreakdown={statusBreakdown}
+          totalReferrals={totalReferrals}
+          referralsThisMonth={referralsThisMonth}
+        />
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-3">
         <ReferralsCard cases={patientCases} />
       </section>
 
@@ -257,9 +362,12 @@ const DoctorsHomePage = async () => {
                     key={patient.id}
                     className="flex items-center justify-between rounded-md border px-3 py-2"
                   >
-                    <span>
+                    <Link
+                      href={`/doctors/patients/${patient.id}` as Route}
+                      className="hover:text-primary"
+                    >
                       {patient.first_name} {patient.last_name}
-                    </span>
+                    </Link>
                     <span className="text-xs text-muted-foreground">{patient.email}</span>
                   </li>
                 ))}

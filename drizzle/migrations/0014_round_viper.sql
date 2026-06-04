@@ -1,0 +1,1 @@
+ALTER TABLE `patient_cases` ADD `status` text;

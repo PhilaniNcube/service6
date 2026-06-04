@@ -31,3 +31,6 @@ export * from "./referrals";
 export * from "./patients";
 export * from "./documents";
 export * from "./contact";
+export * from "./patient-cases";
+export * from "./invoices";
+export * from "./appointments";

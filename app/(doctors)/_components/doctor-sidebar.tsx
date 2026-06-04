@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { StethoscopeIcon, UserIcon, CalendarIcon, FileTextIcon } from "lucide-react";
+import { StethoscopeIcon, UserIcon, CalendarIcon, FileTextIcon, PlusCircleIcon, ListChecksIcon, SettingsIcon, ReceiptIcon } from "lucide-react";
 import Link from "next/link";
 import {
   Sidebar,
@@ -29,14 +29,34 @@ const doctorNav: { title: string; url: Route; icon: React.ComponentType<{ classN
     icon: UserIcon,
   },
   {
+    title: "Referrals",
+    url: "/doctors/referrals" as Route,
+    icon: ListChecksIcon,
+  },
+  {
     title: "Appointments",
     url: "/doctors/appointments" as Route,
     icon: CalendarIcon,
   },
   {
+    title: "Invoices",
+    url: "/doctors/invoices" as Route,
+    icon: ReceiptIcon,
+  },
+  {
     title: "Clinical Notes",
     url: "/doctors/notes" as Route,
     icon: FileTextIcon,
+  },
+  {
+    title: "New Referral",
+    url: "/doctors/new-referral" as Route,
+    icon: PlusCircleIcon,
+  },
+  {
+    title: "My Profile",
+    url: "/doctors/profile" as Route,
+    icon: SettingsIcon,
   },
 ];
 
