@@ -5,6 +5,7 @@ import { asc, desc, eq, inArray } from "drizzle-orm";
 import { cache } from "react";
 import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { cacheTag } from "next/cache";
+import { unstable_rethrow } from "next/navigation";
 
 /**
  * Data Access Layer for User operations
@@ -39,6 +40,7 @@ export async function getCurrentUser() {
 
     return user;
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error fetching current user:", error);
     throw new Error("Failed to fetch current user data");
   }
@@ -59,6 +61,7 @@ export const getUserByClerkId = async (clerkId: string) => {
 
     return user || null;
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error fetching user by clerk_id:", error);
     throw new Error("Failed to fetch user data");
   }
@@ -79,6 +82,7 @@ export const getUserByEmail = cache(async (email: string) => {
 
     return user || null;
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error fetching user by email:", error);
     throw new Error("Failed to fetch user data");
   }
@@ -99,6 +103,7 @@ export const getUserById = cache(async (id: number) => {
 
     return user || null;
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error fetching user by id:", error);
     throw new Error("Failed to fetch user data");
   }
@@ -113,6 +118,7 @@ export const getAllUsers = cache(async () => {
       .orderBy(asc(users.createdAt));
     return allUsers;
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error fetching all users:", error);
     throw new Error("Failed to fetch user data");
   }
@@ -128,6 +134,7 @@ export const getRecentUsers = cache(async (limit: number = 5) => {
       .limit(limit);
     return recentUsers;
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error fetching recent users:", error);
     throw new Error("Failed to fetch user data");
   }
@@ -205,6 +212,7 @@ export const getDoctorUserByIdFromClerk = cache(async (clerkId: string) => {
     const doctorUser = await clerk.users.getUser(clerkId);
     return doctorUser;
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error fetching doctor user by clerk ID:", error);
     throw new Error("Failed to fetch doctor user data");
   }
