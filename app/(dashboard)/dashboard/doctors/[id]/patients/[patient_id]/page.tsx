@@ -5,8 +5,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getReferringPhysicianByClerkId } from "@/features/doctor/referring-physicians-queries";
 import { getPatientsByReferringPhysicianId } from "@/features/patient/patient-queries";
 import { Mail, User, Users } from "lucide-react";
-import { AddPatientCaseDialog } from "./_components/add-patient-case-dialog";
-import { PatientCasesServer } from "./_components/patient-cases-server";
+import { AddPatientCaseDialog } from "@/features/patient/components/add-patient-case-dialog";
+import { PatientCasesServer } from "@/features/patient/components/patient-cases-server";
 import { getProcedures } from "@/features/procedure/procedure-queries";
 
 interface PageProps {

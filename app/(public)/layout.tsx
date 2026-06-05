@@ -1,8 +1,8 @@
 
 import React from "react";
-import { Navigation } from "./_components/navigation";
-import { Footer } from "./_components/footer";
-import { ContactForm } from "./_components/contact-form";
+import { Navigation } from "@/features/public/components/navigation";
+import { Footer } from "@/features/public/components/footer";
+import { ContactForm } from "@/features/public/components/contact-form";
 
 const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
   return (

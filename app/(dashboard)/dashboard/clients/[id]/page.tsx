@@ -1,11 +1,11 @@
 
 import React, { Suspense } from "react";
-import { ClientOverview } from "./_components/client-overview";
-import { ClientDesiredProcedures } from "./_components/client-desired-procedures";
-import { ClientMedicalHistory } from "./_components/client-medical-history";
-import { ClientOverviewSkeleton } from "./_components/client-overview.skeleton";
-import { ClientDesiredProceduresSkeleton } from "./_components/client-desired-procedures.skeleton";
-import { ClientMedicalHistorySkeleton } from "./_components/client-medical-history.skeleton";
+import { ClientOverview } from "@/features/client/components/client-overview";
+import { ClientDesiredProcedures } from "@/features/client/components/client-desired-procedures";
+import { ClientMedicalHistory } from "@/features/client/components/client-medical-history";
+import { ClientOverviewSkeleton } from "@/features/client/components/client-overview.skeleton";
+import { ClientDesiredProceduresSkeleton } from "@/features/client/components/client-desired-procedures.skeleton";
+import { ClientMedicalHistorySkeleton } from "@/features/client/components/client-medical-history.skeleton";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const paramsPromise = params;

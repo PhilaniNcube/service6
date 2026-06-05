@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { TreatmentList } from "../_components/treatment-list"
+import { TreatmentList } from "@/features/treatment/components/treatment-list"
 
 export const metadata: Metadata = {
   title: 'Urology in South Africa - Prostate, Kidney & Bladder Surgery | ApexMed',

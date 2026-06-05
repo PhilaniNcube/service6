@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import { Hero } from './_components/hero'
-import { Services } from './_components/services'
-import { TouristTravel } from './_components/tourist-travel'
-import { HowItWorks } from './_components/how-it-works'
-import { WhyChooseUs } from './_components/why-choose-us'
-import { Testimonials } from './_components/testimonials'
+import { Hero } from '@/features/public/components/hero'
+import { Services } from '@/features/public/components/services'
+import { TouristTravel } from '@/features/public/components/tourist-travel'
+import { HowItWorks } from '@/features/public/components/how-it-works'
+import { WhyChooseUs } from '@/features/public/components/why-choose-us'
+import { Testimonials } from '@/features/public/components/testimonials'
 
 export const metadata: Metadata = {
   title: 'ApexMed - Premium Medical Tourism in South Africa | World-Class Healthcare',

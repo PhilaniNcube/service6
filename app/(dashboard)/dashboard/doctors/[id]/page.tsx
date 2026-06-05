@@ -1,8 +1,8 @@
 import React, { Suspense } from "react";
-import DoctorOverview from "./_components/doctor-overview";
-import DoctorDetails from "./_components/doctor-details";
-import ReferringPhysicianCard from "./_components/referring-physician-card";
-import DoctorPatientsCard from "./_components/doctor-patients-card";
+import DoctorOverview from "@/features/doctor/components/doctor-overview";
+import DoctorDetails from "@/features/doctor/components/doctor-details";
+import ReferringPhysicianCard from "@/features/doctor/components/referring-physician-card";
+import DoctorPatientsCard from "@/features/doctor/components/doctor-patients-card";
 import {
   Card,
   CardContent,
