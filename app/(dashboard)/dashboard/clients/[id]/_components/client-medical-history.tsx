@@ -19,16 +19,14 @@ interface ClientMedicalHistoryProps {
 }
 
 export async function ClientMedicalHistory({ params }: ClientMedicalHistoryProps) {
- 
-
-  const resolvedParams = await params;
-  const [allergies, medications, pastSurgeries, medicalBackground, documents] = await Promise.all([
-    getUserAllergiesByClerkId(resolvedParams.id),
-    getUserMedicationsByClerkId(resolvedParams.id),
-    getUserPastSurgeriesByClerkId(resolvedParams.id),
-    getMedicalHistorySummaryByClerkId(resolvedParams.id),
-    getDocumentsByClerkId(resolvedParams.id),
-  ]);
+  return params.then(async (resolvedParams) => {
+    const [allergies, medications, pastSurgeries, medicalBackground, documents] = await Promise.all([
+      getUserAllergiesByClerkId(resolvedParams.id),
+      getUserMedicationsByClerkId(resolvedParams.id),
+      getUserPastSurgeriesByClerkId(resolvedParams.id),
+      getMedicalHistorySummaryByClerkId(resolvedParams.id),
+      getDocumentsByClerkId(resolvedParams.id),
+    ]);
 
   return (
     <Card>
@@ -281,4 +279,5 @@ export async function ClientMedicalHistory({ params }: ClientMedicalHistoryProps
       </CardContent>
     </Card>
   );
+  });
 }

@@ -27,8 +27,8 @@ const diagnosisStatusVariants = {
 export async function ClientDesiredProcedures({ params }: ClientDesiredProceduresProps) {
   "use cache";
   cacheLife("minutes")
-  const resolvedParams = await params;
-  const procedures = await getUserProceduresByClerkId(resolvedParams.id);
+  return params.then(async (resolvedParams) => {
+    const procedures = await getUserProceduresByClerkId(resolvedParams.id);
 
   return (
     <Card>
@@ -128,4 +128,5 @@ export async function ClientDesiredProcedures({ params }: ClientDesiredProcedure
       </CardContent>
     </Card>
   );
+  });
 }

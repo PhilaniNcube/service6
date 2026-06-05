@@ -34,18 +34,18 @@ const complexityColors: Record<string, "default" | "secondary" | "destructive" |
 };
 
 export default async function PatientDetailPage({ params }: PatientDetailPageProps) {
-  const { id } = await params;
-  const patientId = parseInt(id, 10);
+  return params.then(async ({ id }) => {
+    const patientId = parseInt(id, 10);
 
-  if (isNaN(patientId)) {
-    notFound();
-  }
+    if (isNaN(patientId)) {
+      notFound();
+    }
 
-  const patient = await getPatientWithCases(patientId);
+    const patient = await getPatientWithCases(patientId);
 
-  if (!patient) {
-    notFound();
-  }
+    if (!patient) {
+      notFound();
+    }
 
   return (
     <div className="space-y-6 p-4 lg:p-6">
@@ -185,4 +185,5 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
       </div>
     </div>
   );
+  });
 }

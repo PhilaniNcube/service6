@@ -13,10 +13,9 @@ const DoctorOverview = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
-  const { id } = await params;
-
-  const doctor = await getDoctorUserByIdFromClerk(id);
-  const isReferring = await isDoctorReferringByClerkId(id);
+  return params.then(async ({ id }) => {
+    const doctor = await getDoctorUserByIdFromClerk(id);
+    const isReferring = await isDoctorReferringByClerkId(id);
 
   if (!doctor) {
     return (
@@ -99,6 +98,7 @@ const DoctorOverview = async ({
 
     </div>
   );
+  });
 };
 
 export default DoctorOverview;

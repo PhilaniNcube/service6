@@ -1,4 +1,4 @@
-import AppointmentOverview from "@/app/(doctors)/_components/appointment-overview";
+import AppointmentOverview from "@/features/doctor/components/appointment-overview";
 import React from "react";
 
 const AppointmentPage = async ({

@@ -1,5 +1,5 @@
 import React from 'react'
-import AppointmentDetails from '../_components/appointment-details'
+import AppointmentDetails from '@/features/appointment/components/appointment-details'
 
 const AppointmentPage = ({params}:{params:Promise<{id: string}>}) => {
   return (

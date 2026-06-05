@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getAllUsers, getDoctorUsersfromClerk } from "@/features/user/user-queries";
 import { specialties } from "@/drizzle/tables";
 import db from "@/drizzle/client";
-import { AddReferringPhysicianForm } from "./_components/add-referring-physician-form";
+import { AddReferringPhysicianForm } from "@/features/doctor/components/add-referring-physician-form";
 
 async function ReferringPhysicianFormWrapper() {
   const [allUsers, doctorClerkUsers, specialtyList] = await Promise.all([

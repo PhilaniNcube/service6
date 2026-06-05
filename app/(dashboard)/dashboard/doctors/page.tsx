@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
-import DoctorsList from "./_components/doctors-list";
+import DoctorsList from "@/features/doctor/components/doctors-list";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,

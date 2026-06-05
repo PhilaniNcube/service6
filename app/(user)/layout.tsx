@@ -1,8 +1,8 @@
 import type React from "react"
-import { UserSidebar } from "./_components/user-sidebar"
+import { UserSidebar } from "@/features/user/components/user-sidebar"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
-import { DynamicBreadcrumbs } from "./_components/dynamic-breadcrumbs"
+import { DynamicBreadcrumbs } from "@/features/user/components/dynamic-breadcrumbs"
 
 
 export default async function UserLayout({

@@ -4,9 +4,7 @@ import { InvoiceActions } from './invoice-actions'
 import { Skeleton } from '@/components/ui/skeleton'
 
 const InvoicePage = async ({ params }: { params: Promise<{ invoice_id: string }> }) => {
-  const { invoice_id } = await params
-
-  return (
+  return params.then(({ invoice_id }) => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Invoice #{invoice_id}</h1>
@@ -18,7 +16,7 @@ const InvoicePage = async ({ params }: { params: Promise<{ invoice_id: string }>
         <InvoiceDetails params={params} />
       </Suspense>
     </div>
-  )
+  ))
 }
 
 function InvoiceActionsSkeleton() {

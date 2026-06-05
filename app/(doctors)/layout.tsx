@@ -2,8 +2,8 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { checkRole } from "@/lib/roles";
 import { redirect } from "next/navigation";
 import React from "react";
-import { DoctorSidebar } from "./_components/doctor-sidebar";
-import { DoctorHeader } from "./_components/doctor-header";
+import { DoctorSidebar } from "@/features/doctor/components/doctor-sidebar";
+import { DoctorHeader } from "@/features/doctor/components/doctor-header";
 
 const DoctorsLayout = async ({
   children,

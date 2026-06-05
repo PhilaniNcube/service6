@@ -22,10 +22,10 @@ const DoctorDetails = async ({
 }: {
   paramsPromise: Promise<{ id: string }>;
 }) => {
-  const params = await paramsPromise;
-  const clerkId = params.id;
+  return paramsPromise.then(async (params) => {
+    const clerkId = params.id;
 
-  const user = await getUserByClerkId(clerkId);
+    const user = await getUserByClerkId(clerkId);
   const formatDate = (date?: Date | null) =>
     date ? format(new Date(date), "MMMM d, yyyy") : "Not available";
   const fullName =
@@ -185,6 +185,7 @@ const DoctorDetails = async ({
       </Card>
     </div>
   );
+  });
 };
 
 export default DoctorDetails;

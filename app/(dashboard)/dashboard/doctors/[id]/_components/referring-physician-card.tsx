@@ -10,10 +10,10 @@ const ReferringPhysicianCard = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
-  const { id } = await params;
-  const referring = await getReferringPhysicianByClerkId(id);
-  
-  if (!referring) return null;
+  return params.then(async ({ id }) => {
+    const referring = await getReferringPhysicianByClerkId(id);
+    
+    if (!referring) return null;
   
   const candidateUsers = await getCandidatePatientsForReferrer(referring.id);
   
@@ -90,6 +90,7 @@ const ReferringPhysicianCard = async ({
       </CardContent>
     </Card>
   );
+  });
 };
 
 export default ReferringPhysicianCard;

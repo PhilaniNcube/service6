@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import MedicalHistoryComponent from '../_components/medical-history'
+import MedicalHistoryComponent from '@/features/user/components/medical-history'
 
 const MedicalHistory = async () => {
   return (

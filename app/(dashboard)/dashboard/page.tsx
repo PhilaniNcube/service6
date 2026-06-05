@@ -1,10 +1,10 @@
 
 import  { Suspense } from "react";
-import { RecentPatientsTable } from "./_components/recent-patients-table";
-import { RecentPatientsTableFallback } from "./_components/recent-patients-table-fallback";
-import { ProcedureRequests } from "./_components/procedure-requests";
-import { ProcedureRequestsFallback } from "./_components/procedure-requests-fallback";
-import { MedicalOverview } from "./_components/medical-overview";
+import { RecentPatientsTable } from "@/features/patient/components/recent-patients-table";
+import { RecentPatientsTableFallback } from "@/features/patient/components/recent-patients-table-fallback";
+import { ProcedureRequests } from "@/features/procedure/components/procedure-requests";
+import { ProcedureRequestsFallback } from "@/features/procedure/components/procedure-requests-fallback";
+import { MedicalOverview } from "@/features/medical-record/components/medical-overview";
 
 const DashboardHome = async () => {
   return (

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import db from "@/drizzle/client";
 import { referring_physicians, specialties } from "@/drizzle/tables";
 import { eq } from "drizzle-orm";
-import { DoctorProfileForm } from "../../_components/doctor-profile-form";
+import { DoctorProfileForm } from "@/features/doctor/components/doctor-profile-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserIcon } from "lucide-react";
 

@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
-import ClerkUsers from "./_components/clerk-users";
-import ClerkUsersSkeleton from "./_components/clerk-users-skeleton";
+import ClerkUsers from "@/features/user/components/clerk-users";
+import ClerkUsersSkeleton from "@/features/user/components/clerk-users-skeleton";
 
 const ClientsPage = async () => {
   return (

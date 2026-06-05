@@ -15,7 +15,7 @@ export async function AppointmentDetails({
 }: {
   params: Promise<{ id: string }>;
 }) {
-    const { id } = await params;
+  return params.then(async ({ id }) => {
   const detail = await getAppointmentDetailById(Number(id));
 
   if (!detail) {
@@ -433,7 +433,8 @@ export async function AppointmentDetails({
         </div>
       </div>
     </div>
-  )
+  );
+  });
 }
 
 export default AppointmentDetails;

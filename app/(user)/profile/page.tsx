@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import ProfileCard from "./_components/profile-card";
-import { ProfileCardSkeleton } from "./_components/profile-card-skeleton";
+import ProfileCard from "@/features/user/components/profile-card";
+import { ProfileCardSkeleton } from "@/features/user/components/profile-card-skeleton";
 import UploadDocumentForm from "../documents/UploadDocumentForm";
 import {
   Card,

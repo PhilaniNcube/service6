@@ -4,12 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { InvoiceItem } from "@/drizzle/tables";
 
 export async function InvoiceDetails({ params }: { params: Promise<{ invoice_id: string }> }) {
-  const { invoice_id } = await params;
-  const invoiceId = parseInt(invoice_id);
-  
-  if (isNaN(invoiceId)) {
-    return <div>Invalid Invoice ID</div>;
-  }
+  return params.then(async ({ invoice_id }) => {
+    const invoiceId = parseInt(invoice_id);
+    
+    if (isNaN(invoiceId)) {
+      return <div>Invalid Invoice ID</div>;
+    }
 
   const invoice = await getInvoiceById(invoiceId);
 
@@ -97,4 +97,5 @@ export async function InvoiceDetails({ params }: { params: Promise<{ invoice_id:
       )}
     </div>
   );
+  });
 }

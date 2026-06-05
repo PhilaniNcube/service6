@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import DoctorRequestsList from "./_components/doctor-requests-list";
+import DoctorRequestsList from "@/features/doctor/components/doctor-requests-list";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,

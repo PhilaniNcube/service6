@@ -14,12 +14,11 @@ interface PageProps {
 }
 
 const DoctorPatientPage = async ({ params }: PageProps) => {
-  const { id, patient_id } = await params;
-
-  const referring = await getReferringPhysicianByClerkId(id);
-  if (!referring) {
-    return notFound();
-  }
+  return params.then(async ({ id, patient_id }) => {
+    const referring = await getReferringPhysicianByClerkId(id);
+    if (!referring) {
+      return notFound();
+    }
 
   const patients = await getPatientsByReferringPhysicianId(referring.id);
   const patient = patients.find((p) => String(p.id) === String(patient_id));
@@ -123,6 +122,7 @@ const DoctorPatientPage = async ({ params }: PageProps) => {
       />
     </div>
   );
+  });
 };
 
 export default DoctorPatientPage;

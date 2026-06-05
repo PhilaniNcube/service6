@@ -9,12 +9,12 @@ const AppointmentOverview = async ({
 }: {
   paramsPromise: Promise<{ id: string }>;
 }) => {
-  const params = await paramsPromise;
-  const id = Number(params.id);
+  return paramsPromise.then(async (params) => {
+    const id = Number(params.id);
 
-  if (!Number.isInteger(id) || id <= 0) {
-    return <div>Invalid appointment id</div>;
-  }
+    if (!Number.isInteger(id) || id <= 0) {
+      return <div>Invalid appointment id</div>;
+    }
 
   const detail = await getAppointmentDetailById(id);
 
@@ -168,6 +168,7 @@ const AppointmentOverview = async ({
       </Card>
     </div>
   );
+  });
 };
 
 export default AppointmentOverview;

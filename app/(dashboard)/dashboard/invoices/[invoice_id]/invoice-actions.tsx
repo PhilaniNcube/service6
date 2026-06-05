@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { InvoiceStatusDropdown } from "./invoice-status-dropdown";
 
 export async function InvoiceActions({ params }: { params: Promise<{ invoice_id: string }> }) {
-  const { invoice_id } = await params;
-  const invoiceId = parseInt(invoice_id);
-  
-  if (isNaN(invoiceId)) {
-    return null;
-  }
+  return params.then(async ({ invoice_id }) => {
+    const invoiceId = parseInt(invoice_id);
+    
+    if (isNaN(invoiceId)) {
+      return null;
+    }
 
   const invoice = await getInvoiceById(invoiceId);
 
@@ -40,4 +40,5 @@ export async function InvoiceActions({ params }: { params: Promise<{ invoice_id:
       <Button variant="outline">Print</Button>
     </div>
   );
+  });
 }

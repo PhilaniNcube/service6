@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
-import { InvoicesList } from './_components/invoices-list'
-import { InvoicesTableSkeleton } from './_components/invoices-table-skeleton'
+import { InvoicesList } from '@/features/invoice/components/invoices-list'
+import { InvoicesTableSkeleton } from '@/features/invoice/components/invoices-table-skeleton'
 
 const InvoicesPage = async () => {
   return (

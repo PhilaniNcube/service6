@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 
-import { AppointmentsTable } from "./_components/appointments-table";
+import { AppointmentsTable } from "@/features/appointment/components/appointments-table";
 
 export default async function AppointmentsPage() {
 

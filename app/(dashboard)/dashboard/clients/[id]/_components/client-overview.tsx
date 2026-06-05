@@ -14,9 +14,9 @@ interface ClientOverviewProps {
 export async function ClientOverview({ params }: ClientOverviewProps) {
   "use cache";
   cacheLife("minutes")
-  const resolvedParams = await params;
-  const user = await getUserByClerkId(resolvedParams.id);
-  const patient = user ? await getPatientByUserId(user.id) : null;
+  return params.then(async (resolvedParams) => {
+    const user = await getUserByClerkId(resolvedParams.id);
+    const patient = user ? await getPatientByUserId(user.id) : null;
 
   if (!user) {
     return (
@@ -137,4 +137,5 @@ export async function ClientOverview({ params }: ClientOverviewProps) {
       </CardContent>
     </Card>
   );
+  });
 }
