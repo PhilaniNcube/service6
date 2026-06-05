@@ -3,7 +3,7 @@ import React from "react";
 import AddPastSurgeryDialog from "./add-past-surgery-dialog";
 import PastSurgeryItem from "./past-surgery-item";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getUserPastSurgeries } from "@/dal/queries/past_surgeries";
+import { getUserPastSurgeries } from "@/features/user/past-surgeries-queries";
 
 const PastSurgeries = async () => {
   const surgeries = await getUserPastSurgeries();

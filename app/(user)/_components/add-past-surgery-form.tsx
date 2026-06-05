@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { pastSurgeriesSchema } from "@/lib/schemas";
-import { addPastSurgery } from "@/dal/actions/past-surgeries";
+import { addPastSurgery } from "@/features/user/past-surgeries-actions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";

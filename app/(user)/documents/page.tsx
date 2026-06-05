@@ -1,6 +1,6 @@
 import React from "react";
 import UploadDocumentForm from "./UploadDocumentForm";
-import { getCurrentUser } from "@/dal/queries";
+import { getCurrentUser } from "@/features/user/user-queries";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getDocumentsForUser } from "@/dal/queries";
+import { getDocumentsForUser } from "@/features/document/document-queries";
 import { getPublicR2Url } from "@/lib/r2";
 import Link from "next/link";
 import { Route } from "next";

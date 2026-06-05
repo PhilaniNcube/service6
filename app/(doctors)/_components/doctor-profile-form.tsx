@@ -19,8 +19,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { updateReferringPhysician } from "@/dal/actions/update-referring-physician";
-import type { AddReferringPhysicianState } from "@/dal/actions/types";
+import { updateReferringPhysician } from "@/features/doctor/update-referring-physician-actions";
+import type { AddReferringPhysicianState } from "@/features/_shared/action-types";
 import type { Specialty } from "@/drizzle/tables";
 import { toast } from "sonner";
 

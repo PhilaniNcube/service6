@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getAppointmentDetailById } from "@/dal/queries/appointments";
+import { getAppointmentDetailById } from "@/features/appointment/appointment-queries";
 import { getPublicR2Url } from "@/lib/r2";
 import { ArrowLeft, Calendar, CheckCircle, Clock, Edit, FileText, Mail, MapPin, Phone, Stethoscope, XCircle } from "lucide-react";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getAppointmentDetailById } from "@/dal/queries/appointments";
+import { getAppointmentDetailById } from "@/features/appointment/appointment-queries";
 import { format } from "date-fns";
 
 const AppointmentOverview = async ({

@@ -1,14 +1,14 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { updateUserProfile,  } from "@/dal/actions/users";
+import { updateUserProfile,  } from "@/features/user/user-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldLabel, FieldError, FieldDescription } from "@/components/ui/field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { User } from "@/drizzle/tables";
 import { Loader2 } from "lucide-react";
-import { UpdateUserState } from "@/dal/actions/types";
+import { UpdateUserState } from "@/features/_shared/action-types";
 
 interface ProfileEditFormProps {
   user: User;

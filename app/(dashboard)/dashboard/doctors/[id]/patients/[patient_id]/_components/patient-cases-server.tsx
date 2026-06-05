@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getAppointmentsByPatientCaseId, getPatientCasesByPatientId } from "@/dal/queries";
+import { getPatientCasesByPatientId } from "@/features/referral/patient-cases-queries";
+import { getAppointmentsByPatientCaseId } from "@/features/appointment/appointment-queries";
 import { CaseAppointments } from "./case-appointments";
 
 interface PatientCasesServerProps {

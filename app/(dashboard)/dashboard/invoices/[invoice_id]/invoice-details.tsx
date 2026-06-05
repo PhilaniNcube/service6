@@ -1,4 +1,4 @@
-import { getInvoiceById } from "@/dal/queries/invoices";
+import { getInvoiceById } from "@/features/invoice/invoice-queries";
 import { PatientDetails } from "./patient-details";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { InvoiceItem } from "@/drizzle/tables";

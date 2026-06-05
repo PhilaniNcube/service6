@@ -1,4 +1,4 @@
-import { getAllInvoices } from "@/dal/queries/invoices";
+import { getAllInvoices } from "@/features/invoice/invoice-queries";
 import {
   Table,
   TableBody,

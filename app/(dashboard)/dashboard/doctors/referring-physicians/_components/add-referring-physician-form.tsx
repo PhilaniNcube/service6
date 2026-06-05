@@ -6,8 +6,8 @@ import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { addReferringPhysician } from "@/dal/actions";
-import type { AddReferringPhysicianState } from "@/dal/actions/types";
+import { addReferringPhysician } from "@/features/doctor/referring-physicians-actions";
+import type { AddReferringPhysicianState } from "@/features/_shared/action-types";
 import type { ContactMethod, Specialty, User } from "@/drizzle/tables";
 
 interface AddReferringPhysicianFormProps {

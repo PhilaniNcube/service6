@@ -2,7 +2,7 @@
 
 import { useState, useActionState } from "react";
 
-import { createSpecialty, type CreateSpecialtyState } from "@/dal/actions";
+import { createSpecialty, type CreateSpecialtyState } from "@/features/specialty/specialty-actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

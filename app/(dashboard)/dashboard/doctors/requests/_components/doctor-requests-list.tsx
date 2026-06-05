@@ -1,4 +1,4 @@
-import { getPendingDoctorRequests } from "@/dal/queries/users";
+import { getPendingDoctorRequests } from "@/features/user/user-queries";
 import {
   Table,
   TableBody,

@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone } from "lucide-react"
 import { Field, FieldLabel, FieldError } from "@/components/ui/field"
-import { sendContactEmail } from "@/dal/actions"
+import { sendContactEmail } from "@/features/contact/contact-actions"
 import { toast } from "sonner"
 
 const contactFormSchema = z.object({

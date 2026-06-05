@@ -1,4 +1,4 @@
-import { getSpecialties } from "@/dal/queries";
+import { getSpecialties } from "@/features/specialty/specialty-queries";
 import {
   Table,
   TableBody,

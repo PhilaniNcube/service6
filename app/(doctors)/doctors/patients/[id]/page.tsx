@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getPatientWithCases } from "@/dal/queries/patient-cases";
+import { getPatientWithCases } from "@/features/referral/patient-cases-queries";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";

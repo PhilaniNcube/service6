@@ -32,11 +32,11 @@ import {
 import {
   createPatientCase,
   type CreatePatientCaseState,
-} from "@/dal/actions/patient-cases";
+} from "@/features/referral/patient-cases-actions";
 import {
   createProcedure,
   type CreateProcedureState,
-} from "@/dal/actions/procedures";
+} from "@/features/procedure/procedure-actions";
 import type { TreatmentTimeline, Procedure } from "@/drizzle/tables";
 import type { CaseComplexity } from "@/drizzle/tables";
 import { Loader2, Plus } from "lucide-react";

@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { InvoiceStatus, invoice_statuses } from "@/drizzle/tables";
-import { updateInvoiceStatus } from "@/dal/actions/invoices";
+import { updateInvoiceStatus } from "@/features/invoice/invoice-actions";
 import { toast } from "sonner";
 
 interface InvoiceStatusDropdownProps {

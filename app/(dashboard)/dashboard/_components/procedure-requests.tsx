@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { getRecentProcedureRequests } from "@/dal/queries/procedures";
+import { getRecentProcedureRequests } from "@/features/procedure/procedure-queries";
 
 // Placeholder data matching the desired_procedures table schema
 const procedureRequests = [

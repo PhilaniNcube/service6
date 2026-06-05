@@ -20,7 +20,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { submitReferral, type SubmitReferralState } from "@/dal/actions/referrals";
+import { submitReferral, type SubmitReferralState } from "@/features/referral/referrals-actions";
 import type { Procedure } from "@/drizzle/tables";
 import { toast } from "sonner";
 

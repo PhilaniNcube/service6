@@ -1,4 +1,4 @@
-import { getDoctorUsersWithReferringFlag } from "@/dal/queries/users";
+import { getDoctorUsersWithReferringFlag } from "@/features/user/user-queries";
 import React from "react";
 import {
   Table,

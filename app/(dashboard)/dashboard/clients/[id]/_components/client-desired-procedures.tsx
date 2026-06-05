@@ -1,4 +1,4 @@
-import { getUserProceduresByClerkId } from "@/dal/queries/procedures";
+import { getUserProceduresByClerkId } from "@/features/procedure/procedure-queries";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Stethoscope, Clock, Activity, CheckCircle2 } from "lucide-react";

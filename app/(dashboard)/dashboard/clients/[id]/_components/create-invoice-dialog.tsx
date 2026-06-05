@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Plus, Trash2 } from "lucide-react";
-import { createInvoiceWithItems } from "@/dal/actions/invoices";
+import { createInvoiceWithItems } from "@/features/invoice/invoice-actions";
 import { toast } from "sonner";
 import {
   Field,

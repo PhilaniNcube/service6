@@ -2,7 +2,7 @@
 
 import { Allergy } from "@/drizzle/tables";
 import React, { useState, useTransition } from "react";
-import { deleteAllergyAction } from "@/dal/actions/allergies";
+import { deleteAllergyAction } from "@/features/user/allergies-actions";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Trash2, Loader2 } from "lucide-react";

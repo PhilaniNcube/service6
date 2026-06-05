@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, Users, Heart, Clock } from "lucide-react";
-import { getCurrentUser, getDoctorRequestByClerkId } from "@/dal/queries/users";
+import { getCurrentUser, getDoctorRequestByClerkId } from "@/features/user/user-queries";
 import { UpdateRoleButton } from "./update-role-button";
 import { getUserRole } from "@/lib/roles";
 import Link from "next/link";

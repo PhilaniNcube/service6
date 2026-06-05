@@ -14,7 +14,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2 } from "lucide-react";
 
 import { Field, FieldContent, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
-import { createDesiredProcedure, type CreateDesiredProcedureState } from "@/dal/actions/procedures";
+import { createDesiredProcedure, type CreateDesiredProcedureState } from "@/features/procedure/procedure-actions";
 import type { Procedure, TreatmentTimeline } from "@/drizzle/tables";
 import { treatment_timelines } from "@/drizzle/tables";
 import { useUser } from "@clerk/nextjs";

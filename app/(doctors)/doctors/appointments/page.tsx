@@ -1,6 +1,6 @@
 
 import { auth } from "@clerk/nextjs/server";
-import { getDoctorAppointments } from "@/dal/queries/appointments";
+import { getDoctorAppointments } from "@/features/appointment/appointment-queries";
 import Link from "next/link";
 import { format } from "date-fns";
 

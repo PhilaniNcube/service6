@@ -1,4 +1,4 @@
-import { getInvoiceById } from "@/dal/queries/invoices";
+import { getInvoiceById } from "@/features/invoice/invoice-queries";
 import { Button } from "@/components/ui/button";
 import { InvoiceStatusDropdown } from "./invoice-status-dropdown";
 

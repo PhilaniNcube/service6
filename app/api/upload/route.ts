@@ -1,7 +1,7 @@
 // app/api/upload/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { uploadToR2, getPublicR2Url } from "@/lib/r2";
-import { createDocumentRecord } from "@/dal/actions";
+import { createDocumentRecord } from "@/features/document/document-actions";
 
 export async function POST(req: NextRequest) {
   try {

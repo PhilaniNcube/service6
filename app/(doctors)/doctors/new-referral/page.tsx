@@ -1,4 +1,4 @@
-import { getProcedures } from "@/dal/queries/procedures";
+import { getProcedures } from "@/features/procedure/procedure-queries";
 import { NewReferralForm } from "../../_components/new-referral-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileTextIcon } from "lucide-react";

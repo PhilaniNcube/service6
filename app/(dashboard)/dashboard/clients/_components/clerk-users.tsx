@@ -1,4 +1,4 @@
-import { getAllClerkUsers } from "@/dal/queries/users";
+import { getAllClerkUsers } from "@/features/user/user-queries";
 import React from "react";
 import Link from "next/link";
 import {
@@ -25,7 +25,7 @@ const getInitials = (firstName?: string | null, lastName?: string | null) => {
   return `${firstName?.[0] || ""}${lastName?.[0] || ""}`.toUpperCase();
 };
 
-const formatDate = (timestamp: number) => {
+const formatDate = (timestamp: number | string) => {
   return new Date(timestamp).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',

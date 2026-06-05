@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import db from "@/drizzle/client";
 import { referring_physicians } from "@/drizzle/tables";
 import { eq } from "drizzle-orm";
-import { getReferralsByPhysicianId } from "@/dal/queries/referrals";
+import { getReferralsByPhysicianId } from "@/features/referral/referrals-queries";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

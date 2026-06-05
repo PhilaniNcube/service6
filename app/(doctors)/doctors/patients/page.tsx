@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import db from "@/drizzle/client";
 import { referring_physicians } from "@/drizzle/tables";
-import { getPatientsByReferringPhysicianId } from "@/dal/queries/patients";
+import { getPatientsByReferringPhysicianId } from "@/features/patient/patient-queries";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
 import { type Route } from "next";

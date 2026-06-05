@@ -3,7 +3,7 @@ import React from "react";
 import AddAllergyDialog from "./add-allergy-dialog";
 import AllergyItem from "./allergy-item";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getUserAllergies } from "@/dal/queries/allergies";
+import { getUserAllergies } from "@/features/user/allergies-queries";
 
 const Allergies = async () => {
   const allergies = await getUserAllergies();

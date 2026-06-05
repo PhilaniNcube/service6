@@ -1,4 +1,4 @@
-import { getMedicalHistorySummaryByClerkId } from "@/dal/queries/medical-history";
+import { getMedicalHistorySummaryByClerkId } from "@/features/user/medical-history-queries";
 import React from "react";
 import {
   Card,

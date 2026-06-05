@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { getReferringPhysicianByClerkId } from "@/dal/queries/referring-physicians";
-import { getPatientsByReferringPhysicianId } from "@/dal/queries/patients";
+import { getReferringPhysicianByClerkId } from "@/features/doctor/referring-physicians-queries";
+import { getPatientsByReferringPhysicianId } from "@/features/patient/patient-queries";
 import { User, Users } from "lucide-react";
 import { Route } from "next";
 

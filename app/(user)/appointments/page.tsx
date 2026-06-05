@@ -1,4 +1,4 @@
-import { getAppointmentsByUserClerkId } from "@/dal/queries";
+import { getAppointmentsByUserClerkId } from "@/features/appointment/appointment-queries";
 import { currentUser } from "@clerk/nextjs/server";
 
 import type { Appointment } from "@/drizzle/tables";

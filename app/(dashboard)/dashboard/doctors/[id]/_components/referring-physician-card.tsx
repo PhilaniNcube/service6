@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, Stethoscope } from "lucide-react";
-import { getReferringPhysicianByClerkId } from "@/dal/queries/referring-physicians";
-import { getCandidatePatientsForReferrer } from "@/dal/queries";
+import { getReferringPhysicianByClerkId } from "@/features/doctor/referring-physicians-queries";
+import { getCandidatePatientsForReferrer } from "@/features/patient/candidate-patients-queries";
 import { AddPatientDialog } from "./add-patient-dialog";
 
 const ReferringPhysicianCard = async ({

@@ -2,12 +2,12 @@ import { notFound } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { getReferringPhysicianByClerkId } from "@/dal/queries/referring-physicians";
-import { getPatientsByReferringPhysicianId } from "@/dal/queries/patients";
+import { getReferringPhysicianByClerkId } from "@/features/doctor/referring-physicians-queries";
+import { getPatientsByReferringPhysicianId } from "@/features/patient/patient-queries";
 import { Mail, User, Users } from "lucide-react";
 import { AddPatientCaseDialog } from "./_components/add-patient-case-dialog";
 import { PatientCasesServer } from "./_components/patient-cases-server";
-import { getProcedures } from "@/dal/queries/procedures";
+import { getProcedures } from "@/features/procedure/procedure-queries";
 
 interface PageProps {
   params: Promise<{ id: string; patient_id: string }>;

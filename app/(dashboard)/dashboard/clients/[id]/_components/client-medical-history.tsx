@@ -1,8 +1,8 @@
-import { getUserAllergiesByClerkId } from "@/dal/queries/allergies";
-import { getUserMedicationsByClerkId } from "@/dal/queries/medications";
-import { getUserPastSurgeriesByClerkId } from "@/dal/queries/past_surgeries";
-import { getMedicalHistorySummaryByClerkId } from "@/dal/queries/medical-history";
-import { getDocumentsByClerkId } from "@/dal/queries/documents";
+import { getUserAllergiesByClerkId } from "@/features/user/allergies-queries";
+import { getUserMedicationsByClerkId } from "@/features/user/medications-queries";
+import { getUserPastSurgeriesByClerkId } from "@/features/user/past-surgeries-queries";
+import { getMedicalHistorySummaryByClerkId } from "@/features/user/medical-history-queries";
+import { getDocumentsByClerkId } from "@/features/document/document-queries";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

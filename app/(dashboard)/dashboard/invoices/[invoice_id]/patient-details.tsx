@@ -1,4 +1,4 @@
-import { getPatientById } from "@/dal/queries/patients";
+import { getPatientById } from "@/features/patient/patient-queries";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export async function PatientDetails({ patientId }: { patientId: number }) {

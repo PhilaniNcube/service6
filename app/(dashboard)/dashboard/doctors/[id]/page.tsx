@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const DoctorLoadingFallback = () => (
-  <div className="space-y-6">
+function DoctorOverviewSkeleton() {
+  return (
     <Card>
       <CardContent className="pt-6">
         <div className="flex flex-col gap-6 md:flex-row">
@@ -34,29 +34,37 @@ const DoctorLoadingFallback = () => (
         </div>
       </CardContent>
     </Card>
+  );
+}
 
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <Skeleton className="h-5 w-44" />
-          </CardTitle>
-          <CardDescription>
-            <Skeleton className="h-4 w-64" />
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <div key={`details-${index}`} className="space-y-2">
-                <Skeleton className="h-4 w-24" />
-                <Skeleton className="h-5 w-full" />
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+function DoctorDetailsSkeleton() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <Skeleton className="h-5 w-44" />
+        </CardTitle>
+        <CardDescription>
+          <Skeleton className="h-4 w-64" />
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div key={`details-${index}`} className="space-y-2">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-5 w-full" />
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
+function DoctorCardsSkeleton() {
+  return (
+    <>
       <Card>
         <CardHeader>
           <CardTitle>
@@ -102,21 +110,25 @@ const DoctorLoadingFallback = () => (
           ))}
         </CardContent>
       </Card>
-    </div>
-  </div>
-);
+    </>
+  );
+}
 
 const DoctorPage = ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <div className="space-y-6">
-      <Suspense fallback={<DoctorLoadingFallback />}>
+      <Suspense fallback={<DoctorOverviewSkeleton />}>
         <DoctorOverview params={params} />
+      </Suspense>
+      <Suspense fallback={<DoctorDetailsSkeleton />}>
         <DoctorDetails paramsPromise={params} />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      </Suspense>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Suspense fallback={<DoctorCardsSkeleton />}>
           <ReferringPhysicianCard params={params} />
           <DoctorPatientsCard params={params} />
-        </div>
-      </Suspense>
+        </Suspense>
+      </div>
     </div>
   );
 };

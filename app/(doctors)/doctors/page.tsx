@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
-import { getDoctorUserByIdFromClerk } from "@/dal/queries/users";
-import { getPatientsByReferringPhysicianId } from "@/dal/queries/patients";
-import { getDoctorAppointments } from "@/dal/queries/appointments";
-import { getPatientCasesByPatientId } from "@/dal/queries/patient-cases";
+import { getDoctorUserByIdFromClerk } from "@/features/user/user-queries";
+import { getPatientsByReferringPhysicianId } from "@/features/patient/patient-queries";
+import { getDoctorAppointments } from "@/features/appointment/appointment-queries";
+import { getPatientCasesByPatientId } from "@/features/referral/patient-cases-queries";
 import { appointments, referring_physicians } from "@/drizzle/tables";
 import db from "@/drizzle/client";
 import { and, count, eq, gte, lt } from "drizzle-orm";

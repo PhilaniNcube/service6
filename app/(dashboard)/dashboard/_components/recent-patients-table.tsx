@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { getRecentUsers } from "@/dal/queries/users";
+import { getRecentUsers } from "@/features/user/user-queries";
 import Link from "next/link";
 
 const getInitials = (firstName?: string | null, lastName?: string | null) => {

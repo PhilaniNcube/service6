@@ -14,7 +14,7 @@ import { Field, FieldContent, FieldError, FieldLabel } from "@/components/ui/fie
 import { Textarea } from "@/components/ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { createAppointment, type CreateAppointmentState } from "@/dal/actions/appointments";
+import { createAppointment, type CreateAppointmentState } from "@/features/appointment/appointment-actions";
 import { Loader2, Plus, Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 

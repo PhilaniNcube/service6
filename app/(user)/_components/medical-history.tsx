@@ -10,7 +10,7 @@ import Procedures from "./procedures";
 import Allergies from "./allergies";
 import PastSurgeries from "./past-surgeries";
 import Medications from "./medications";
-import { getCurrentUser } from "@/dal/queries/users";
+import { getCurrentUser } from "@/features/user/user-queries";
 
 const MedicalHistoryComponent = async () => {
   const profile = await getCurrentUser();

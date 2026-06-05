@@ -1,4 +1,4 @@
-import { getUserByClerkId } from "@/dal/queries/users";
+import { getUserByClerkId } from "@/features/user/user-queries";
 import {
   Card,
   CardContent,

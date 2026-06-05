@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { updateUserRoleToDoctor } from "@/dal/actions/users";
+import { updateUserRoleToDoctor } from "@/features/user/user-actions";
 import { toast } from "sonner";
 import { UserCog } from "lucide-react";
 

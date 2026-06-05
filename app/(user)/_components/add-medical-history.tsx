@@ -4,7 +4,7 @@ import type { User } from "@/drizzle/tables";
 import React, { startTransition, useActionState, useEffect } from "react";
 import {
   addMedicalBackground
-} from "@/dal/actions/users";
+} from "@/features/user/user-actions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -19,7 +19,7 @@ import {
   FieldError,
   FieldContent,
 } from "@/components/ui/field";
-import { AddMedicalBackgroundState } from "@/dal/actions/types";
+import { AddMedicalBackgroundState } from "@/features/_shared/action-types";
 
 // Form validation schema
 const formSchema = z.object({

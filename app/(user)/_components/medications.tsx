@@ -3,7 +3,7 @@ import React from "react";
 import AddMedicationDialog from "./add-medication-dialog";
 import MedicationItem from "./medication-item";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getUserMedications } from "@/dal/queries/medications";
+import { getUserMedications } from "@/features/user/medications-queries";
 
 const Medications = async () => {
   const medications = await getUserMedications();

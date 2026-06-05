@@ -6,8 +6,8 @@ import {
   getDashboardMedicalConditionsOverview,
   getDashboardRecentAllergies,
   getDashboardRecentSurgeries,
-} from "@/dal/queries/dashboard-medical-overview"
-import { getCurrentUser } from "@/dal/queries/users"
+} from "@/features/medical-record/dashboard-medical-overview-queries"
+import { getCurrentUser } from "@/features/user/user-queries"
 
 export async function MedicalOverview() {
   const user = await getCurrentUser()

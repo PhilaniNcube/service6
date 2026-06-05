@@ -20,9 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createPatientForReferringPhysician } from "@/dal/actions";
-import type { CreatePatientState } from "@/dal/actions/types";
-import type { getCandidatePatientsForReferrer } from "@/dal/queries";
+import { createPatientForReferringPhysician } from "@/features/patient/patient-actions";
+import type { CreatePatientState } from "@/features/_shared/action-types";
+import type { getCandidatePatientsForReferrer } from "@/features/patient/candidate-patients-queries";
 
 const formSchema = z.object({
   user_id: z.string().min(1, "Please select a user"),

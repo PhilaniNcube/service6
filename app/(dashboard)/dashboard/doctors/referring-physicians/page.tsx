@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getAllUsers, getDoctorUsersfromClerk } from "@/dal/queries/users";
+import { getAllUsers, getDoctorUsersfromClerk } from "@/features/user/user-queries";
 import { specialties } from "@/drizzle/tables";
 import db from "@/drizzle/client";
 import { AddReferringPhysicianForm } from "./_components/add-referring-physician-form";

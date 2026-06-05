@@ -1,10 +1,10 @@
-import { getUserByClerkId } from "@/dal/queries/users";
+import { getUserByClerkId } from "@/features/user/user-queries";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, User, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import { cacheLife } from "next/cache";
-import { getPatientByUserId } from "@/dal/queries/patients";
+import { getPatientByUserId } from "@/features/patient/patient-queries";
 import { CreateInvoiceDialog } from "./create-invoice-dialog";
 
 interface ClientOverviewProps {

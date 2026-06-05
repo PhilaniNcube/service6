@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   approveDoctorRequest,
   rejectDoctorRequest,
-} from "@/dal/actions/users";
+} from "@/features/user/user-actions";
 import { toast } from "sonner";
 import { Check, X } from "lucide-react";
 

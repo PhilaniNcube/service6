@@ -2,7 +2,7 @@
 
 import { PastSurgery } from "@/drizzle/tables";
 import React, { useState, useTransition } from "react";
-import { deletePastSurgery } from "@/dal/actions/past-surgeries";
+import { deletePastSurgery } from "@/features/user/past-surgeries-actions";
 import { Button } from "@/components/ui/button";
 import { Trash2, Loader2 } from "lucide-react";
 import {

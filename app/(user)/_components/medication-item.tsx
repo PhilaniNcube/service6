@@ -2,7 +2,7 @@
 
 import { Medication } from "@/drizzle/tables";
 import React, { useState, useTransition } from "react";
-import { deleteMedication } from "@/dal/actions/medications";
+import { deleteMedication } from "@/features/user/medications-actions";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Trash2, Loader2, Calendar, Pill } from "lucide-react";

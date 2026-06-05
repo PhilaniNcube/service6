@@ -1,4 +1,4 @@
-import { getAllAppointmentsForAdmin } from "@/dal/queries/appointments";
+import { getAllAppointmentsForAdmin } from "@/features/appointment/appointment-queries";
 import { AppointmentsTableClient } from "./appointments-table-client";
 
 
